@@ -1,0 +1,21 @@
+{
+  "name": "node-game",
+  "description": "node back-end management",
+  "main": "",
+  "authors": [
+    "Sam"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "homepage": "https://github.com/bestsamcn/node-game",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -11,8 +11,12 @@ var users = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+var template = require('art-template');
+template.config('base', '');
+template.config('extname', '.html');
+app.engine('.html', template.__express);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
