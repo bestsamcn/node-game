@@ -10,6 +10,7 @@ body.signin {
     color: rgba(255,255,255,.95);
 }
 
+
 .signinpanel {
     width: 320px;
     margin: 10% auto 0 auto;
@@ -57,7 +58,7 @@ body.signin {
 
 }
 
-.signup-footer{border-top: solid 1px rgba(255,255,255,.3);margin:20px 0;padding-top: 15px;}
+.signup-footer{border-top: solid 1px rgba(0,0,0,.1);margin:20px 0;padding-top: 15px;}
 
 @media screen and (max-width: 768px) {
     .signinpanel,
@@ -90,4 +91,7 @@ body.signin {
         margin:0 20px;
         width:auto;
     }
+}
+.loginscreen.middle-box{
+    width: initial
 }

@@ -1,4 +1,7 @@
-
+/**
+ * connect
+ * 数据库连接
+ */
 var config = require('../config').mongoConfig;
 
 var mongoose = require('mongoose');

@@ -4,15 +4,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
-
-
-
-
 var app = express();
+var globalConfig = require('./config');
+var ROOT_DIR = process.cwd();
+
 
 // view engine setup
 var template = require('art-template');
 template.config('base', '');
+template.config('cache', globalConfig.templateCache);
 template.config('extname', '.html');
 app.engine('.html', template.__express);
 app.set('view engine', 'html');
@@ -29,12 +29,12 @@ app.use('/public', express.static(__dirname + '/public'));
 /**
  * @route
  */
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var sign = require('./routes/sign');
-app.use('/sign', sign);
-app.use('/', routes);
-app.use('/users', users);
+require('./routes')(app);
+
+/**
+* @api
+*/
+require('./api')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

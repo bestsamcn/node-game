@@ -1,49 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <title>登录</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }}</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/public/libs/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/public/libs/font-awesome.css" rel="stylesheet">
+    <link href="/public/libs/iCheck/custom.css" rel="stylesheet">
     <link href="/public/libs/animate.css" rel="stylesheet">
+    <link href="/public/css/base.css" rel="stylesheet">
     <link href="/public/css/style.css" rel="stylesheet">
     <link href="/public/css/login.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <meta http-equiv="refresh" content="0;ie.html" />
-    <![endif]-->
-    <script>
-        if (window.top !== window.self) {
-            window.top.location = window.location;
-        }
-    </script>
-
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
 </head>
-
 <body class="signin">
-    <div class="signinpanel">
-        <div class="row">
-            <div class="col-sm-12">
-                <form method="post" action="index.html">
-                    <h4 class="no-margins text-center font-black">登录：</h4>
-                    <p class="m-t-md">登录到H+后台主题UI框架</p>
-                    <input type="text" class="form-control uname" placeholder="用户名" />
-                    <input type="password" class="form-control pword m-b" placeholder="密码" />
-                    <a href="">忘记密码了？</a>
-                    <button class="btn btn-success btn-block">登录</button>
-                </form>
-            </div>
-        </div>
-        <div class="signup-footer">
-            <div class="pull-left">
-                &copy; hAdmin
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div class="signinpanel">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form class="m-t" role="form" id="signin-form">
+                        <h4 class="text-center sign-title color-green">Register</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control uname" name="account" placeholder="请输入用户名" ></div>
+                        <div class="form-group">
+                            <input type="password" class="form-control pword" name="password" placeholder="请输入密码" ></div>
+                        <div class="form-group">
+                            <input type="password" class="form-control pword" name="repassword" placeholder="请再次输入密码" ></div>
+                        <div class="form-group text-left">
+                            <div class="checkbox i-checks">
+                                <label class="no-padding color-green">
+                                    <input type="checkbox" name="agreement"> <i></i>
+                                    我同意注册协议
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary block full-width m-b" id="signin-btn">注 册</button>
+                        <p class="text-muted text-center">
+                            <small>已经有账户了？</small>
+                            <a href="/sign/signin">点此登录</a>
+                        </p>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- 全局js -->
+    <script src="/public/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="/public/libs/iCheck/icheck.min.js"></script>
+    <script src="/public/js/util.js"></script>
+    <script src="/public/js/sign.js"></script>
 </body>
 
 </html>

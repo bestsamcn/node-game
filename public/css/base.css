@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'rancho';
+  src: url('../fonts/Rancho-Regular.ttf');
+}
+.color-black{
+	color:#333;
+}
+.color-gray{
+	color:#999;
+}
+.color-green{
+	color:#27c24c
+}
+.color-purple{
+	color:#7266ba
+}
+.sign-title{
+	font-family: 'rancho',cursive;
+	font-size: 50px;
+	margin-bottom:40px !important;
+}

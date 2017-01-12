@@ -1,3 +1,7 @@
+/**
+ * User
+ * 用户数据结构
+ */
 var mongoose =  require('mongoose');
 
 //用户信息
@@ -36,6 +40,11 @@ var UserSchema = new mongoose.Schema({
 		require:true,
 		default:1
 	},
+	isActive:{
+		type:Number,
+		require:true,
+		default:0
+	},
 	createLog:{
 		createTime:{
 			type:Number,
@@ -53,7 +62,7 @@ var UserSchema = new mongoose.Schema({
 	userType:{
 		type:Number,
 		require:true,
-		default:0
+		default:1
 	},
 	setAdminTime:{
 		type:Number,
@@ -65,6 +74,6 @@ var UserSchema = new mongoose.Schema({
 	}
 });
 
-exports.UserSchema = UserSchema;
+exports = module.exports = UserSchema;
 
 

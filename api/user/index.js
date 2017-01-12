@@ -3,7 +3,6 @@ var router = express.Router();
 var service = require('./user.service');
 
 //用户登录
-router.get('/signup',service.userSignup);
-
+router.post('/signup',service.userSignup);
 
 module.exports = router;

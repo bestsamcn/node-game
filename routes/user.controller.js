@@ -1,3 +1,7 @@
+/**
+ * user.controller
+ * 用户管理模块
+ */
 var express = require('express');
 var router = express.Router();
 

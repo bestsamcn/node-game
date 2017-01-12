@@ -1,5 +1,10 @@
-//模块目录结构最佳实践
+
+/**
+ * 接口组
+ */
+
 var _user = require('./user');
-var _userApi = function(app){
-	app.use('/user',_user);
+var _apiGroup = function(app){
+	app.use('/api/user',_user);
 }
+module.exports = _apiGroup;
