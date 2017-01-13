@@ -1,4 +1,40 @@
-var arr = [
-	{ retCode:0 , msg:'回调成功', data:null },
-	{ retCode:100001 , msg:'用户名重复', data:null }
-]
+var arr = [{
+	retCode: 0,
+	msg: '回调成功',
+	data: null
+}, {
+	retCode: 100001,
+	msg: '用户名重复',
+	data: null
+}, {
+	retCode: 100002,
+	msg: '用户名格式错误',
+	data: null
+}, {
+	retCode: 100003,
+	msg: '密码格式错误',
+	data: null
+}, {
+	retCode: 100004,
+	msg: '手机号码格式错误',
+	data: null
+}, {
+	retCode: 100005,
+	msg: '用户名不能为空或者少于2位',
+	data: null
+}, {
+	retCode: 100006,
+	msg: '密码不能为空或者少于6位'
+}, {
+	retCode: 100007,
+	msg: '用户名不存在',
+	data: null
+}, {
+	retCode: 100008,
+	msg: '密码错误',
+	data: null
+}, {
+	retCode: 100009,
+	msg: '登录成功',
+	data: fdoc
+}]

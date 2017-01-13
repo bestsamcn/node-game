@@ -13,7 +13,7 @@ module.exports = function(grunt) {
         },
         open: {
             all: {
-                path: 'http://'+globalConfig.host+':'+globalConfig.port
+                path: 'http://'+globalConfig.host+':'+globalConfig.port+'/sign/signin'
             },
             file: {
                 path: '/etc/hosts'

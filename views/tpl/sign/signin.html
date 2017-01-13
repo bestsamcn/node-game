@@ -26,15 +26,15 @@
         <div class="signinpanel">
             <div class="row">
                 <div class="col-sm-12">
-                    <form method="post" action="index.html">
+                    <form id="signin-form">
                         <h4 class="text-center sign-title color-purple">Login</h4>
-                        <input type="text" class="form-control uname" placeholder="用户名" />
-                        <input type="password" class="form-control pword m-b" placeholder="密码" />
-                        <a href="" class="pull-left m-b">忘记密码了？</a>
-                        <button class="btn btn-success full-width btn-block m-b">登录</button>
+                        <input type="text" class="form-control uname" name="account" placeholder="用户名" />
+                        <input type="password" class="form-control pword m-b" name="password" placeholder="密码" />
+                        <a href="" class="pull-left m-b color-gray">忘记密码了？</a>
+                        <button class="btn btn-success full-width btn-block m-b" id="signin-btn">登录</button>
                         <p class="text-muted text-center">
-                            <small>还没有帐号？</small>
-                            <a href="/sign/signup">点此注册</a>
+                            <small class="color-gray">还没有帐号？</small>
+                            <a href="/sign/signup" class="color-green">点此注册</a>
                         </p>
                     </form>
                 </div>
@@ -46,3 +46,10 @@
     </div>
 </body>
 </html>
+<!-- 全局js -->
+<script src="/public/libs/jquery/dist/jquery.min.js"></script>
+<script src="/public/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="/public/libs/iCheck/icheck.min.js"></script>
+<script src="/public/js/util.js"></script>
+<script src="/public/js/sign.js"></script>

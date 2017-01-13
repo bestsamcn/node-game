@@ -5,9 +5,23 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/**
+ * 如果没有登录不能进入
+ */
+router.get('*', function(req, res, next){
+	if(!req.session.isLogin){
+		res.redirect('/sign/signin')
+		res.end();
+		return;
+	}
+	next();
+})
+
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+	res.render('tpl/home/index', {
+		routerName: '/home',
+		title:'主页'
+	});
 });
 
 module.exports = router;

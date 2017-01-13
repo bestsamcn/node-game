@@ -1,462 +1,685 @@
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> 
+<![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" lang="en"> 
+<![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+    <head>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="renderer" content="webkit">
+        <title>MEME INTERCONNECT</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta charset="UTF-8">
 
-    <title> hAdmin- 主页</title>
-
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-
-    <!--[if lt IE 9]>
-    <meta http-equiv="refresh" content="0;ie.html" />
-    <![endif]-->
-
-    <link rel="shortcut icon" href="favicon.ico"> <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/public/libs/font-awesome.css" rel="stylesheet">
-    <link href="/public/libs/animate.css" rel="stylesheet">
-    <link href="/public/css/style.css" rel="stylesheet">
-</head>
-
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
-    <div id="wrapper">
-        <!--左侧导航开始-->
-        <nav class="navbar-default navbar-static-side" role="navigation">
-            <div class="nav-close"><i class="fa fa-times-circle"></i>
-            </div>
-            <div class="sidebar-collapse">
-                <ul class="nav" id="side-menu">
-                    <li class="nav-header">
-                        <div class="dropdown profile-element">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="clear">
-                                    <span class="block m-t-xs" style="font-size:20px;">
-                                        <i class="fa fa-area-chart"></i>
-                                        <strong class="font-bold">hAdmin</strong>
-                                    </span>
-                                </span>
-                            </a>
-                        </div>
-                        <div class="logo-element">hAdmin
-                        </div>
-                    </li>
-                    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                        <span class="ng-scope">分类</span>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="index_v1.html">
-                            <i class="fa fa-home"></i>
-                            <span class="nav-label">主页</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa fa-bar-chart-o"></i>
-                            <span class="nav-label">统计图表</span>
-                            <span class="fa arrow"></span>
-                        </a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a class="J_menuItem" href="graph_echarts.html">百度ECharts</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="graph_flot.html">Flot</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="graph_morris.html">Morris.js</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="graph_rickshaw.html">Rickshaw</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="graph_peity.html">Peity</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="graph_sparkline.html">Sparkline</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="graph_metrics.html">图表组合</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="line dk"></li>
-                    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                        <span class="ng-scope">分类</span>
-                    </li>
-                    <li>
-                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">信箱 </span><span class="label label-warning pull-right">16</span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="mailbox.html">收件箱</a>
-                            </li>
-                            <li><a class="J_menuItem" href="mail_detail.html">查看邮件</a>
-                            </li>
-                            <li><a class="J_menuItem" href="mail_compose.html">写信</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">表单</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="form_basic.html">基本表单</a>
-                            </li>
-                            <li><a class="J_menuItem" href="form_validate.html">表单验证</a>
-                            </li>
-                            <li><a class="J_menuItem" href="form_advanced.html">高级插件</a>
-                            </li>
-                            <li><a class="J_menuItem" href="form_wizard.html">表单向导</a>
-                            </li>
-                            <li>
-                                <a href="#">文件上传 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li><a class="J_menuItem" href="form_webuploader.html">百度WebUploader</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="form_file_upload.html">DropzoneJS</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">编辑器 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li><a class="J_menuItem" href="form_editors.html">富文本编辑器</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="form_simditor.html">simditor</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="form_markdown.html">MarkDown编辑器</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="code_editor.html">代码编辑器</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="J_menuItem" href="layerdate.html">日期选择器layerDate</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">页面</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="contacts.html">联系人</a>
-                            </li>
-                            <li><a class="J_menuItem" href="profile.html">个人资料</a>
-                            </li>
-                            <li>
-                                <a href="#">项目管理 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li><a class="J_menuItem" href="projects.html">项目</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="project_detail.html">项目详情</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="J_menuItem" href="teams_board.html">团队管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="social_feed.html">信息流</a>
-                            </li>
-                            <li><a class="J_menuItem" href="clients.html">客户管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="file_manager.html">文件管理器</a>
-                            </li>
-                            <li><a class="J_menuItem" href="calendar.html">日历</a>
-                            </li>
-                            <li>
-                                <a href="#">博客 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li><a class="J_menuItem" href="blog.html">文章列表</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="article.html">文章详情</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="J_menuItem" href="faq.html">FAQ</a>
-                            </li>
-                            <li>
-                                <a href="#">时间轴 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li><a class="J_menuItem" href="timeline.html">时间轴</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="timeline_v2.html">时间轴v2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="J_menuItem" href="pin_board.html">标签墙</a>
-                            </li>
-                            <li>
-                                <a href="#">单据 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li><a class="J_menuItem" href="invoice.html">单据</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="invoice_print.html">单据打印</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="J_menuItem" href="search_results.html">搜索结果</a>
-                            </li>
-                            <li><a class="J_menuItem" href="forum_main.html">论坛</a>
-                            </li>
-                            <li>
-                                <a href="#">即时通讯 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li><a class="J_menuItem" href="chat_view.html">聊天窗口</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">登录注册相关 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li><a href="login.html" target="_blank">登录页面</a>
-                                    </li>
-                                    <li><a href="login_v2.html" target="_blank">登录页面v2</a>
-                                    </li>
-                                    <li><a href="register.html" target="_blank">注册页面</a>
-                                    </li>
-                                    <li><a href="lockscreen.html" target="_blank">登录超时</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="J_menuItem" href="404.html">404页面</a>
-                            </li>
-                            <li><a class="J_menuItem" href="500.html">500页面</a>
-                            </li>
-                            <li><a class="J_menuItem" href="empty_page.html">空白页</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="line dk"></li>
-                    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                        <span class="ng-scope">分类</span>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-flask"></i> <span class="nav-label">UI元素</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="typography.html">排版</a>
-                            </li>
-                            <li>
-                                <a href="#">字体图标 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li>
-                                        <a class="J_menuItem" href="fontawesome.html">Font Awesome</a>
-                                    </li>
-                                    <li>
-                                        <a class="J_menuItem" href="glyphicons.html">Glyphicon</a>
-                                    </li>
-                                    <li>
-                                        <a class="J_menuItem" href="iconfont.html">阿里巴巴矢量图标库</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">拖动排序 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li><a class="J_menuItem" href="draggable_panels.html">拖动面板</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="agile_board.html">任务清单</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="J_menuItem" href="buttons.html">按钮</a>
-                            </li>
-                            <li><a class="J_menuItem" href="tabs_panels.html">选项卡 &amp; 面板</a>
-                            </li>
-                            <li><a class="J_menuItem" href="notifications.html">通知 &amp; 提示</a>
-                            </li>
-                            <li><a class="J_menuItem" href="badges_labels.html">徽章，标签，进度条</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="grid_options.html">栅格</a>
-                            </li>
-                            <li><a class="J_menuItem" href="plyr.html">视频、音频</a>
-                            </li>
-                            <li>
-                                <a href="#">弹框插件 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li><a class="J_menuItem" href="layer.html">Web弹层组件layer</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="modal_window.html">模态窗口</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="sweetalert.html">SweetAlert</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">树形视图 <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li><a class="J_menuItem" href="jstree.html">jsTree</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="tree_view.html">Bootstrap Tree View</a>
-                                    </li>
-                                    <li><a class="J_menuItem" href="nestable_list.html">nestable</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="J_menuItem" href="toastr_notifications.html">Toastr通知</a>
-                            </li>
-                            <li><a class="J_menuItem" href="diff.html">文本对比</a>
-                            </li>
-                            <li><a class="J_menuItem" href="spinners.html">加载动画</a>
-                            </li>
-                            <li><a class="J_menuItem" href="widgets.html">小部件</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-table"></i> <span class="nav-label">表格</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="table_basic.html">基本表格</a>
-                            </li>
-                            <li><a class="J_menuItem" href="table_data_tables.html">DataTables</a>
-                            </li>
-                            <li><a class="J_menuItem" href="table_jqgrid.html">jqGrid</a>
-                            </li>
-                            <li><a class="J_menuItem" href="table_foo_table.html">Foo Tables</a>
-                            </li>
-                            <li><a class="J_menuItem" href="table_bootstrap.html">Bootstrap Table
-                                <span class="label label-danger pull-right">推荐</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="line dk"></li>
-                    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                        <span class="ng-scope">分类</span>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-picture-o"></i> <span class="nav-label">相册</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="basic_gallery.html">基本图库</a>
-                            </li>
-                            <li><a class="J_menuItem" href="carousel.html">图片切换</a>
-                            </li>
-                            <li><a class="J_menuItem" href="blueimp.html">Blueimp相册</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="css_animation.html"><i class="fa fa-magic"></i> <span class="nav-label">CSS动画</span></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">工具 </span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="form_builder.html">表单构建器</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
-            </div>
-        </nav>
-        <!--左侧导航结束-->
-        <!--右侧部分开始-->
-        <div id="page-wrapper" class="gray-bg dashbard-1">
-            <div class="row border-bottom">
-                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                    <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#"><i class="fa fa-bars"></i> </a>
-                        <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
-                            <div class="form-group">
-                                <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">
-                            </div>
-                        </form>
-                    </div>
-                    <ul class="nav navbar-top-links navbar-right">
-                        <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-messages">
-                                <li class="m-t-xs">
-                                    <div class="dropdown-messages-box">
-                                        <a href="profile.html" class="pull-left">
-                                            <img alt="image" class="img-circle" src="img/a7.jpg">
-                                        </a>
-                                        <div class="media-body">
-                                            <small class="pull-right">46小时前</small>
-                                            <strong>小四</strong> 是不是只有我死了,你们才不骂爵迹
-                                            <br>
-                                            <small class="text-muted">3天前 2014.11.8</small>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <div class="dropdown-messages-box">
-                                        <a href="profile.html" class="pull-left">
-                                            <img alt="image" class="img-circle" src="img/a4.jpg">
-                                        </a>
-                                        <div class="media-body ">
-                                            <small class="pull-right text-navy">25小时前</small>
-                                            <strong>二愣子</strong> 呵呵
-                                            <br>
-                                            <small class="text-muted">昨天</small>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <div class="text-center link-block">
-                                        <a class="J_menuItem" href="mailbox.html">
-                                            <i class="fa fa-envelope"></i> <strong> 查看所有消息</strong>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-alerts">
-                                <li>
-                                    <a href="mailbox.html">
-                                        <div>
-                                            <i class="fa fa-envelope fa-fw"></i> 您有16条未读消息
-                                            <span class="pull-right text-muted small">4分钟前</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="profile.html">
-                                        <div>
-                                            <i class="fa fa-qq fa-fw"></i> 3条新回复
-                                            <span class="pull-right text-muted small">12分钟钱</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <div class="text-center link-block">
-                                        <a class="J_menuItem" href="notifications.html">
-                                            <strong>查看所有 </strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="row J_mainContent" id="content-main">
-                <iframe id="J_iframe" width="100%" height="100%" src="" frameborder="0" data-id="index_v1.html" seamless></iframe>
-            </div>
+        <!-- CSS Bootstrap & Custom -->
+        <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="/public/libs/animate.css" rel="stylesheet" media="screen">
+		<link href="/public/libs/font-awesome.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" href="/public/css/base.css">
+        <link href="/public/css/templatemo_style.css" rel="stylesheet" media="screen">
+       
+        <!-- JavaScripts -->
+        <script src="/public/libs/jquery/dist/jquery.min.js"></script>
+        <script src="/public/js/modernizr.js"></script>
+        <!--[if lt IE 8]>
+	    <div style=' clear: both; text-align:center; position: relative;'>
+            <a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" alt="" /></a>
         </div>
-        <!--右侧部分结束-->
-    </div>
+        <![endif]-->
+    </head>
+    <body>
+	<!-- Preloader -->
+	<div id="page-preloader">
+	    <div id="spinner"></div>
+	</div>
+	<!-- End Preloader -->
+	
+	<!-- Mobile Menu -->
+	<div id="mobile-menu" class="mobile-nav hide-nav hidden-md hidden-lg">
+	    <div class="mobile-menu-close">
+		<button type="button" class="close" aria-hidden="true"><span>Close</span>&times;</button>
+	    </div>
+	   
+		<ul class="mobile-navigation">
+		    <li><a href="#introduction">首页</a></li>
+		    <li><a href="#about">关于</a></li>
+		    <li><a href="#portfolio">图片</a></li>
+		    <li><a href="#partners">合作</a></li>
+		    <li><a href="#our-team">团队</a></li>
+		    <li><a href="#contact">联系</a></li>
+		    <li><a href="/home">个人</a></li>
+		</ul>
+		
+		<ul class="mobile-social-icons">
+		    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+		    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+		    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+		    <li><a href="#"><i class="fa fa-rss"></i></a></li>
+		</ul>
+	    
+	</div>
 
-    <!-- 全局js -->
-    <script src="/public/libs/jquery/dist/jquery.min.js"></script>
-    <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/public/libs/metisMenu/jquery.metisMenu.js"></script>
-    <script src="/public/libs/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="/public/libs/layer/layer.min.js"></script>
+        <!-- Header -->
+        <header id="header" class="site-header" role="banner">
+	    <div class="container">
+		<div class="row">
+		    
+		    <div class="col-md-4 logo">
+			<a href="#" class="logo">
+			M<span class="color-purple">EM</span>E
+			</a>
+		    </div> <!-- //.logo -->
+		    
+		    <div class="col-md-8">
+			<nav id="navigation" class="hidden-sm hidden-xs">
+			    <ul id="main-nav" class="main-navigation">
+				<li class="current"><a href="#introduction">首页</a></li>
+				<li><a href="#about">关于</a></li>
+				<li><a href="#portfolio">图片</a></li>
+				<li><a href="#partners">合作</a></li>
+				<li><a href="#our-team">团队</a></li>
+				<li><a href="#contact">联系</a></li>
+				<li><a href="/home">个人</a></li>
+			    </ul>
+			</nav>
+			
+			<a href="#mobile-menu" class="visible-xs visible-sm mobile-menu-trigger"><i class="fa  fa-reorder"></i></a>
+			
+		    </div>
+		    
+		</div> <!-- //.row -->
+	    </div> <!-- //.container -->
+            
+        </header>
+	<!-- End Header -->
+	
+	<!-- Introduction Section -->
+	<section id="introduction" class="content-section clearfix">
+	    <div class="flexslider introduction-slider">
+		
+		<ul class="slides">
+		    <li> 
+			<div class="flex-caption section-overlay slide-caption">
+			    <div class="container">
+				<div class="row">
+				    <div class="col-md-12">
+					<h2>
+					    Curabitur a risus sed massa elementum dictum<br>
+					    Proin convallis venenatis sem
+					</h2>
+					<a class="slide-button">View Project</a>
+				    </div>
+				</div>
+			    </div>
+			</div> 
+			<img src="/public/img/slides/slide1.jpg" alt="slide-01">  
+		    </li>
+		    
+		    <li> 
+			<div class="flex-caption section-overlay slide-caption">
+			    <div class="container">
+				<div class="row">
+				    <div class="col-md-12">
+					<h2>
+					    Nullam euismod erat eget mi tincidunt malesuada<br>
+					    Aliquam sed est volutpat turpis condimentum
+					</h2>
+					<a class="slide-button">View Project</a>
+				    </div>
+				</div>
+			    </div>
+			</div> 
+			<img src="/public/img/slides/slide2.jpg" alt="slide-02">    
+		    </li>
+		    
+		    <li> 
+			<div class="flex-caption section-overlay slide-caption">
+			    <div class="container">
+				<div class="row">
+				    <div class="col-md-12">
+					<h2>
+					    Proin quis nunc nec turpis ultrices aliquet<br>
+					    Vestibulum placerat placerat eros
+					</h2>
+					<a class="slide-button">View Project</a>
+				    </div>
+				</div>
+			    </div>
+			</div> 
+			<img src="/public/img/slides/slide3.jpg" alt="slide-03">    
+		    </li>
+		</ul>
 
-    <!-- 自定义js -->
-    <script src="/public/js/hAdmin.js"></script>
-    <script type="text/javascript" src="/public/js/index.js"></script>
+		<div class="slide-navigation">
+		    <a href="#" class="slide-prev"><i class="fa fa-arrow-left"></i></a>
+		    <a href="#" class="slide-next"><i class="fa fa-arrow-right"></i></a>
+		</div>
+		
+	    </div> <!-- //.flexslider -->
+	</section>
+	<!-- End Introduction Section -->
+	<div class="copyrights">Collect from <a href="http://www.777moban.com/" title="777模板">777模板</a></div>
+	<!-- About Section -->
+	<section id="about" class="content-section clearfix">
+	    <div class="container">
+		<div class="row">
+		    <div class="col-md-12">
+			<h2 class="section-title left">What We Do</h2>
+		    </div>
+		</div>
+		<div class="row">
+		    
+		    <div class="col-md-4 animated-item feature-item fadeInUp" data-delay="200">
+			<span class="feature-icon"><i class="li_bulb"></i></span>
+			<div class="feature-info">
+			    <h3 class="feature-title"><span></span>Different Ideas</h3>
+			    <p>Fusce dolor ante, imperdiet vitae sapien eget, ullamcorper laoreet turpis. Integer posuere dui sapien. Morbi eu aliquam lectus.</p>
+			</div>
+		    </div>
+		    
+		    <div class="col-md-4 animated-item feature-item fadeInUp" data-delay="300">
+			<span class="feature-icon"><i class="li_params"></i></span>
+			<div class="feature-info">
+			    <h3 class="feature-title"><span></span>Flexible Mind</h3>
+			    <p>Mauris quis egestas ipsum. Suspendisse auctor porttitor eros ut molestie. Proin quis nunc nec turpis ultrices aliquet eget ac neque.</p>
+			</div>
+		    </div>
+		    
+		    <div class="col-md-4 animated-item feature-item fadeInUp" data-delay="400">
+			<span class="feature-icon"><i class="li_heart"></i></span>
+			<div class="feature-info">
+			    <h3 class="feature-title"><span></span>Sweet Support</h3>
+			    <p>Integer posuere dui sapien. Morbi eu aliquam lectus. Nam sem arcu, varius nec bibendum egestas, finibus tempus urna.</p>
+			</div>
+		    </div>
+		    
+		</div> <!-- //.row -->
+		
+		<hr class="solid">
+		
+		<div class="row">
+		    <div class="col-md-7 animated-item fadeInLeft" data-delay="200">
+			<h3>Our Skills</h3>
+			
+			<p>Impressum is <a rel="nofollow" href="#/page/1">free parallax template</a> from <b class="blue">template</b><b class="green">mo</b>. 
+            You can download, edit and use this responsive layout for any website. Credit goes to <a rel="nofollow" href="#">Unsplash</a> for /public/img used in this template.
+			Donec fringilla iaculis nunc, non semper felis mattis a. Quisque tincidunt orci eu orci elementum laoreet nec non lectus.
+			Maecenas commodo purus sapien, ac adipiscing tortor tempor sed. Aenean ac facilisis augue, tempor pellentesque nisl. </p>
+			
+			<p>Aliquam porttitor aliquet arcu, et ornare sapien pharetra in. Aenean sit amet est, ut libero. Nunc at pulvinar velit.
+			Nunc pretium odio nibh, eget vehicula tellus sodales id.</p>
+			
+		    </div>
+		    <div class="col-md-5 skillbar-container animated-item fadeInRight" data-delay="400">
+			
+			<div class="skillbar clearfix anim" data-percent="94">
+			    <div class="skillbar-title">Photoshop</div>
+			    <div class="skillbar-bar"></div>
+			    <div class="skillbar-percent">94%</div>
+			</div>
+			
+			<div class="skillbar clearfix anim" data-percent="88">
+			    <div class="skillbar-title">Illustrator</div>
+			    <div class="skillbar-bar"></div>
+			    <div class="skillbar-percent">88%</div>
+			</div>
+			
+			<div class="skillbar clearfix anim" data-percent="66">
+			    <div class="skillbar-title">Fireworks</div>
+			    <div class="skillbar-bar"></div>
+			    <div class="skillbar-percent">66%</div>
+			</div>
+			
+		    </div>
+		</div> <!-- //.row -->
+	    </div> <!-- //.container -->
+	</section>
+	<section id="counter" class="content-section content-overlay parallax-section clearfix">
+		<div class="section-overlay">
+		    <div class="container">
+			<div class="row fadeInUp">
+			    <div class="col-md-3 counter-item">
+				<span class="counter-icon"><i class="li_user"></i></span>
+				<span class="counter-number" data-from="1" data-to="256" data-speed="1000"></span>
+				<span class="counter-text">Satisfied Clients</span>
+			    </div>
+			    
+			    <div class="col-md-3 counter-item">
+				<span class="counter-icon"><i class="li_display"></i></span>
+				<span class="counter-number" data-from="1" data-to="512" data-speed="2000"></span>
+				<span class="counter-text">Projects Delivered</span>
+			    </div>
+			    
+			    <div class="col-md-3 counter-item">
+				<span class="counter-icon"><i class="li_pen"></i></span>
+				<span class="counter-number" data-from="1" data-to="1024" data-speed="3000"></span>
+				<span class="counter-text">Line of Code</span>
+			    </div>
+			    
+			    <div class="col-md-3 counter-item">
+				<span class="counter-icon"><i class="li_bubble"></i></span>
+				<span class="counter-number" data-from="1" data-to="2048" data-speed="4000"></span>
+				<span class="counter-text">Questions Answered</span>
+			    </div>
+			</div>
+		    </div>
+		    
+		</div>
+	</section>
+	<!-- End About Section -->
+	
+	<!-- Portfolio Section -->
+	<section id="portfolio" class="content-section clearfix">
+	    <div class="container">
+		<div class="row">
+		    <div class="col-md-12">
+			<h2 class="section-title right">Portfolio</h2>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-12">
+			<ul id="filters" class="folio-filters">
+			    <li class="current"><a href="#" data-filter="*">All</a></li>
+			    <li class=""><a href="#" data-filter=".webdesign">Web Design</a></li>
+			    <li class=""><a href="#" data-filter=".photography">Photography</a></li>
+			    <li class=""><a href="#" data-filter=".branding">Branding</a></li>
+			    <li class=""><a href="#" data-filter=".marketing">Marketing</a></li>
+			</ul>
+		    </div>
+		</div>
+		    
+		    <div id="folio-container" class="row">
+			<div class="col-md-3 col-sm-6 folio-item webdesign">
+			    <div class="folio-thumb item-h2">
+				<img src="/public/img/post1.jpg" alt="">
+				    <div class="folio-overlay">
+					<a href="/public/img/big-post1.jpg" class="folio-zoom">
+					    <i class="fa fa-plus"></i>
+					</a>
+				    </div> <!-- //.folio-overlay -->
+				
+			    </div> <!-- //.folio-thumb -->
+			    <div class="folio-desc">
+				<span class="folio-tail"></span>
+				<h4><a href="#">Supermario Shoes</a></h4>
+				<h6>Website & Shop</h6>
+			    </div> <!-- //.folio-desc -->
+			</div> <!-- folio-item -->
+			
+			<div class="col-md-3 col-sm-6 folio-item photography">
+			    <div class="folio-thumb">
+				<img src="/public/img/post2.jpg" alt="">
+				    <div class="folio-overlay">
+					<a href="/public/img/big-post2.jpg" class="folio-zoom">
+					    <i class="fa fa-plus"></i>
+					</a>
+				    </div> <!-- //.folio-overlay -->
+				
+			    </div> <!-- //.folio-thumb -->
+			    <div class="folio-desc">
+				<span class="folio-tail"></span>
+				<h4><a href="#">Supermario Shoes</a></h4>
+				<h6>Website & Shop</h6>
+			    </div> <!-- //.folio-desc -->
+			</div> <!-- folio-item -->
+			
+			<div class="col-md-3 col-sm-6 folio-item branding">
+			    <div class="folio-thumb item-h2">
+				<img src="/public/img/post3.jpg" alt="">
+				    <div class="folio-overlay">
+					<a href="/public/img/big-post3.jpg" class="folio-zoom">
+					    <i class="fa fa-plus"></i>
+					</a>
+				    </div> <!-- //.folio-overlay -->
+				
+			    </div> <!-- //.folio-thumb -->
+			    <div class="folio-desc">
+				<span class="folio-tail"></span>
+				<h4><a href="#">Supermario Shoes</a></h4>
+				<h6>Website & Shop</h6>
+			    </div> <!-- //.folio-desc -->
+			</div> <!-- folio-item -->
+			
+			<div class="col-md-3 col-sm-6 folio-item marketing">
+			    <div class="folio-thumb">
+				<img src="/public/img/post4.jpg" alt="">
+				    <div class="folio-overlay">
+					<a href="/public/img/big-post4.jpg" class="folio-zoom">
+					    <i class="fa fa-plus"></i>
+					</a>
+				    </div> <!-- //.folio-overlay -->
+				
+			    </div> <!-- //.folio-thumb -->
+			    <div class="folio-desc">
+				<span class="folio-tail"></span>
+				<h4><a href="#">Supermario Shoes</a></h4>
+				<h6>Website & Shop</h6>
+			    </div> <!-- //.folio-desc -->
+			</div> <!-- folio-item -->
+			
+			<div class="col-md-3 col-sm-6 folio-item webdesign">
+			    <div class="folio-thumb">
+				<img src="/public/img/post5.jpg" alt="">
+				    <div class="folio-overlay">
+					<a href="/public/img/big-post5.jpg" class="folio-zoom">
+					    <i class="fa fa-plus"></i>
+					</a>
+				    </div> <!-- //.folio-overlay -->
+				
+			    </div> <!-- //.folio-thumb -->
+			    <div class="folio-desc">
+				<span class="folio-tail"></span>
+				<h4><a href="#">Supermario Shoes</a></h4>
+				<h6>Website & Shop</h6>
+			    </div> <!-- //.folio-desc -->
+			</div> <!-- folio-item -->
+			
+			<div class="col-md-3 col-sm-6 folio-item photography">
+			    <div class="folio-thumb item-h2">
+				<img src="/public/img/post6.jpg" alt="">
+				    <div class="folio-overlay">
+					<a href="/public/img/big-post6.jpg" class="folio-zoom">
+					    <i class="fa fa-plus"></i>
+					</a>
+				    </div> <!-- //.folio-overlay -->
+				
+			    </div> <!-- //.folio-thumb -->
+			    <div class="folio-desc">
+				<span class="folio-tail"></span>
+				<h4><a href="#">Supermario Shoes</a></h4>
+				<h6>Website & Shop</h6>
+			    </div> <!-- //.folio-desc -->
+			</div> <!-- folio-item -->
+			
+			<div class="col-md-3 col-sm-6 folio-item branding">
+			    <div class="folio-thumb">
+				<img src="/public/img/post7.jpg" alt="">
+				    <div class="folio-overlay">
+					<a href="/public/img/big-post7.jpg" class="folio-zoom">
+					    <i class="fa fa-plus"></i>
+					</a>
+				    </div> <!-- //.folio-overlay -->
+				
+			    </div> <!-- //.folio-thumb -->
+			    <div class="folio-desc">
+				<span class="folio-tail"></span>
+				<h4><a href="#">Supermario Shoes</a></h4>
+				<h6>Website & Shop</h6>
+			    </div> <!-- //.folio-desc -->
+			</div> <!-- folio-item -->
+			
+			<div class="col-md-3 col-sm-6 folio-item marketing">
+			    <div class="folio-thumb">
+				<img src="/public/img/post8.jpg" alt="">
+				    <div class="folio-overlay">
+					<a href="/public/img/big-post8.jpg" class="folio-zoom">
+					    <i class="fa fa-plus"></i>
+					</a>
+				    </div> <!-- //.folio-overlay -->
+				
+			    </div> <!-- //.folio-thumb -->
+			    <div class="folio-desc">
+				<span class="folio-tail"></span>
+				<h4><a href="#">Supermario Shoes</a></h4>
+				<h6>Website & Shop</h6>
+			    </div> <!-- //.folio-desc -->
+			</div> <!-- folio-item -->
+			
+		    </div> <!-- //. row .folio-container-->
+		</div>
+	    
+	</section>
+	<!-- End Portfolio Section -->
+	
+	<!-- Partners Section -->
+	<section id="partners" class="content-section content-overlay parallax-section clearfix">
+	    
+	    <div class="section-overlay">
+		<div class="container">
+		    <div class="row">
+			<div class="col-md-12">
+			    <h2 class="section-title left">Best Partners</h2>
+			</div>
+		    </div>
+		    <div class="row no-margin">
+			<div class="col-md-2 partner-logo">
+			    <img data-toggle="tooltip" title="Our Partner" src="/public/img/partner-logo.png" alt="">
+			</div>
+			<div class="col-md-2 partner-logo">
+			    <img data-toggle="tooltip" title="Our Partner" src="/public/img/partner-logo.png" alt="">
+			</div>
+			<div class="col-md-2 partner-logo">
+			    <img data-toggle="tooltip" title="Our Partner" src="/public/img/partner-logo.png" alt="">
+			</div>
+			<div class="col-md-2 partner-logo">
+			    <img data-toggle="tooltip" title="Our Partner" src="/public/img/partner-logo.png" alt="">
+			</div>
+			<div class="col-md-2 partner-logo">
+			    <img data-toggle="tooltip" title="Our Partner" src="/public/img/partner-logo.png" alt="">
+			</div>
+			<div class="col-md-2 partner-logo">
+			    <img data-toggle="tooltip" title="Our Partner" src="/public/img/partner-logo.png" alt="">
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    
+	</section>
+	<!-- End Partners Section -->
+	
+	<!-- Partners Section -->
+	<section id="our-team" class="content-section clearfix">
+	    <div class="container">
+		<div class="row">
+		    <div class="col-md-12">
+			<h2 class="section-title right">Our Team</h2>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-3 team-box animated-item fadeInUp" data-delay="100">
+			<div class="team-thumb">
+			    <img src="/public/img/author1.jpg" alt="">
+			    <div class="team-overlay">
+				<div class="team-desc">
+				    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, nisi dui, ultrices.</p>
+				</div>
+				<ul class="team-social-icons">
+				    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+				    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+				    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+				</ul>
+			    </div>
+			</div>
+			<div class="team-info">
+			    <h4>Tracy</h4>
+			    <h6>Designer</h6>
+			</div>
+		    </div> <!-- //.team-box -->
+		    
+		    <div class="col-md-3 team-box animated-item fadeInUp" data-delay="200">
+			<div class="team-thumb">
+			    <img src="/public/img/author2.jpg" alt="">
+			    <div class="team-overlay">
+				<div class="team-desc">
+				    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, nisi dui, ultrices.</p>
+				</div>
+				<ul class="team-social-icons">
+				    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+				    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+				    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+				</ul>
+			    </div>
+			</div>
+			<div class="team-info">
+			    <h4>Julia</h4>
+			    <h6>Director</h6>
+			</div>
+		    </div> <!-- //.team-box -->
+		    
+		    <div class="col-md-3 team-box animated-item fadeInUp" data-delay="300">
+			<div class="team-thumb">
+			    <img src="/public/img/author3.jpg" alt="">
+			    <div class="team-overlay">
+				<div class="team-desc">
+				    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, nisi dui, ultrices.</p>
+				</div>
+				<ul class="team-social-icons">
+				    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+				    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+				    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+				</ul>
+			    </div>
+			</div>
+			<div class="team-info">
+			    <h4>Linda</h4>
+			    <h6>Manager</h6>
+			</div>
+		    </div> <!-- //.team-box -->
+		    
+		    <div class="col-md-3 team-box animated-item fadeInUp" data-delay="400">
+			<div class="team-thumb">
+			    <img src="/public/img/author4.jpg" alt="">
+			    <div class="team-overlay">
+				<div class="team-desc">
+				    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, nisi dui, ultrices.</p>
+				</div>
+				<ul class="team-social-icons">
+				    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+				    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+				    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+				</ul>
+			    </div>
+			</div>
+			<div class="team-info">
+			    <h4>Christina</h4>
+			    <h6>CEO</h6>
+			</div>
+		    </div> <!-- //.team-box -->
+		</div>
+	    </div>
+	</section>
+	<!-- End Partners Section -->
+	
+	<!-- Testimonials Section -->
+	<section id="testimonials" class="content-section content-overlay parallax-section">
+	    <div class="section-overlay">
+		<div class="container">
+		    <div class="row">
+			<div class="col-md-12">
+			    <div class="flexslider testimonials-slider">
+				<ul class="slides">
+				    <li>
+					<p>Feel free to download responsive templates from templatemo.com website for your personal or commercial projects.</p>
+					<span class="testimonials-author">Kyor Kyor</span>
+				    </li>
+				    <li>
+					<p>Donec quis diam mollis, ornare nunc ut, laoreet nunc. Nullam euismod erat eget mi tincidunt malesuada. Curabitur vel cursus tellus.</p>
+					<span class="testimonials-author">Lynn Lynn</span>
+				    </li>
+				    <li>
+					<p>Nam pellentesque eleifend lectus in commodo. Proin accumsan sodales neque, bibendum tincidunt tellus laoreet vel.</p>
+					<span class="testimonials-author">Htet Htet</span>
+				    </li>
+				    
+				</ul>
+			    </div>
+			</div>
+		    </div>
+		</div>
+		
+	    </div>
+	</section>
+	<!-- End Testimonials Section -->
+	
+	<!-- Contact Section -->
+	<section id="contact" class="content-section">
+	    <div class="container">
+		<div class="row">
+		    <div class="col-md-12">
+			<h2 class="section-title left">Contact Us</h2>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="col-md-6 contact-form">
+			<form id="email-form" action="#" method="post">
+			    <div class="row">
+				<div class="col-md-6">
+				    <label for="name">Name</label>
+				    <input type="text" class="form-input" name="name" id="name">
+				</div>
+				<div class="col-md-6">
+				    <label for="email">Email</label>
+				    <input type="email" class="form-input" name="email" id="email">
+				</div>
+			    </div>
+			    <div class="row">
+				<div class="col-md-12">
+				    <label for="message">Message</label>
+				    <textarea rows="6" id="message" name="message" class="form-input"></textarea>
+				</div>
+			    </div>
+			    <div class="row">
+				<div class="col-md-12">
+				    <button class="main-button" type="submit">Send Message</button>
+				</div>
+			    </div>
+			</form>
+			
+		    </div>
+		    <div class="col-md-5 col-md-offset-1 contact-info">
+			<h4>Our Office</h4>
+			<p>Fusce viverra tempus lectus nec pretium. Donec pellentesque,
+			tellus sed bibendum placerat, orci diam congue nisi, sed blandit diam
+			turpissit amet dui.
+			</p>
+			
+			<h4>Contact Details</h4>
+			<ul>
+			    <li><i class="fa fa-map-marker"></i>123 Dagon Studio, Digital Estate</li>
+			    <li><i class="fa fa-phone"></i>010-020-0340</li>
+			    <li><i class="fa fa-envelope"></i><a href="mailto:">hello@company.com</a></li>
+			</ul>
+			
+		    </div>
+		</div>
+	    </div>
+	</section>
+	<!-- End Contact Section -->
+	
+	<!-- Hidden Content -->
+	<section id="load-folio" class="folio-details">
+	    <div id="folio-content" class="load-folio-content">
+		
+	    </div>
+	</section>
+	
+        <footer id="footer" class="site-footer" role="contentinfo">
+			<div class="container">
+                <div class="col-md-6 col-sm-6">
+                    <div class="copyright-text">
+                        <span>Copyright &copy; 么么互联科技 <a href="http://www.777moban.com/" target="_blank" title="么么互联科技">么么互联科技</a> - Collect from <a href="/" title="么么互联科技" target="_blank">么么互联科技</a></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="social-icons">
+                        <ul>
+                            <li><a href="#" class="fa fa-facebook"></a></li>
+                            <li><a href="#" class="fa fa-twitter"></a></li>
+                            <li><a href="#" class="fa fa-linkedin"></a></li>
+                            <li><a href="#" class="fa fa-rss"></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+	
 
-    <!-- 第三方插件 -->
-    <script src="/public/libs/pace/pace.min.js"></script>
+        <!-- JavaScripts -->
+        <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/public/js/plugins.js"></script>
+        <script src="/public/js/custom.js"></script>
 
-</body>
-
+    </body>
 </html>
