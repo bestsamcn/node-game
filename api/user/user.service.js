@@ -15,7 +15,8 @@ var _userSignup = function(req, res){
 	var _password = req.body.password;
 	// var _code = req.body.code;
 	var _mobile = req.body.mobile || '';
-	var uip = $$.getClientIp(req).match(/\d+\.\d+\.\d+\.\d+/)[0];
+	//localhost访问会无法获取ip
+	var uip = $$.getClientIp(req).match(/\d+\.\d+\.\d+\.\d+/)[0] || '';
 
 	//检测验证码
 	// if (_code !== req.session.randomCode) {

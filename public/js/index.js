@@ -3,6 +3,10 @@ $(function(){
     J_iframe
     $(".J_menuItem").on('click',function(){
         var url = $(this).attr('href');
+        if(url === '/'){
+        	window.location.href='/';
+        	return;
+        }
         $("#J_iframe").attr('src',url);
         return false;
     });
