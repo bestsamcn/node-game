@@ -314,3 +314,136 @@ triggerMobileMenu();
 	
 
 });
+
+/**
+ * 留言接口
+ */
+ var addMessage = function(){
+ 	var oForm = $('#message-form');
+ 	var oBtn = $('#add-message-btn');
+ 	var postInfo = function(e){
+ 		e && e.preventDefault();
+ 		window.event && (window.event.returnValue = false);
+
+ 		if(!oForm[0].name.value || oForm[0].name.value.length < 2){
+ 			alertInfo('用户名长度不能少于2位');
+ 			oForm[0].name.blur();
+ 			oForm[0].name.focus();
+ 			return;
+ 		}
+ 		if(!oForm[0].email.value || !/^\w+@\w+\.\w+$/ig.test(oForm[0].email.value)){
+ 			alertInf('邮箱格式不正确');
+ 			oForm[0].email.blur();
+ 			oForm[0].email.focus();
+ 			return;
+ 		}
+ 		if(!oForm[0].content.value || oForm[0].content.value.length < 6){
+ 			alertInfo('留言内容长度不能少于6位');
+ 			oForm[0].content.blur();
+ 			oForm[0].content.focus();
+ 			return;
+ 		}
+ 		$.ajax({
+ 			type:'post',
+ 			dataType:'json',
+ 			data:oForm.serialize(),
+ 			url:'/api/message/addMessage',
+ 			success:function(res){
+ 				if(res.retCode !==0){
+ 					alertInfo(res.msg || '留言失败');
+ 					return;
+ 				}
+ 				alertInfo(res.msg || '留言成功');
+ 				oForm[0].reset();
+ 			},
+ 			error:function(){
+ 				alertInfo('留言失败');
+ 			}
+
+ 		});
+ 	}
+ 	oBtn.on('click',postInfo);
+} 
+
+$(function(){
+	addMessage();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

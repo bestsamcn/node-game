@@ -1,3 +1,7 @@
+/**
+ * 用户服务模块
+ */
+
 //服务器根目录路径
 var $$ = require('../../tools');
 var Q = require('q');
@@ -95,7 +99,7 @@ var _userSignup = function(req, res){
 	 * @return { Object } 
 	 */
 	var _createAccount = function(){
-		UserModel.create({
+		var UserEntity = new UserModel({
 			account: _account,
 			password: _password,
 			mobile: _mobile,
@@ -103,7 +107,8 @@ var _userSignup = function(req, res){
 				createTime: Date.now(),
 				createIp: uip
 			}
-		},function(cerr, cdoc){
+		});
+		UserEntity.save(function(cerr, cdoc){
 			if(cerr){
 				res.sendStatus(500);
 				res.end();

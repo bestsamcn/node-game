@@ -3,7 +3,7 @@ $(function(){
     J_iframe
     $(".J_menuItem").on('click',function(){
         var url = $(this).attr('href');
-        if(url === '/'){
+        if(url === '/' || url === '/home'){
         	window.location.href='/';
         	return;
         }

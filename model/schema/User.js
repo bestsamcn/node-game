@@ -2,6 +2,7 @@
  * User
  * 用户数据结构
  */
+require('../connect');
 var mongoose =  require('mongoose');
 
 //用户信息

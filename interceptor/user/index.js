@@ -2,14 +2,13 @@
  * 用户拦截器
  */
 var UserModel = require('../../model').UserModel;
-
 /**
  * 获取当前用户
  */
 var _getMe = function(req, res, next) {
     if (req.session.isLogin) {
-        var _account = req.session.user.account;
-        UserModel.findOne({ account: _account}, function(ferr, fdoc) {
+        var use_id = req.session.user._id;
+        UserModel.findOne({ _id: use_id}, function(ferr, fdoc) {
         	if(ferr){
         		return next(500);
         	}

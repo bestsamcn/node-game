@@ -5,11 +5,13 @@
 
 var indexController = require('./index.controller');
 var homeController = require('./home.controller');
+var messageController = require('./message.controller');
 var signController = require('./sign.controller');
 var userController = require('./user.controller');
 var router =  function(app){
 	app.use('/',indexController);
 	app.use('/home',homeController);
+	app.use('/message',messageController);
 	app.use('/sign',signController);
 	app.use('/user',userController);
 }

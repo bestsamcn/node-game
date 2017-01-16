@@ -603,26 +603,26 @@
 		</div>
 		<div class="row">
 		    <div class="col-md-6 contact-form">
-			<form id="email-form" action="#" method="post">
+			<form id="message-form">
 			    <div class="row">
 				<div class="col-md-6">
-				    <label for="name">Name</label>
-				    <input type="text" class="form-input" name="name" id="name">
+				    <label for="name">昵称</label>
+				    <input type="text" class="form-input" placeholder="昵称" name="name" id="name">
 				</div>
 				<div class="col-md-6">
-				    <label for="email">Email</label>
-				    <input type="email" class="form-input" name="email" id="email">
+				    <label for="email">邮箱</label>
+				    <input type="email" class="form-input" placeholder="邮箱" name="email" id="email">
 				</div>
 			    </div>
 			    <div class="row">
 				<div class="col-md-12">
-				    <label for="message">Message</label>
-				    <textarea rows="6" id="message" name="message" class="form-input"></textarea>
+				    <label for="content">内容</label>
+				    <textarea rows="6" id="content" name="content" placeholder="内容" class="form-input"></textarea>
 				</div>
 			    </div>
 			    <div class="row">
 				<div class="col-md-12">
-				    <button class="main-button" type="submit">Send Message</button>
+				    <button class="main-button" type="submit" id="add-message-btn">Send Message</button>
 				</div>
 			    </div>
 			</form>
@@ -679,6 +679,7 @@
         <!-- JavaScripts -->
         <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="/public/js/plugins.js"></script>
+        <script src="/public/js/util.js"></script>
         <script src="/public/js/custom.js"></script>
 
     </body>

@@ -4,10 +4,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
-var app = express();
+
 var globalConfig = require('./config');
 var ROOT_DIR = process.cwd();
 var session = require('express-session');
+var app = express();
 var RedisStore = require('connect-redis')(session);
 
 // view engine setup
@@ -24,7 +25,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
 app.use(cookieParser());
 app.use('/public', express.static(__dirname + '/public'));

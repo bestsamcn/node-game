@@ -37,4 +37,24 @@ var arr = [{
 	retCode: 100009,
 	msg: '登录成功',
 	data: fdoc
+}, {
+	retCode: 100010,
+	msg: '查找无登录信息',
+	data: null
+}, {
+	retCode: 100011,
+	msg: '昵称长度不能少于两位',
+	data: null
+}, {
+	retCode: 100012,
+	msg: '邮箱格式不正确',
+	data: null
+}, {
+	retCode: 100013,
+	msg: '内容长度不能少于6位',
+	data: null
+}, {
+	retCode: 100014,
+	msg: '查找该记录',
+	data: null
 }]
