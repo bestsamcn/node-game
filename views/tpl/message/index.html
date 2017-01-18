@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="favicon.ico"> 
     <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/public/libs/font-awesome.css" rel="stylesheet">
-    <link href="/public/libs/iCheck/custom.css" rel="stylesheet">
+    <link href="/public/libs/sweetalert/sweetalert.css" rel="stylesheet">
     <link href="/public/libs/animate.css" rel="stylesheet">
     <link href="/public/css/style.css" rel="stylesheet">
 </head>
@@ -30,15 +30,14 @@
                         </div>
                     </form>
                     <h2>
-                    收件箱 (16)
+                    收件箱 (<span id="total-message">0</span>)
                 </h2>
                     <div class="mail-tools tooltip-demo m-t-md">
                         <div class="btn-group pull-right">
-                            <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i>
+                            <button class="btn btn-white btn-sm" disabled id="prev-page-btn"><i class="fa fa-arrow-left"></i>
                             </button>
-                            <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i>
+                            <button class="btn btn-white btn-sm" disabled id="next-page-btn"><i class="fa fa-arrow-right"></i>
                             </button>
-
                         </div>
                         <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
                         <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="已读"><i class="fa fa-eye"></i>
@@ -103,25 +102,15 @@
 	<!-- 全局js -->
 	<script src="/public/libs/jquery/dist/jquery.min.js"></script>
 	<script src="/public/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/public/libs/sweetalert/sweetalert.min.js"></script>
     <script src="/public/libs/art-template/dist/template.js"></script>
     <script src="/public/js/util.js"></script>
+    <script src="/public/js/artHelper.js"></script>
 
 
     <!-- 自定义js -->
     <script src="/public/js/content.js"></script>
     <script src="/public/js/message.js"></script>
-
-
-    <!-- iCheck -->
-    <script src="/public/libs/iCheck/icheck.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-        });
-    </script>
 
     
     
