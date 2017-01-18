@@ -132,7 +132,6 @@ var _getMessageList = function(req, res) {
  */
 var _delMessage = function(req, res) {
 	var msg_id = req.query.id;
-	console.log(msg_id)
 	if (!msg_id || msg_id.length !== 24) {
 		res.json({
 			retCode: 100014,
@@ -158,7 +157,72 @@ var _delMessage = function(req, res) {
 	});
 }
 
+/**
+ * 获取当前记录的相邻记录
+ * @param  {direction} 方向可以是next,prev 
+ * @param  {id} 当前记录的id 
+ * @return {object} 返回相邻记录 
+ */
+var _getPrevAndNextMessage = function(req, res){
+	var direction = req.query.direction,
+		msg_id = req.query.id;
+	if(!direction || direction.length !== 4){
+		res.json({retCode:100015, msg:'请输入方向', data:null});
+		res.end();
+		return;
+	}
+	if(!msg_id || msg_id.length !== 24){
+		res.json({retCode:100016, msg:'无该留言记录存在', data:null});
+		res.end();
+		return;
+	}
+
+	//首先查询当前id的记录是否存在
+	var _isExistRecord = function(){
+		var defer = Q.defer();
+		MessageModel.findById(msg_id, function(ferr, fdoc){
+
+			if(ferr){
+				res.sendStatus(500);
+				res.end();
+				return;
+			}
+
+			defer.resolve();
+		});
+		return defer.promise;
+	}
+
+	//根据direction来确定排序寻找相邻的记录
+	var _findRecord = function(){
+		if(direction === 'prev'){
+			MessageModel.find('_id',{$lt:ObjectId(msg_id)}).limit(1).sort({_id:1}).exec(function(ferr, fdoc){
+				if(ferr){
+					res.sendStatus(500);
+					res.end();
+					return;
+				}
+				res.json({retCode:0, msg:'查询成功', data:fdoc});
+				res.end();
+			});
+		}else{
+			MessageModel.find('_id',{$gt:ObjectId(msg_id)}).limit(1).sort({_id:1}).exec(function(ferr, fdoc){
+				console.log(ferr, fdoc,'asdfasdf')
+				if(ferr){
+					res.sendStatus(500);
+					res.end();
+					return;
+				}
+				res.json({retCode:0, msg:'查询成功', data:fdoc});
+				res.end();
+			});
+		}
+	}
+	_isExistRecord().then(_findRecord);
+}
+
 
 exports.addMessage = _addMessage;
 exports.getMessageList = _getMessageList;
 exports.delMessage = _delMessage;
+exports.getPrevAndNextMessage = _getPrevAndNextMessage;

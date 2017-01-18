@@ -25,7 +25,6 @@ router.get('/', function(req, res, next) {
  * 详情
  */
 router.get('/messageDetail', function(req, res) {
-	console.log('adjalfjadfj')
     res.render('tpl/message/messageDetail', {
         routerName: '/message/messageDetail',
         title: '留言详情'

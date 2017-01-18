@@ -71,10 +71,10 @@ var _userSignup = function(req, res){
 
 	
 	/**
-	 * _isExistAccount 检测用户名重复
+	 * _notExistAccount 检测用户名重复
 	 * @return {promise} 返回一个可以执行的promise
 	 */
-	var _isExistAccount = function(){
+	var _notExistAccount = function(){
 		
 		var defer = Q.defer();
 
@@ -118,7 +118,7 @@ var _userSignup = function(req, res){
 			res.end();
 		});
 	}
-	_isExistAccount().then(_createAccount);
+	_notExistAccount().then(_createAccount);
 }
 
 /**
