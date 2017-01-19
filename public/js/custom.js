@@ -332,7 +332,7 @@ triggerMobileMenu();
  			return;
  		}
  		if(!oForm[0].email.value || !/^\w+@\w+\.\w+$/ig.test(oForm[0].email.value)){
- 			alertInf('邮箱格式不正确');
+ 			alertInfo('邮箱格式不正确');
  			oForm[0].email.blur();
  			oForm[0].email.focus();
  			return;

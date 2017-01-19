@@ -19,6 +19,7 @@ template.config('extname', '.html');
 app.engine('.html', template.__express);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
+require('./artHelper');
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

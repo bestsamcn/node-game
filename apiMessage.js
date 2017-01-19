@@ -57,4 +57,12 @@ var arr = [{
 	retCode: 100014,
 	msg: '查找该记录',
 	data: null
+}, {
+	retCode: 100015,
+	msg: '请输入方向',
+	data: null
+}, {
+	retCode: 100016,
+	msg: '无该留言记录存在',
+	data: null
 }]

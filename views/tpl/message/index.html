@@ -11,6 +11,7 @@
     <link href="/public/libs/font-awesome.css" rel="stylesheet">
     <link href="/public/libs/sweetalert/sweetalert.css" rel="stylesheet">
     <link href="/public/libs/animate.css" rel="stylesheet">
+    <link href="/public/css/base.css" rel="stylesheet">
     <link href="/public/css/style.css" rel="stylesheet">
 </head>
 <body class="gray-bg">
@@ -21,9 +22,9 @@
 
                     <form method="get" action="index.html" class="pull-right mail-search">
                         <div class="input-group">
-                            <input type="text" class="form-control input-sm" name="search" placeholder="搜索邮件标题，正文等">
+                            <input type="text" class="form-control input-sm" name="search" id="message-search-value" placeholder="搜索邮件标题，正文等">
                             <div class="input-group-btn">
-                                <button type="submit" class="btn btn-sm btn-primary">
+                                <button type="submit" class="btn btn-sm btn-primary" id="message-search-btn">
                                     搜索
                                 </button>
                             </div>
@@ -39,11 +40,19 @@
                             <button class="btn btn-white btn-sm" disabled id="next-page-btn"><i class="fa fa-arrow-right"></i>
                             </button>
                         </div>
-                        <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                        <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="已读"><i class="fa fa-eye"></i>
-                        </button>
-                        <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="未读"><i class="fa fa-eye-slash"></i>
-                        </button>
+                        <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="刷新" id="refresh-document"><i class="fa fa-refresh"></i> 刷新</button>
+                        <label class="check-label" title="全部"  id="un-read-btn">
+                            <input type="radio" name="filter" checked value="">
+                            <span class="fa fa-eye">未读</span>
+                        </label>
+                        <label class="check-label"  title="已读" id="is-read-btn">
+                            <input type="radio" name="filter" value="isRead">
+                            <span class="fa fa-eye-slash">已读</span>
+                        </label>
+                        <label class="check-label" title="未读"  id="un-read-btn">
+                            <input type="radio" name="filter" value="unRead">
+                            <span class="fa fa-eye">未读</span>
+                        </label>
                         
                     </div>
                 </div>

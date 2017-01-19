@@ -58,7 +58,7 @@
                         <span class="ng-scope">分类</span>
                     </li>
                     <li>
-                        <a href="/message" class="J_menuItem"><i class="fa fa-envelope"></i> <span class="nav-label">信箱 </span><span class="label label-warning pull-right">{{ messageList.total }}</span></a>
+                        <a href="/message" class="J_menuItem"><i class="fa fa-envelope"></i> <span class="nav-label">信箱 </span><span class="label label-warning pull-right" id="total-message-number1">{{ messageList.total }}</span></a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">表单</span><span class="fa arrow"></span></a>
@@ -323,7 +323,7 @@
                     <ul class="nav navbar-top-links navbar-right">
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-envelope"></i> <span class="label label-warning">{{ messageList.total }}</span>
+                                <i class="fa fa-envelope"></i> <span class="label label-warning" id="total-message-number2">{{ messageList.total }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-messages">
                                 <li class="m-t-xs">

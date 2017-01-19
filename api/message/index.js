@@ -6,7 +6,8 @@ var messageService = require('./message.service');
 router.post('/addMessage',messageService.addMessage);
 router.get('/getMessageList',messageService.getMessageList);
 router.get('/delMessage', messageService.delMessage);
-router.get('/getPrevAndNextMessage', messageService.getPrevAndNextMessage);
+router.get('/getAdjoinMessage', messageService.getAdjoinMessage);
+router.get('/getMessageDetail', messageService.getMessageDetail);
 
 
 module.exports = router;

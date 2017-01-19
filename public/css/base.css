@@ -29,3 +29,32 @@
 a{
 	color:#333;
 }
+.check-label{
+	width:100px;
+	height:30px;
+	display: inline-block;
+	margin:0 5px;
+	padding:0;
+	border:0;
+	vertical-align: bottom;
+}
+.check-label input{
+	display: none;
+}
+.check-label span{
+	width:100px;
+	height:30px;
+	border-radius: 3px;
+	line-height: 30px;
+	display: block;
+	text-align: center;
+	box-sizing: border-box;
+	color:#666;
+	border:1px solid #ddd;
+	font-size: 12px;
+}
+.check-label input:checked + span{
+	border:1px solid rgb(36, 182, 227);
+	background:rgb(36, 182, 227);
+	color:#fff;
+}

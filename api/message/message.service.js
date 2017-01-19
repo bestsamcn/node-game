@@ -5,6 +5,7 @@ var Q = require('q');
 var MessageModel = require('../../model').MessageModel;
 var UserModel = require('../../model').UserModel;
 var xss = require('xss');
+var ObjectId = require('mongoose').Schema.ObjectId;
 
 
 /**
@@ -82,11 +83,29 @@ var _addMessage = function(req, res) {
 var _getMessageList = function(req, res) {
 	var _pageIndex = parseInt(req.query.pageIndex) - 1 || 0,
 		_pageSize = parseInt(req.query.pageSize) || 10;
+	var _filter = req.query.filter;
+	var _search = req.query.search;
+	var filterObj = {};
+	var searchObj = {};
+
+	//过滤
+	if(typeof _filter){
+		if(_filter === 'isRead'){
+			filterObj.isRead = true;
+		}else if(_filter === 'unRead'){
+			filterObj.isRead = false;
+		}
+	}
+
+    //搜索
+    if(typeof _search){
+    	filterObj.content = new RegExp(_search,'gim');
+    }
 
 	//获取分页数据
 	var _getList = function() {
 			var defer = Q.defer();
-			MessageModel.find().sort({
+			MessageModel.find(filterObj).sort({
 				postTime: -1
 			}).skip(_pageIndex * _pageSize).limit(_pageSize).populate('member').exec(function(ferr, flist) {
 				if (ferr) {
@@ -105,7 +124,7 @@ var _getMessageList = function(req, res) {
 		}
 		//计算记录总数
 	var _getTotal = function(obj) {
-		MessageModel.count(function(cerr, ctotal) {
+		MessageModel.count(filterObj, function(cerr, ctotal) {
 			if (cerr) {
 				res.sendStatus(500);
 				res.end();
@@ -163,25 +182,19 @@ var _delMessage = function(req, res) {
  * @param  {id} 当前记录的id 
  * @return {object} 返回相邻记录 
  */
-var _getPrevAndNextMessage = function(req, res){
-	var direction = req.query.direction,
+var _getAdjoinMessage = function(req, res){
+	var direction = req.query.direction || '',
 		msg_id = req.query.id;
-	if(!direction || direction.length !== 4){
-		res.json({retCode:100015, msg:'请输入方向', data:null});
-		res.end();
-		return;
-	}
+	
 	if(!msg_id || msg_id.length !== 24){
 		res.json({retCode:100016, msg:'无该留言记录存在', data:null});
 		res.end();
 		return;
 	}
-
 	//首先查询当前id的记录是否存在
 	var _isExistRecord = function(){
 		var defer = Q.defer();
 		MessageModel.findById(msg_id, function(ferr, fdoc){
-
 			if(ferr){
 				res.sendStatus(500);
 				res.end();
@@ -193,36 +206,74 @@ var _getPrevAndNextMessage = function(req, res){
 		return defer.promise;
 	}
 
-	//根据direction来确定排序寻找相邻的记录
-	var _findRecord = function(){
-		if(direction === 'prev'){
-			MessageModel.find('_id',{$lt:ObjectId(msg_id)}).limit(1).sort({_id:1}).exec(function(ferr, fdoc){
-				if(ferr){
-					res.sendStatus(500);
-					res.end();
-					return;
-				}
-				res.json({retCode:0, msg:'查询成功', data:fdoc});
+	//查询上一条记录
+	var _findPrevRecord = function(){
+		var defer = Q.defer();
+		MessageModel.find({_id:{$lt:msg_id}}).limit(1).sort({_id:-1}).exec(function(ferr, fdoc){
+			if(ferr){
+				res.sendStatus(500);
 				res.end();
-			});
-		}else{
-			MessageModel.find('_id',{$gt:ObjectId(msg_id)}).limit(1).sort({_id:1}).exec(function(ferr, fdoc){
-				console.log(ferr, fdoc,'asdfasdf')
-				if(ferr){
-					res.sendStatus(500);
-					res.end();
-					return;
-				}
-				res.json({retCode:0, msg:'查询成功', data:fdoc});
-				res.end();
-			});
-		}
+				return;
+			}
+			defer.resolve(fdoc);
+		});
+		return defer.promise;
 	}
-	_isExistRecord().then(_findRecord);
+
+	//查询下一条记录
+	var _findNextRecord = function(){
+		var defer = Q.defer();
+		MessageModel.find({_id:{$gt:msg_id}}).limit(1).sort({_id:-1}).exec(function(ferr, fdoc){
+			if(ferr){
+				res.sendStatus(500);
+				res.end();
+				return;
+			}
+			defer.resolve(fdoc);
+		});
+		return defer.promise;
+	}
+	//统计返回
+	var _responseRecord = function(){
+		Q.all([_findPrevRecord(), _findNextRecord()]).then(function(fList){
+			var obj = {};
+			obj.prev = fList[0][0] || null;
+			obj.next = fList[1][0] || null;
+			res.json({retCode:0, msg:'查询成功', data:obj});
+			res.end();
+		})
+	}
+	_isExistRecord().then(_responseRecord);
 }
 
+/**
+ * 获取留言详情
+ */
+var _getMessageDetail = function(req, res){
+	var msg_id = req.query.id;
+	if(!msg_id || msg_id.length !== 24){
+		res.json({retCode:100017, msg:'查询无记录存在', data:null});
+		res.end();
+		return;
+	}
+	MessageModel.findByIdAndUpdate(msg_id, {$set:{isRead:true}}, function(ferr, fdoc){
+		if(ferr){
+			res.sendStatus(500);
+			res.end();
+			return;
+		}
+		if(!fdoc){
+			res.json({retCode:100017, msg:'查询无记录存在', data:null});
+			res.end();
+			return;
+		}	
+		res.json({retCode:0, msg:'查询成功', data:fdoc});
+		res.end();
+	});
+}
 
 exports.addMessage = _addMessage;
 exports.getMessageList = _getMessageList;
 exports.delMessage = _delMessage;
-exports.getPrevAndNextMessage = _getPrevAndNextMessage;
+exports.getAdjoinMessage = _getAdjoinMessage;
+exports.getMessageDetail = _getMessageDetail;

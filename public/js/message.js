@@ -1,71 +1,86 @@
+
 var totalMessage = document.getElementById('total-message');
-var totalMessageNumber = parseInt(totalMessage.innerHTML);
+var totalMessageNumber = totalMessage && parseInt(totalMessage.innerHTML);
 var prevPageBtn = $('#prev-page-btn');
 var nextPageBtn = $('#next-page-btn');
 var pageIndex = 1;
 var pageSize = 2;
 var pageListVm = $('#message-list-vm');
+var delMessageBtn = $('#del-message-btn');
+var parentWindow = window.parent;
+var PWtotalMessageNumber1=parentWindow.document.getElementById('total-message-number1');
+var PWtotalMessageNumber2=parentWindow.document.getElementById('total-message-number2');
+var readFilter = document.getElementsByName('filter');
+var searchInput = document.getElementById('message-search-value');
+var searchBtn = document.getElementById('message-search-btn');
+var search = null;
+var filter = null;
 /**
  * 获取留言列表 
  * @param  {Number} pageIndex 分页索引
  * @param  {Number} pageSize 每页分数数量 
  */
 var getMessageList = function(index, size) {
-        var _pageIndex = index || 1;
-        var _pageSize = size || 10;
-
-        var page = $('#message-list-page');
-        $.ajax({
-            type: 'get',
-            dataType: 'json',
-            data: { pageIndex: _pageIndex, pageSize: _pageSize },
-            url: '/api/message/getMessageList',
-            success: function(res) {
-                console.log(res);
-                if (res.retCode !== 0) {
-                    return;
-                }
-                //显示总数
-                totalMessage && (totalMessage.innerHTML = res.total);
-                //控制上下分页按钮
-                if (res.total < _pageSize * _pageIndex) {
-                    nextPageBtn.attr('disabled', true);
-                } else {
-                    nextPageBtn.attr('disabled', false);
-                }
-                if (res.pageIndex > 1) {
-                    prevPageBtn.attr('disabled', false);
-                } else {
-                    prevPageBtn.attr('disabled', true);
-                }
-                var html = template('message-list-tpl', { messageList: res.data });
-                pageListVm.html(html);
-            },
-            error: function() {
-                alertInfo('获取留言分页失败');
+    if(window.location.pathname !== '/message') return;
+    var _pageIndex = index || 1;
+    var _pageSize = size || 10;
+    var obj ={};
+    obj.pageIndex = _pageIndex;
+    obj.pageSize = _pageSize;
+    obj.filter = filter
+    
+    obj.search = search;
+    var page = $('#message-list-page');
+    $.ajax({
+        type: 'get',
+        dataType: 'json',
+        data: obj,
+        url: '/api/message/getMessageList',
+        success: function(res) {
+            if (res.retCode !== 0) {
+                return;
             }
-        });
-    }
-    /**
-     * 分页点击
-     */
+            //显示总数
+            totalMessage && (totalMessage.innerHTML = res.total);
+            //控制上下分页按钮
+            if (res.total <= _pageSize * _pageIndex) {
+                nextPageBtn.attr('disabled', true);
+            } else {
+                nextPageBtn.attr('disabled', false);
+            }
+            if (res.pageIndex > 1) {
+                prevPageBtn.attr('disabled', false);
+            } else {
+                prevPageBtn.attr('disabled', true);
+            }
+            var html = template('message-list-tpl', { messageList: res.data });
+            pageListVm.html(html);
+        },
+        error: function() {
+            alertInfo('获取留言分页失败');
+        }
+    });
+}
+/**
+ * 分页点击
+ */
 var messageListPage = function() {
-        var _prevPage = function() {
-            pageIndex--;
-            getMessageList(pageIndex, pageSize);
-        }
-        var _nextPage = function() {
-            pageIndex++;
-            getMessageList(pageIndex, pageSize);
-        }
-        prevPageBtn.on('click', _prevPage);
-        nextPageBtn.on('click', _nextPage);
+    var _prevPage = function() {
+        pageIndex--;
+        getMessageList(pageIndex, pageSize);
     }
-    /**
-     * 留言删除
-     */
+    var _nextPage = function() {
+        pageIndex++;
+        getMessageList(pageIndex, pageSize);
+    }
+    prevPageBtn.on('click', _prevPage);
+    nextPageBtn.on('click', _nextPage);
+}
+/**
+ * 留言删除
+ */
 var delMessage = function() {
-    var _delEvent = function(e) {
+    var _delEvent = function() {
         var $this = $(this);
         var _id = $this.attr('data-id');
         if (!_id || _id.length !== 24) {
@@ -91,15 +106,62 @@ var delMessage = function() {
         				alertInfo('删除失败');
         				return;
         			}
-        			$this.parent().parent().remove();
-        			totalMessage.innerHTML = pageIndex;
+                    
+                    //控制父级window的信息
+                    PWtotalMessageNumber1.innerHTML = parseInt(PWtotalMessageNumber1.innerHTML)-1;
+                    PWtotalMessageNumber2.innerHTML = parseInt(PWtotalMessageNumber2.innerHTML)-1;
+                    totalMessage && (totalMessage.innerHTML = parseInt(totalMessage.innerHTML)-1);
+
+        			if($this.parent().parent()) $this.parent().parent().remove();
         			swal("删除成功！", "您已经永久删除了这条信息。", "success");
-        		}
+                    if(window.location.pathname === '/message/messageDetail') {
+                        window.location.href='/message';
+                    }
+        		},
+                error:function(){
+                    alertInfo('删除失败');
+                }
         	});
             
         });
     }
     pageListVm.on('click','.btn',_delEvent);
+    delMessageBtn.on('click',_delEvent);
+}
+
+/**
+ * 刷新窗口
+ */
+var refreshDocument = function(){
+    $('#refresh-document').on('click',function(){
+        window.location.reload();
+    });
+}
+
+/**
+ * 条件筛选已读，未读
+ */
+var filterMessageList = function(){
+    for(var i=0; i< readFilter.length; i++){
+        readFilter[i].onclick = function(){
+            filter = this.value;
+            pageIndex = 1;
+            getMessageList(pageIndex,pageSize);
+        }
+    }
+}
+
+/**
+ * 搜索
+ */
+var searchMessage = function(){
+    searchBtn.onclick = function(e){
+        e && e.preventDefault();
+        window.event && (window.event.returnValue=false);
+        search = searchInput.value;
+        pageIndex = 1;
+        getMessageList(pageIndex,pageSize);
+    }
 }
 
 
@@ -109,4 +171,7 @@ $(function() {
     getMessageList(pageIndex, pageSize);
     messageListPage();
     delMessage();
+    refreshDocument();
+    filterMessageList();
+    searchMessage();
 });

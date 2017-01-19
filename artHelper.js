@@ -1,6 +1,16 @@
-/**
- * artteplate config
- */
+var template = require('art-template');
+template.helper('roleFilter', function(role) {
+    console.log(role)
+    if (role === 1) {
+        return '管理员'
+    }
+    if (role === 2) {
+        return '超级管理员'
+    }
+    if (role === 0) {
+        return '会员'
+    }
+});
 /** 
  * 对日期进行格式化， 
  * @param date 要格式化的日期 
@@ -18,9 +28,8 @@
  * @author yanis.wang
  * @see http://yaniswang.com/frontend/2013/02/16/dateformat-performance/
  */
-template.helper('dateFormat', function (date, format) {
-    date = parseInt(date);
-    if(!arguments[0]){
+template.helper('dateFormat', function(date, format) {
+    if (!arguments[0]) {
         return '暂无'
     }
     date = new Date(date);
@@ -33,16 +42,15 @@ template.helper('dateFormat', function (date, format) {
         "q": Math.floor((date.getMonth() + 3) / 3), //季度 
         "S": date.getMilliseconds() //毫秒 
     };
-    format = format.replace(/([yMdhmsqS])+/g, function(all, t){
+    format = format.replace(/([yMdhmsqS])+/g, function(all, t) {
         var v = map[t];
-        if(v !== undefined){
-            if(all.length > 1){
+        if (v !== undefined) {
+            if (all.length > 1) {
                 v = '0' + v;
-                v = v.substr(v.length-2);
+                v = v.substr(v.length - 2);
             }
             return v;
-        }
-        else if(t === 'y'){
+        } else if (t === 'y') {
             return (date.getFullYear() + '').substr(4 - all.length);
         }
         return all;
@@ -50,20 +58,41 @@ template.helper('dateFormat', function (date, format) {
     return format;
 });
 
-//文字省略
-template.helper('textEllipsis', function (str,len) {
-    if(!arguments[0]){
-        return '暂无'
-    }
-    if(len <1) return;
-    var afterSlice = '';
-    if(str.length > len ){
-        var afterSlice = str.substring(0,len) + '...';
-    }else{
-        afterSlice = str;
-    }
-    return afterSlice;
+/**
+ * dateDesc 时间倒序
+ * @param {oldDate} 过去的时间戳
+ * @return {string} 计算后的时间差
+ */
+template.helper('dateDesc', function(oldDate) {
+    var now = new Date().getTime(),
+        past = !isNaN(oldDate) ? oldDate : new Date(oldDate).getTime(),
+        diffValue = now - past,
+        res = '',
+        s = 1000,
+        m = 1000 * 60,
+        h = m * 60,
+        d = h * 24,
+        hm = d * 15,
+        mm = d * 30,
+        y = mm * 12,
+        _y = diffValue / y,
+        _mm = diffValue / mm,
+        _w = diffValue / (7 * d),
+        _d = diffValue / d,
+        _h = diffValue / h,
+        _m = diffValue / m,
+        _s = diffValue / s;
+    if (_y >= 1) res = parseInt(_y) + '年前';
+    else if (_mm >= 1) res = parseInt(_mm) + '个月前';
+    else if (_w >= 1) res = parseInt(_w) + '周前';
+    else if (_d >= 1) res = parseInt(_d) + '天前';
+    else if (_h >= 1) res = parseInt(_h) + '小时前';
+    else if (_m >= 1) res = parseInt(_m) + '分钟前';
+    else if (_s >= 1) res = parseInt(_s) + '秒前';
+    else res = '刚刚';
+    return res;
 });
+
 
 /**
  * 将str中的html符号转义,将转义“'，&，<，"，>”五个字符
@@ -123,56 +152,4 @@ template.helper('html', function (str) {
             '&nbsp;':' '
         }[m]
     }) : '';
-});
-
-/**
-* 获取纯文本
-*/
-template.helper('getText',function(str){
-    var fillChar = '/\u200B/';
-     var reg = new RegExp(fillChar, 'gm');
-    //取出来的空格会有c2a0会变成乱码，处理这种情况\u00a0
-    var t = str.replace(reg, '').replace(/\u00a0/g, ' ');
-    console.log(t);
-    return t ;
-    
-});
-
-
-template.config('openTag', '<%');
-template.config('closeTag', '%>');
-
-/**
- * dateDesc 时间倒序
- * @param {oldDate} 过去的时间戳
- * @return {string} 计算后的时间差
- */
-template.helper('dateDesc', function(oldDate) {
-    var now = new Date().getTime(),
-        past = !isNaN(oldDate) ? oldDate : new Date(oldDate).getTime(),
-        diffValue = now - past,
-        res = '',
-        s = 1000,
-        m = 1000 * 60,
-        h = m * 60,
-        d = h * 24,
-        hm = d * 15,
-        mm = d * 30,
-        y = mm * 12,
-        _y = diffValue / y,
-        _mm = diffValue / mm,
-        _w = diffValue / (7 * d),
-        _d = diffValue / d,
-        _h = diffValue / h,
-        _m = diffValue / m,
-        _s = diffValue / s;
-    if (_y >= 1) res = parseInt(_y) + '年前';
-    else if (_mm >= 1) res = parseInt(_mm) + '个月前';
-    else if (_w >= 1) res = parseInt(_w) + '周前';
-    else if (_d >= 1) res = parseInt(_d) + '天前';
-    else if (_h >= 1) res = parseInt(_h) + '小时前';
-    else if (_m >= 1) res = parseInt(_m) + '分钟前';
-    else if (_s >= 1) res = parseInt(_s) + '秒前';
-    else res = '刚刚';
-    return res;
 });

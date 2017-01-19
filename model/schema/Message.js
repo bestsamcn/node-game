@@ -14,7 +14,7 @@ require('../connect');
  		require:true
  	},
  	content:{
- 		type:String,
+ 		type:Schema.Types.Mixed,
  		require:true
  	},
  	member:{
