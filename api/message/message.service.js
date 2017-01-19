@@ -86,7 +86,6 @@ var _getMessageList = function(req, res) {
 	var _filter = req.query.filter;
 	var _search = req.query.search;
 	var filterObj = {};
-	var searchObj = {};
 
 	//过滤
 	if(typeof _filter){
@@ -178,7 +177,6 @@ var _delMessage = function(req, res) {
 
 /**
  * 获取当前记录的相邻记录
- * @param  {direction} 方向可以是next,prev 
  * @param  {id} 当前记录的id 
  * @return {object} 返回相邻记录 
  */

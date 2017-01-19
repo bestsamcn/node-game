@@ -113,10 +113,14 @@ var delMessage = function() {
                     totalMessage && (totalMessage.innerHTML = parseInt(totalMessage.innerHTML)-1);
 
         			if($this.parent().parent()) $this.parent().parent().remove();
-        			swal("删除成功！", "您已经永久删除了这条信息。", "success");
-                    if(window.location.pathname === '/message/messageDetail') {
-                        window.location.href='/message';
-                    }
+                    
+        			swal("删除成功！", "您已经永久删除了这条信息。", "info");
+                    setTimeout(function(){
+                        if(window.location.pathname.indexOf('/message/messageDetail') !== -1) {
+                            window.location.href='/message';
+                        }
+                    },1000);
+
         		},
                 error:function(){
                     alertInfo('删除失败');
@@ -155,6 +159,7 @@ var filterMessageList = function(){
  * 搜索
  */
 var searchMessage = function(){
+    if(!searchBtn) return;
     searchBtn.onclick = function(e){
         e && e.preventDefault();
         window.event && (window.event.returnValue=false);
