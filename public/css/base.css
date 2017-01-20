@@ -58,3 +58,18 @@ a{
 	background:rgb(36, 182, 227);
 	color:#fff;
 }
+.table thead{
+	background:#f1f1f1;
+}
+.table .unread td{
+	background:initial;
+}
+.table .read td{
+	background:initial;
+}
+.table .unread{
+	background:#fff;
+}
+.table .read{
+	background:#f7f7f7;
+}

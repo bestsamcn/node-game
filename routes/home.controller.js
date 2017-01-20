@@ -23,11 +23,15 @@ router.get('*', function(req, res, next){
  * 主页
  */
 router.get('/', function(req, res, next) {
+	var rcookie = req.cookies.NODESESSIONID;
 	var _getMessageCount = function(){
 		var defer = Q.defer();
 		R.request('http://'+globalConfig.host+':'+globalConfig.port+'/api/message/getMessageList',{
 			method:'get',
-			dataType:'json'
+			dataType:'json',
+			cookies:{
+				NODESESSIONID:rcookie
+			}
 		}).then(function(data){
 			//只是body不是json对象
 			var rdata = JSON.parse(data.body);
@@ -40,13 +44,12 @@ router.get('/', function(req, res, next) {
 	}
 	var _sendHtml = function(messageList){
 		res.locals.messageList = messageList;
-		console.log(res.locals.messageList )
-		console.log(messageList)
 		res.render('tpl/home/index',{
 			routerName:'/home',
 			title:'主页'
 		});
-	} 
+	}
+	 
 	_getMessageCount().then(_sendHtml);
 	
 });

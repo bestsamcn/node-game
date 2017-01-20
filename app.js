@@ -4,6 +4,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
+var cors = require('cors');
 
 var globalConfig = require('./config');
 var ROOT_DIR = process.cwd();
@@ -31,6 +32,11 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use('/public', express.static(__dirname + '/public'));
 
+app.use(cors({
+    credentials: true,
+    origin: true
+}));
+
 
 //redis
 var config = require('./config').redisConfig;
@@ -43,6 +49,7 @@ app.use(session({
     cookie: config.cookie,
     secret: config.secret
 }));
+
 
 //更新个人信息
 require('./interceptor')(app);

@@ -2,10 +2,11 @@
  * 拦截模块
  */
 
-var getMe = require('./user/index').getMe;
+var _userIneterceptor = require('./user/index');
 var _globalConfig = require('../config');
-var _userIneterceptor = function(app){
+var setInterceptor = function(app){
 	app.locals.globalConfig = _globalConfig;
-	app.use(getMe);
+	app.use(_userIneterceptor.getMe);
+	app.use(_userIneterceptor.setAccessLog);
 }
-module.exports = _userIneterceptor;
+module.exports = setInterceptor;

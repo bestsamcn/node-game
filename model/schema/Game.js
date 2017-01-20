@@ -1,0 +1,65 @@
+/**
+ * 游戏数据结构
+ */
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var  CostActive = new Schema({
+	createBy:{
+		type:Schema.ObjectId,
+		ref:'User',
+		require:true
+	},
+	gameName:{
+		type:String,
+		require:true
+	},
+	installAmount:{
+		type:Number,
+		require:true,
+		default:0
+	},
+	singlePrize:{
+		type:Number,
+		require:true,
+		default:0
+	},
+	createTime:{
+		type:Number,
+		require:true
+	}
+});
+var CostSales = new Schema({
+	createBy:{
+		type:Schema.ObjectId,
+		ref:'User',
+		require:true
+	},
+	additionUser:{
+		type:String,
+		require:true
+	},
+	splitRatio:{
+		type:Number,
+		require:true,
+		default:0
+	},
+	totalStream:{
+		type:Number,
+		require:true,
+		default:0
+	},
+	arpu:{
+		type:Number,
+		require:true,
+		default:0
+	},
+	settlementAmount:{
+		type:Number,
+		require:true,
+		default
+	},
+	createTime:{
+		type:Number,
+		require:true
+	}
+});

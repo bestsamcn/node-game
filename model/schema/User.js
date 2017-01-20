@@ -72,6 +72,19 @@ var UserSchema = new mongoose.Schema({
 	lastUpdateTime:{
 		type:Number,
 		require:false
+	},
+	conpany:{
+		type:String,
+		require:false
+	},
+	channel:{
+		type:String,
+		require:true,
+		unique:true
+	},
+	cooperationMode:{
+		type:Number,
+		require:true
 	}
 });
 

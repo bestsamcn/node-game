@@ -5,8 +5,6 @@ var Q = require('q');
 var MessageModel = require('../../model').MessageModel;
 var UserModel = require('../../model').UserModel;
 var xss = require('xss');
-var ObjectId = require('mongoose').Schema.ObjectId;
-
 
 /**
  * @/api/message/addMessage 用户访客留言接口
@@ -17,7 +15,6 @@ var ObjectId = require('mongoose').Schema.ObjectId;
  */
 
 var _addMessage = function(req, res) {
-
 	var _name = req.body.name,
 		_email = req.body.email,
 		_content = req.body.content;
@@ -80,7 +77,7 @@ var _addMessage = function(req, res) {
  * @pageSize {Number, require} 分页体积
  * @return { retCode, msg, data, total, pageIndex, pageSize } 返回 
  */
-var _getMessageList = function(req, res) {
+var _getMessageList = function(req, res, next) {
 	var _pageIndex = parseInt(req.query.pageIndex) - 1 || 0,
 		_pageSize = parseInt(req.query.pageSize) || 10;
 	var _filter = req.query.filter;
@@ -176,14 +173,12 @@ var _delMessage = function(req, res) {
 }
 
 /**
- * 获取当前记录的相邻记录
+ * @/api/message/getAdjoinMessage 获取当前记录的相邻记录
  * @param  {id} 当前记录的id 
  * @return {object} 返回相邻记录 
  */
 var _getAdjoinMessage = function(req, res){
-	var direction = req.query.direction || '',
-		msg_id = req.query.id;
-	
+	var	msg_id = req.query.id;
 	if(!msg_id || msg_id.length !== 24){
 		res.json({retCode:100016, msg:'无该留言记录存在', data:null});
 		res.end();
@@ -254,7 +249,8 @@ var _getMessageDetail = function(req, res){
 		res.end();
 		return;
 	}
-	MessageModel.findByIdAndUpdate(msg_id, {$set:{isRead:true}}, function(ferr, fdoc){
+
+	MessageModel.findByIdAndUpdate(msg_id, {$set:{isRead:true, readTime:Date.now() }}, function(ferr, fdoc){
 		if(ferr){
 			res.sendStatus(500);
 			res.end();

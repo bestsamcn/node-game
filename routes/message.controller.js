@@ -28,6 +28,7 @@ router.get('/', function(req, res, next) {
  */
 router.get('/messageDetail/:id', function(req, res) {
     var msg_id = req.params.id;
+    var rcookie = req.cookies.NODESESSIONID;
     if(!msg_id || msg_id.length !== 24){
         res.redirect('back');
         res.end();
@@ -41,7 +42,10 @@ router.get('/messageDetail/:id', function(req, res) {
             params:{
                 id:msg_id
             },
-            dataType:'json'
+            dataType:'json',
+            cookies:{
+                NODESESSIONID:rcookie
+            }
         }).then(function(data){
             var _messageDetail = JSON.parse(data.body).data;
             defer.resolve(_messageDetail);
@@ -59,7 +63,10 @@ router.get('/messageDetail/:id', function(req, res) {
             params:{
                 id:msg_id
             },
-            dataType:'json'
+            dataType:'json',
+            cookies:{
+                NODESESSIONID:rcookie
+            }
         }).then(function(data){
             var _adJoinMessageList = JSON.parse(data.body).data;
             defer.resolve(_adJoinMessageList);

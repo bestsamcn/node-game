@@ -65,4 +65,8 @@ var arr = [{
 	retCode: 100016,
 	msg: '无该留言记录存在',
 	data: null
+}, {
+	retCode: 100017,
+	msg: '查询无记录存在',
+	data: null
 }]

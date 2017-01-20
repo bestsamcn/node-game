@@ -59,7 +59,7 @@
                 <div class="mail-box">
                     <table class="table table-hover table-mail">
                         <thead>
-                             <tr class="unread">
+                             <tr>
                                 <td class="mail-ontact text-left">昵称<span class="label label-success pull-right">会员</span>
                                 </td>
                                 <td class="mail-subject text-center">概要
@@ -71,22 +71,15 @@
                             </tr>
                         </thead>
                         <tbody id="message-list-vm">
-                            <tr class="read">
-                                <td class="mail-ontact"><a href="mail_detail.html">WordPress</a> <span class="label label-warning pull-right">验证邮件</span>
-                                </td>
-                                <td class="mail-subject"><a href="mail_detail.html">wp-user-frontend-pro v2.1.9</a>
-                                </td>
-                                <td class=""></td>
-                                <td class="text-right mail-date">上午9:21</td>
-                            </tr>
+                            <!-- 留言列表 -->
                         </tbody>
                         <script type="text/html" id="message-list-tpl">
                             <% if messageList.length > 0 %>
                             <% each messageList %>
-                            <tr class="<% $value.isRead ? 'unread': 'read' %>">
+                            <tr class="<% $value.isRead ? 'read': 'unread' %>">
                                 <td class="mail-ontact text-left"><a href="/message/messageDetail/<% $value._id %>"><% $value.name %></a> 
                                 <% if !!$value.member %>
-                                <span class="label label-success pull-right">会员</span>
+                                <span class="label label-warn pull-right">会员</span>
                                 <% /if %>
                                 </td>
                                 <td class="mail-subject text-center"><a href="/message/messageDetail/<% $value._id %>"><% $value.content | textEllipsis:50 %></a>
