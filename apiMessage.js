@@ -69,4 +69,32 @@ var arr = [{
 	retCode: 100017,
 	msg: '查询无记录存在',
 	data: null
+}, {
+	retCode: 100018,
+	msg: '公司名长度不能少于2位',
+	data: null
+}, {
+	retCode: 100019,
+	msg: '渠道名称长度不能少于2位',
+	data: null
+}, {
+	retCode: 100020,
+	msg: '合作模式长度不能为空',
+	data: null
+}, {
+	retCode: 100021,
+	msg: '用户名长度不能少于2位',
+	data: null
+}, {
+	retCode: 100022,
+	msg: '密码长度不能少于6',
+	data: null
+}, {
+	retCode: 100023,
+	msg: '用户名重复',
+	data: null
+}, {
+	retCode: 100024,
+	msg: '渠道名称重复',
+	data: null
 }]

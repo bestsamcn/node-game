@@ -1,1 +1,142 @@
-index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>- 基础表格</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/libs/font-awesome.css" rel="stylesheet">
+    <link href="/public/libs/iCheck/custom.css" rel="stylesheet">
+    <link href="/public/libs/animate.css" rel="stylesheet">
+    <link href="/public/css/base.css" rel="stylesheet">
+    <link href="/public/css/style.css" rel="stylesheet"></head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="mail-box-header">
+                    <form method="get" action="index.html" class="pull-right mail-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="search" id="channel-search-input" placeholder="搜索渠道">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-sm btn-primary" id="channel-search-btn">搜索</button>
+                            </div>
+                        </div>
+                    </form>
+                    <h2>
+                        渠道列表 (
+                        <span id="total-channel">0</span>
+                        )
+                    </h2>
+                    <div class="row mail-tools tooltip-demo m-t-md">
+                        <div class="col-md-8 col-xs-8">
+                            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="刷新" id="refresh-btn">
+                                <i class="fa fa-refresh"></i>
+                                刷新
+                            </button>
+                            <label class="check-label" title="全部"  id="find-cpa-btn">
+                                <input type="radio" name="mode" checked value="">
+                                <span>全部</span>
+                            </label>
+                            <label class="check-label" title="CPA"  id="find-cpa-btn">
+                                <input type="radio" name="mode" value="1">
+                                <span>CPA</span>
+                            </label>
+                            <label class="check-label"  title="CPS" id="find-cps-btn">
+                                <input type="radio" name="mode" value="2">
+                                <span>CPS</span>
+                            </label>
+                        </div>
+                        <div class="col-md-4 col-xs-4 btn-group text-right">
+                            <button class="btn btn-white btn-sm no-float" disabled id="prev-page-btn"> <i class="fa fa-arrow-left"></i>
+                            </button>
+                            <button class="btn btn-white btn-sm no-float" disabled id="next-page-btn"> <i class="fa fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>名称</th>
+                                        <th class="text-center">账号</th>
+                                        <th class="text-center">密码</th>
+                                        <th class="text-center">模式</th>
+                                        <th class="text-center">公司</th>
+                                        <th class="text-center">时间</th>
+                                        <th class="pull-right text-center">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="channel-list-vm">
+                                    <tr>
+                                        <td>米莫说｜MiMO Show</td>
+                                        <td class="text-center">sam</td>
+                                        <td class="text-center">123123</td>
+                                        <td class="text-center">CPS</td>
+                                        <td class="text-center">阿里巴巴</td>
+                                        <td class="pull-right text-center">
+                                            <a href="javascript:;">
+                                                <i class="fa fa-plus text-navy"></i>
+                                            </a>
+                                            <a href="javascript:;" class="margin-0-5">
+                                                <i class="fa fa-pencil text-navy"></i>
+                                            </a>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-remove text-navy"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <script type="text/html" id="channel-list-tpl">
+                                    <% if !!channelList.length %>
+                                    <% each channelList %>
+                                    <tr>
+                                        <td><% $value.channel %></td>
+                                        <td class="text-center"><% $value.account %></td>
+                                        <td class="text-center"><% $value.password %></td>
+                                        <td class="text-center"><% $value.mode | transformMode %></td>
+                                        <td class="text-center"><% ($value.company ? $value.company : '无') %></td>
+                                        <td class="text-center"><% $value.createLog.createTime | dateFormat:'yyyy.MM.dd' %></td>
+                                        <td class="pull-right text-center">
+                                            <a href="/admin/addChanelGame/<% $value._id %>" >
+                                                <i class="fa fa-plus text-navy"></i>
+                                            </a>
+                                            <a href="/admin/editChannel/<% $value._id %>" class="margin-0-5">
+                                                <i class="fa fa-pencil text-navy"></i>
+                                            </a>
+                                            <a href="javascript:;" class="delete-btn" data-id="<% $value._id %>">
+                                                <i class="fa fa-remove text-navy"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% /each %>
+                                    <% /if %>
+                                </script>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="/public/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/public/libs/art-template/dist/template.js"></script>
+    <!-- 自定义js -->
+    <script src="/public/js/util.js"></script>
+    <script src="/public/js/artHelper.js"></script>
+    <script src="/public/js/content.js"></script>
+    <script src="/public/js/admin.js"></script>
+
+</body>
+
+</html>

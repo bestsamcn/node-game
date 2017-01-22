@@ -1,6 +1,11 @@
 /**
  * artteplate config
  */
+
+template.config('openTag', '<%');
+template.config('closeTag', '%>');
+
+
 /** 
  * 对日期进行格式化， 
  * @param date 要格式化的日期 
@@ -139,8 +144,7 @@ template.helper('getText',function(str){
 });
 
 
-template.config('openTag', '<%');
-template.config('closeTag', '%>');
+
 
 /**
  * dateDesc 时间倒序
@@ -175,4 +179,18 @@ template.helper('dateDesc', function(oldDate) {
     else if (_s >= 1) res = parseInt(_s) + '秒前';
     else res = '刚刚';
     return res;
+});
+
+template.helper('transformMode',function(num){
+    var str = '出错';
+    if(!num){
+        return str;
+    }
+    num = parseInt(num);
+    if(num === 1){
+        str = 'CPA';
+    }else if(num === 2){
+        str = 'CPS';
+    }
+    return str;
 });

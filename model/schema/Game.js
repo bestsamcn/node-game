@@ -3,8 +3,13 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var  CostActive = new Schema({
+var  CostActiveSchema = new Schema({
 	createBy:{
+		type:Schema.ObjectId,
+		ref:'User',
+		require:true
+	},
+	channel:{
 		type:Schema.ObjectId,
 		ref:'User',
 		require:true
@@ -26,10 +31,19 @@ var  CostActive = new Schema({
 	createTime:{
 		type:Number,
 		require:true
+	},
+	createIp:{
+		type:String,
+		require:true
 	}
 });
-var CostSales = new Schema({
+var CostSalesSchema = new Schema({
 	createBy:{
+		type:Schema.ObjectId,
+		ref:'User',
+		require:true
+	},
+	channel:{
 		type:Schema.ObjectId,
 		ref:'User',
 		require:true
@@ -56,10 +70,16 @@ var CostSales = new Schema({
 	settlementAmount:{
 		type:Number,
 		require:true,
-		default
+		default:0
 	},
 	createTime:{
 		type:Number,
 		require:true
+	},
+	createIp:{
+		type:String,
+		require:true
 	}
 });
+exports.CostActiveSchema = CostActiveSchema;
+exports.CostSalesSchema = CostSalesSchema;

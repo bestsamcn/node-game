@@ -73,7 +73,7 @@ var UserSchema = new mongoose.Schema({
 		type:Number,
 		require:false
 	},
-	conpany:{
+	company:{
 		type:String,
 		require:false
 	},
@@ -82,7 +82,7 @@ var UserSchema = new mongoose.Schema({
 		require:true,
 		unique:true
 	},
-	cooperationMode:{
+	mode:{
 		type:Number,
 		require:true
 	}

@@ -8,11 +8,13 @@ var homeController = require('./home.controller');
 var messageController = require('./message.controller');
 var signController = require('./sign.controller');
 var userController = require('./user.controller');
+var adminController = require('./admin.controller');
 var router =  function(app){
 	app.use('/',indexController);
 	app.use('/home',homeController);
 	app.use('/message',messageController);
 	app.use('/sign',signController);
 	app.use('/user',userController);
+	app.use('/admin',adminController);
 }
 exports = module.exports = router;
