@@ -153,3 +153,22 @@ template.helper('html', function (str) {
         }[m]
     }) : '';
 });
+
+/**
+ * @name  transformMode 模式转换
+ * @param  {num:String} 模式代号
+ * @return {CPA | CPS}  返回模式
+ */
+template.helper('transformMode',function(num){
+    var str = '出错';
+    if(!num){
+        return str;
+    }
+    num = parseInt(num);
+    if(num === 1){
+        str = 'CPA';
+    }else if(num === 2){
+        str = 'CPS';
+    }
+    return str;
+});

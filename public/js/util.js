@@ -150,3 +150,27 @@ window.Modal = function () {
     }
 
 }();
+
+/**
+ * 保存两位小数
+ * @param {_this} input DOM上下文对象
+ */
+window.toDecimal2 = function (_this) {
+    var x = _this.value;
+    var f = parseFloat(x);    
+    if (isNaN(f)) {
+        _this.value = '0.00';    
+        return false;    
+    }    
+    var f = Math.round(x*100)/100;    
+    var s = f.toString();    
+    var rs = s.indexOf('.');    
+    if (rs < 0) {    
+        rs = s.length;    
+        s += '.';    
+    }    
+    while (s.length <= rs + 2) {    
+        s += '0';    
+    }    
+    _this.value = s   
+}

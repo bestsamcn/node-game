@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="/public/libs/font-awesome.css" rel="stylesheet"> 
+    <link href="/public/libs/iCheck/custom.css" rel="stylesheet"> 
+    <link href="/public/libs/animate.css" rel="stylesheet"> 
+    <link href="/public/css/base.css" rel="stylesheet"> 
+    <link href="/public/css/style.css" rel="stylesheet">
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="mail-box-header">
+                    <h2>
+                    添加游戏
+                    </h2>
+                    <div class="row mail-tools tooltip-demo m-t-md">
+                        <div class="col-md-8 col-xs-8">
+                            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="刷新" id="refresh-btn">
+                                <i class="fa fa-refresh"></i>
+                                刷新
+                            </button>
+                            <span class="btn btn-sm btn-danger">{{ channelDetail.channel }}</span>
+                            <span class="btn btn-sm btn-info">{{ channelDetail.mode | transformMode }}</span>
+                        </div>
+                    </div>
+                 </div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        {{ if channelDetail.mode === 1 }}
+                        <form class="form-horizontal" id="add-game-form">
+                            <input type="hidden" name="channel-id" value="{{ channelDetail._id }}">
+                            <div class="form-group">
+                                <input type="text" style="position:absolute;top:-100000px;">
+                                <label class="col-sm-3 control-label">游戏名称：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="game" placeholder="游戏名称" class="form-control"> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" style="position:absolute;top:-100000px;">
+                                <label class="col-sm-3 control-label">安装数：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="installAmount" placeholder="安装数" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" style="position:absolute;top:-100000px;">
+                                <label class="col-sm-3 control-label">单价：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="singlePrize" onblur='toDecimal2(this)' value="0.00" placeholder="单价" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-8">
+                                    <button class="btn btn-sm btn-primary" id="add-game-btn">确定</button>
+                                    <button type="reset" class="btn btn-sm btn-info">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                        {{ else if channelDetail.mode === 2}}
+                        <form class="form-horizontal" id="add-game-form">
+                            <input type="hidden" name="channel-id" value="{{ channelDetail._id }}">
+                            <div class="form-group">
+                                <input type="text" style="position:absolute;top:-100000px;">
+                                <label class="col-sm-3 control-label">游戏名称：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="game" placeholder="游戏名称" class="form-control"> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" style="position:absolute;top:-100000px;">
+                                <label class="col-sm-3 control-label">新增用户：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="additionUser" placeholder="新增用户" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" style="position:absolute;top:-100000px;">
+                                <label class="col-sm-3 control-label">合成比例：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="splitRatio"  placeholder="合成比例" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" style="position:absolute;top:-100000px;">
+                                <label class="col-sm-3 control-label">总流水：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="totalStream" placeholder="总流水" onblur='toDecimal2(this)' value="0.00" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-8">
+                                    <button class="btn btn-sm btn-primary" id="add-game-btn">确定</button>
+                                    <button type="reset" class="btn btn-sm btn-info">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                        {{ /if }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+ <!-- 全局js --> 
+ <script src="/public/libs/jquery/dist/jquery.min.js"></script>
+ <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+ <!-- 自定义js --> 
+ <script src="/public/js/util.js"></script>
+ <script src="/public/js/content.js"></script>
+ <script src="/public/js/game.js"></script>
+

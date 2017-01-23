@@ -51,7 +51,7 @@ var _setAccessLog = function(req,res,next){
     });
 }
 /**
- * 用户权限控制
+ * api用户权限控制
  */
 var _onlyAllowAdmin = function(req, res, next){
     if(!req.session.isLogin || req.session.user.userType < 2){
@@ -61,6 +61,21 @@ var _onlyAllowAdmin = function(req, res, next){
     }
     next();
 }
+/**
+ * router用户权限控制
+ */
+var _routerOnlyForAdmin = function(req, res, next){
+    if(!req.session.isLogin || req.session.user.userType < 2){
+        res.redirect('back');
+        res.end();
+        return;
+    }
+    next();
+}
+
+
+
 exports.getMe = _getMe;
 exports.setAccessLog =_setAccessLog;
 exports.onlyAllowAdmin = _onlyAllowAdmin;
+exports.routerOnlyForAdmin = _routerOnlyForAdmin;

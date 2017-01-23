@@ -181,6 +181,11 @@ template.helper('dateDesc', function(oldDate) {
     return res;
 });
 
+/**
+ * @name  transformMode 模式转换
+ * @param  {num:String} 模式代号
+ * @return {CPA | CPS}  返回模式
+ */
 template.helper('transformMode',function(num){
     var str = '出错';
     if(!num){

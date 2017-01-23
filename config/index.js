@@ -1,8 +1,8 @@
 var NODE_ENV = process.env.NODE_ENV || 'development',
 	NODE_HOST = process.env.NODE_HOST || '127.0.0.1',
 	NODE_PORT = process.env.NODE_PORT || 3030,
-	NODE_DATABASE = 'game',
-	NODE_SECRECT = 'node-game',
+	NODE_DATABASE = process.env.NODE_SECRECT || 'game',
+	NODE_SECRECT = process.env.NODE_SECRECT || 'node-game',
 	NODE_COOKIEID = 'NODESESSIONID',
 	NODE_REDIS_PORT = process.env.NODE_REDIS_PORT || 6379,
 	TEMPLATE_CACHE = ( NODE_ENV !== 'development' );
