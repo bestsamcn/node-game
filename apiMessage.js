@@ -97,4 +97,104 @@ var arr = [{
 	retCode: 100024,
 	msg: '渠道名称重复',
 	data: null
+}, {
+	retCode: 100025,
+	msg: '真实姓名不为空时，不能少于2位',
+	data: null
+}, {
+	retCode: 100026,
+	msg: '手机号码格式正确',
+	data: null
+}, {
+	retCode: 100027,
+	msg: '邮箱格式正确',
+	data: null
+}, {
+	retCode: 100028,
+	msg: '公司名称为空的时候，长度不能少于2位',
+	data: null
+}, {
+	retCode: 100029,
+	msg: '渠道长度不能少于2位',
+	data: null
+}, {
+	retCode: 100030,
+	msg: '合作模式不能为空',
+	data: null
+}, {
+	retCode: 100030,
+	msg: '合作模式不能为空',
+	data: null
+}, {
+	retCode: 100031,
+	msg: '该渠道不存在',
+	data: null
+}, {
+	retCode: 100032,
+	msg: '无该渠道信息',
+	data: null
+}, {
+	retCode: 100032,
+	msg: '无该渠道信息',
+	data: null
+}, {
+	retCode: 100033,
+	msg: '密码长度不能少于6',
+	data: null
+}, {
+	retCode: 100034,
+	msg: '无该游戏记录',
+	data: null
+}, {
+	retCode: 100035,
+	msg: '游戏名称长度不能少于2位',
+	data: null
+}, {
+	retCode: 100036,
+	msg: '游戏单价不能小于0',
+	data: null
+}, {
+	retCode: 100037,
+	msg: '无该渠道记录',
+	data: null
+}, {
+	retCode: 100038,
+	msg: '创建失败',
+	data: null
+}, {
+	retCode: 100039,
+	msg: '无该游戏记录',
+	data: null
+}, {
+	retCode: 100040,
+	msg: '游戏名称长度不能少于2位',
+	data: null
+}, {
+	retCode: 100045,
+	msg: '日期长度只能为10位',
+	data: null
+}, {
+	retCode: 100041,
+	msg: '新增用户不能小于0',
+	data: null
+}, {
+	retCode: 100042,
+	msg: '分成比例长度不能小于0或者大于100',
+	data: null
+}, {
+	retCode: 100043,
+	msg: '总流水不能小于0',
+	data: null
+}, {
+	retCode: 100044,
+	msg: '无该渠道记录',
+	data: null
+}, {
+	retCode: 100045,
+	msg: '日期长度只能为10位',
+	data: null
+}, {
+	retCode: 100046,
+	msg: '游戏安装数不能小于0',
+	data: null
 }]

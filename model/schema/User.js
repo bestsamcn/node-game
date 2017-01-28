@@ -77,7 +77,7 @@ var UserSchema = new mongoose.Schema({
 		type:String,
 		require:false
 	},
-	channel:{
+	channelName:{
 		type:String,
 		require:true,
 		unique:true

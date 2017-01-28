@@ -14,8 +14,16 @@ var  CostActiveSchema = new Schema({
 		ref:'User',
 		require:true
 	},
+	channelName:{
+		type:String,
+		require:true
+	},
 	gameName:{
 		type:String,
+		require:true
+	},
+	inputDate:{
+		type:Number,
 		require:true
 	},
 	installAmount:{
@@ -24,6 +32,11 @@ var  CostActiveSchema = new Schema({
 		default:0
 	},
 	singlePrize:{
+		type:Number,
+		require:true,
+		default:0
+	},
+	settlementAmount:{
 		type:Number,
 		require:true,
 		default:0
@@ -48,14 +61,25 @@ var CostSalesSchema = new Schema({
 		ref:'User',
 		require:true
 	},
+	channelName:{
+		type:String,
+		require:true
+	},
+	gameName:{
+		type:String,
+		require:true
+	},
+	inputDate:{
+		type:Number,
+		require:true
+	},
 	additionUser:{
 		type:String,
 		require:true
 	},
 	splitRatio:{
-		type:Number,
-		require:true,
-		default:0
+		type:String,
+		require:true
 	},
 	totalStream:{
 		type:Number,
@@ -64,8 +88,7 @@ var CostSalesSchema = new Schema({
 	},
 	arpu:{
 		type:Number,
-		require:true,
-		default:0
+		require:true
 	},
 	settlementAmount:{
 		type:Number,

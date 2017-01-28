@@ -19,11 +19,11 @@
 					that.oForm[0].company.focus();
 					return b;
 				}
-				if(!that.oForm[0].channel.value || that.oForm[0].channel.value.length < 2){
+				if(!that.oForm[0].channelName.value || that.oForm[0].channelName.value.length < 2){
 					alertInfo('渠道名称长度不能少于2位');
 					b = false;
-					that.oForm[0].channel.blur();
-					that.oForm[0].channel.focus();
+					that.oForm[0].channelName.blur();
+					that.oForm[0].channelName.focus();
 					return b;
 				}
 				if(!that.oForm[0].mode.value || that.oForm[0].mode.value.length !== 1){
@@ -218,11 +218,11 @@
 					b = false;
 					return b;
 				}
-				if(!that.oForm[0].channel.value || that.oForm[0].channel.value.length < 2){
+				if(!that.oForm[0].channelName.value || that.oForm[0].channelName.value.length < 2){
 					alertInfo('渠道名称长度不能少于2位');
 					b = false;
-					that.oForm[0].channel.blur();
-					that.oForm[0].channel.focus();
+					that.oForm[0].channelName.blur();
+					that.oForm[0].channelName.focus();
 					return b;
 				}
 				if(!that.oForm[0].mode.value || that.oForm[0].mode.value.length !== 1){

@@ -7936,3 +7936,8 @@ body.skin-3 {
     font-size: 0;
     background-color: #131e26;
 }
+.layer-date{
+    height: 30px !important;
+    vertical-align: top !important;
+    width: 130px !important;
+}

@@ -12,7 +12,7 @@ var $$ = require('../../tools');
  * @name  /api/admin/addChannel 添加新渠道
  * @type {post}
  * @param {company:String} 公司名称，当不为空的时候检验
- * @param {channel:String} 渠道名称
+ * @param {channelName:String} 渠道名称
  * @param {mode:Number} 合作模式，1，2分别代码CPA,CPS
  * @param {account:String} 用户名
  * @param {password:String} 密码 
@@ -20,17 +20,16 @@ var $$ = require('../../tools');
  */
 var _addChannel = function(req, res){
 	var _company = req.body.company,
-		_channel = req.body.channel,
+		_channelName = req.body.channelName,
 		_mode = req.body.mode,
 		_account = req.body.account,
 		_password = req.body.password;
-
 	if(_company && _company.length < 2){
 		res.json({retCode:100018, msg:'公司名长度不能少于2位', data:null});
 		res.end();
 		return;
 	}
-	if(!_channel || _channel.length < 2){
+	if(!_channelName || _channelName.length < 2){
 		res.json({retCode:100019, msg:'渠道名称长度不能少于2位', data:null});
 		res.end();
 		return;
@@ -71,7 +70,7 @@ var _addChannel = function(req, res){
 	//检测渠道名是否重复
 	var _isNotExistChannel = function(){
 		var defer = Q.defer();
-		UserModel.findOne({channel:_channel}, function(ferr, fdoc){
+		UserModel.findOne({channelName:_channelName}, function(ferr, fdoc){
 			if(ferr){
 				res.sendStatus(500);
 				res.end();
@@ -88,10 +87,8 @@ var _addChannel = function(req, res){
 	}
 	//创建渠道
 	var _createChannel = function(){
-		
 		var md5 = crypto.createHash('md5');
 		_password = md5.update(_password).digest('hex');
-
 		var _createIp = $$.getClientIp(req).match(/\d+\.\d+\.\d+\.\d+/)[0] || '';
 		var entity = {
 			account:_account,
@@ -101,11 +98,10 @@ var _addChannel = function(req, res){
 				createIp:_createIp
 			},
 			company:_company,
-			channel:_channel,
+			channelName:_channelName,
 			mode:_mode
 		}
 		UserModel.create(entity, function(cerr, cdoc){
-			console.log(cerr, cdoc)
 			if(cerr || !cdoc){
 				res.sendStatus(500);
 				res.end();
@@ -136,7 +132,7 @@ var _getChannelList = function(req, res, next) {
 	filterObj.userType = 1;
 
 	//过滤
-	if(typeof _mode){
+	if(!!_mode){
 		if(_mode === '1'){
 			filterObj.mode = 1;
 		}else if(_mode === '2'){
@@ -145,8 +141,8 @@ var _getChannelList = function(req, res, next) {
 	}
 
     //搜索
-    if(typeof _search){
-    	filterObj.channel = new RegExp(_search,'gim');
+    if(!!_search){
+    	filterObj.channelName = new RegExp(_search,'gim');
     }
 
 	//获取分页数据
@@ -200,7 +196,7 @@ var _getChannelList = function(req, res, next) {
  * @param {email:String} 邮箱，默认空
  * @param {gender:Number} 性别 1,2分别代码男女，默认是1
  * @param {company:String}  公司名称
- * @param {channel:String} 渠道名称
+ * @param {channelName:String} 渠道名称
  * @param {mode:Number}  合作模式，1，2分别代码CPA,CPS
  * @return {retCode:Number, msg:String, data:null}  
  */
@@ -211,7 +207,7 @@ var _editChannel = function(req, res){
 		_email = req.body.email,
 		_gender = req.body.gender,
 		_company = req.body.company,
-		_channel = req.body.channel,
+		_channelName = req.body.channelName,
 		_mode = req.body.mode;
 	var editObj = {};
 
@@ -269,14 +265,14 @@ var _editChannel = function(req, res){
 			editObj.company = _company;
 		}
 	}
-	//channel
-	if(!!_channel){
-		if(_channel.length < 2){
+	//_channelName
+	if(!!_channelName){
+		if(_channelName.length < 2){
 			res.json({retCode:100029, msg:'渠道长度不能少于2位', data:null});
 			res.end();
 			return;
 		}else{
-			editObj.channel = _channel;
+			editObj.channelName = _channelName;
 		}
 	}else{
 		res.json({retCode:100031, msg:'渠道不存在', data:null});
