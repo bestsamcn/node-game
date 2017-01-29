@@ -73,9 +73,22 @@ var _routerOnlyForAdmin = function(req, res, next){
     next();
 }
 
+/**
+ * 只允许用户自己和管理员访问api
+ */
 
+var _apiJustForAdminAndYourself = function(req, res, next){
+    //objectid与queryid的类型是不一样的
+    if(!req.session.isLogin || (req.session.user.userType < 2 && req.session.user._id != req.query.channelId)){
+        res.json({retCode:401, msg:'你没有权限', data:null});
+        res.end();
+        return;
+    }
+    next();
+}
 
 exports.getMe = _getMe;
 exports.setAccessLog =_setAccessLog;
 exports.onlyAllowAdmin = _onlyAllowAdmin;
 exports.routerOnlyForAdmin = _routerOnlyForAdmin;
+exports.apiJustForAdminAndYourself = _apiJustForAdminAndYourself;

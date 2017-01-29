@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var onlyAllowAdmin = require('../../interceptor/user').onlyAllowAdmin;
-
+var apiJustForAdminAndYourself  = require('../../interceptor/user').apiJustForAdminAndYourself;
 var gameService = require('./game.service');
 
 /**
@@ -9,6 +9,6 @@ var gameService = require('./game.service');
  */
 router.post('/addCpaGame', onlyAllowAdmin, gameService.addCpaGame);
 router.post('/addCpsGame', onlyAllowAdmin, gameService.addCpsGame);
-router.get('/getGameList', onlyAllowAdmin, gameService.getGameList);
+router.get('/getGameList', apiJustForAdminAndYourself, gameService.getGameList);
 
 module.exports = router;

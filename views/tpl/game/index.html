@@ -20,15 +20,15 @@
                 <div class="mail-box-header">
                     <form method="get" action="index.html" class="pull-right mail-search">
                         <div class="input-group">
-                            <input type="text" class="form-control input-sm" name="search" id="channel-search-input" placeholder="搜索渠道/游戏名">
+                            <input type="text" class="form-control input-sm" name="search" id="game-search-input" placeholder="搜索游戏名">
                             <div class="input-group-btn">
-                                <button type="submit" class="btn btn-sm btn-primary" id="channel-search-btn">搜索</button>
+                                <button type="submit" class="btn btn-sm btn-primary" id="game-search-btn">搜索</button>
                             </div>
                         </div>
                     </form>
                     <h2>
                         游戏列表 (
-                        <span id="total-channel">0</span>
+                        <span id="total-game">0</span>
                         )
                     </h2>
                     <div class="row mail-tools tooltip-demo m-t-md">
@@ -37,11 +37,18 @@
                                 <i class="fa fa-refresh"></i>
                                 刷新
                             </button>
-                            <span class="btn btn-sm btn-danger" title="渠道名">{{ channelDetail.channelName }}</span>
+                            <span class="btn btn-sm btn-danger" title="渠道名" id="reset-all-game-btn">{{ channelDetail.channelName }}</span>
+                            <input type="hidden" value="{{ channelDetail._id }}" id="channel-id" name="channel-id">
                             <select class="btn btn-sm btn-info" name="mode" id="mode" title="模式">
+                                {{ if channelDetail.mode === 1 }}
+                                <option value="" disabled>请选择</option>
+                                <option value="1" selected>CPA</option>
+                                <option value="2">CPS</option>
+                                {{ else if channelDetail.mode === 2 }}
                                 <option value="" disabled>请选择</option>
                                 <option value="1">CPA</option>
-                                <option value="2">CPS</option>
+                                <option value="2" selected>CPS</option>
+                                {{ /if }}
                             </select>
                             <input id="input-date" class="laydate-icon form-control layer-date">
                         </div>
@@ -57,37 +64,72 @@
                     <div class="ibox-content">
                         <div class="table-responsive">
                             <table class="table table-striped">
-                                <thead>
+                                <thead id="game-header-vm">
+                                </thead>
+                                <script type="text/html" id="game-header-tpl">
+                                <% if mode === '1' %> 
                                     <tr>
-                                        <th>名称</th>
-                                        <th class="text-center">账号</th>
-                                        <th class="text-center">密码</th>
-                                        <th class="text-center">模式</th>
-                                        <th class="text-center">公司</th>
-                                        <th class="text-center">时间</th>
+                                        <th>渠道名</th>
+                                        <th class="text-center">日期</th>
+                                        <th class="text-center">游戏名</th>
+                                        <th class="text-center">安装数</th>
+                                        <th class="text-center">单价</th>
+                                        <th class="text-center">结算金额</th>
                                         <th class="pull-right text-center">操作</th>
                                     </tr>
-                                </thead>
+                                <% else %> 
+                                    <tr>
+                                        <th>渠道名</th>
+                                        <th class="text-center">日期</th>
+                                        <th class="text-center">游戏名</th>
+                                        <th class="text-center">新增用户</th>
+                                        <th class="text-center">总流水</th>
+                                        <th class="text-center">ARPU</th>
+                                        <th class="text-center">分成比例</th>
+                                        <th class="text-center">结算金额</th>
+                                        <th class="pull-right text-center">操作</th>
+                                    </tr>
+                                <% /if %>
+                                </script> 
                                 <tbody id="game-list-vm">
-                                   
                                 </tbody>
                                 <script type="text/html" id="game-cpa-list-tpl">
-                                    <% if !!channelList.length %>
-                                    <% each channelList %>
+                                    <% if !!gameList.length %>
+                                    <% each gameList %>
                                     <tr>
                                         <td><% $value.channelName %></td>
-                                        <td class="text-center"><% $value.account %></td>
-                                        <td class="text-center"><% $value.password %></td>
-                                        <td class="text-center"><% $value.mode | transformMode %></td>
-                                        <td class="text-center"><% ($value.company ? $value.company : '无') %></td>
-                                        <td class="text-center"><% $value.createLog.createTime | dateFormat:'yyyy.MM.dd' %></td>
+                                        <td class="text-center"><% $value.inputDate | dateFormat:'yyyy-MM-dd' %></td>
+                                        <td class="text-center"><% $value.gameName %></td>
+
+                                        <td class="text-center"><% $value.installAmount %></td>
+                                        <td class="text-center"><% $value.singlePrize %></td>
+                                        
+                                        <td class="text-center"><% $value.settlementAmount %></td>
                                         <td class="pull-right text-center">
-                                            <a href="/game/getGameList/<% $value._id %>" title="查看">
-                                                <i class="fa fa-eye text-navy"></i>
+                                            <a href="/admin/editChannel/<% $value._id %>" title="修改" class="margin-0-5">
+                                                <i class="fa fa-pencil text-navy"></i>
                                             </a>
-                                            <a href="/game/addGame/<% $value._id %>" title="添加" class="margin-0-5">
-                                                <i class="fa fa-plus text-navy"></i>
+                                            <a href="javascript:;" class="delete-btn" title="删除" data-id="<% $value._id %>">
+                                                <i class="fa fa-remove text-navy"></i>
                                             </a>
+                                        </td>
+                                    </tr>
+                                    <% /each %>
+                                    <% /if %>
+                                </script>
+                                <script type="text/html" id="game-cps-list-tpl">
+                                    <% if !!gameList.length %>
+                                    <% each gameList %>
+                                    <tr>
+                                        <td><% $value.channelName %></td>
+                                        <td class="text-center"><% $value.inputDate | dateFormat:'yyyy-MM-dd' %></td>
+                                        <td class="text-center"><% $value.gameName %></td>
+                                        <td class="text-center"><% $value.additionUser %></td>
+                                        <td class="text-center"><% $value.totalStream %></td>
+                                        <td class="text-center"><% $value.arpu %></td>
+                                        <td class="text-center"><% $value.splitRatio %></td>
+                                        <td class="text-center"><% $value.settlementAmount %></td>
+                                        <td class="pull-right text-center">
                                             <a href="/admin/editChannel/<% $value._id %>" title="修改" class="margin-0-5">
                                                 <i class="fa fa-pencil text-navy"></i>
                                             </a>

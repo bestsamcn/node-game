@@ -7,6 +7,7 @@ var CostSalesModel = require('../../model').CostSalesModel;
 var $$ = require('../../tools');
 
 
+
 /**
  * @name  /api/game/addCpaGame 添加cpa游戏数据
  * @param {gameName:String} 游戏名称 
@@ -224,6 +225,7 @@ var _addCpsGame = function(req, res){
 /**
  * @name  /api/game/getCpaGameList 获取游戏列表
  * @type {get}
+ * @param {id:String} 特定渠道下的搜索
  * @param {seach:String} 关键词搜索
  * @param {pageIndex:Number} 分页索引,1默认
  * @param {pageSize:Number} 分页长度,10默认
@@ -233,27 +235,36 @@ var _addCpsGame = function(req, res){
 var _getGameList = function(req, res, next) {
 	var _pageIndex = parseInt(req.query.pageIndex) - 1 || 0,
 		_pageSize = parseInt(req.query.pageSize) || 10;
+	var _channel_id = req.query.channelId;
 	var _mode = req.query.mode || 1;//1-cpa,2-cps
 	var _search = req.query.search;//渠道名称|游戏名称
 	var _inputDate = req.query.inputDate;
 	var _company = req.query.company;
 	var filterObj = {};
-
-
-    //搜索-渠道名-游戏名
-    if(!!_search){
-    	var reg =  new RegExp(_search,'gim');
-    	filterObj.$or = [
-    		{'channelName':{$regex:reg}},
-    		{'gameName':{$regex:reg}}
-    	]
     
-    }
+    //如果是指定了渠道id，那么渠道的名的模糊搜索将取消，主要针对用户查询自己的游戏列表
+	if(!!_channel_id && _channel_id.length === 24){
+		//怪异啊，不能直接赋值，需要重新开内存，才能赋值属性，这个是涉及到关联表的属性查询
+		filterObj.channel = {};
+		filterObj.channel._id = _channel_id
+		if(!!_search){
+			var reg =  new RegExp(_search,'gim');
+			filterObj.gameName = reg;
+		}
+	}else{
+		//搜索-渠道名-游戏名
+		if(!!_search){
+			filterObj.$or = [
+	    		{'channelName':{$regex:reg}},
+	    		{'gameName':{$regex:reg}}
+	    	]
+		}
+	}
 
     //搜索-日期
     if(!!_inputDate){
+    	_inputDate = new Date(_inputDate).getTime();
     	filterObj.inputDate = _inputDate;
-    	
     }
 
     //搜索-公司

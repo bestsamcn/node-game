@@ -103,7 +103,7 @@
                                         <td class="text-center"><% $value.password %></td>
                                         <td class="text-center"><% $value.mode | transformMode %></td>
                                         <td class="text-center"><% ($value.company ? $value.company : '无') %></td>
-                                        <td class="text-center"><% $value.createLog.createTime | dateFormat:'yyyy.MM.dd' %></td>
+                                        <td class="text-center"><% $value.createLog.createTime | dateFormat:'yyyy-MM-dd' %></td>
                                         <td class="pull-right text-center">
                                             <a href="/game/<% $value._id %>" title="查看">
                                                 <i class="fa fa-eye text-navy"></i>
