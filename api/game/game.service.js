@@ -254,6 +254,12 @@ var _getGameList = function(req, res, next) {
 	}else{
 		//搜索-渠道名-游戏名
 		if(!!_search){
+			var reg =  new RegExp(_search,'gim');
+			// filterObj.$or = [];
+			// filterObj.$or[0] = {};
+			// filterObj.$or[0].channel = {};
+			// filterObj.$or[0].channel.channelName ={$regex:reg};
+			// filterObj.$or[1].gameName = {$regex:reg};
 			filterObj.$or = [
 	    		{'channelName':{$regex:reg}},
 	    		{'gameName':{$regex:reg}}

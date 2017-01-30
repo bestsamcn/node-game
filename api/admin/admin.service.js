@@ -4,6 +4,8 @@
 var Q = require('q');
 var xss = require('xss');
 var UserModel = require('../../model').UserModel;
+var CostActiveModel = require('../../model').CostActiveModel;
+var CostSalesModel = require('../../model').CostSalesModel;
 var crypto = require('crypto');
 var $$ = require('../../tools');
 

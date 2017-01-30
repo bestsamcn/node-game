@@ -5,9 +5,7 @@
 	$('#refresh-btn').on('click', function(){
 		window.location.reload();
 	});
-
 	
-
 	/**
 	 * cpa
 	 */
@@ -200,18 +198,14 @@
 				}
 				that.addCpsGameBtn.on('click',postInfo);
 			},
-
 			init:function(){
 				if(!this.addCpsGameForm[0]) return;	
 				this.addCpsGame();
 			}
 		}
 		game2.init();
-		
-
 	}
 	CpsGameFunc();
-
 
 	/**
 	 * 游戏列表
