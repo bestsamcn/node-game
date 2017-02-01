@@ -415,8 +415,68 @@ var _editChannelPassword = function(req, res){
 	_isExistChannel().then(_editAndResponse);
 }
 
+/**
+ * @name  /api/admin/delChannel 删除渠道
+ * @param {id:ObjectId} id 渠道id
+ */
+var _delChannel = function(req, res){
+	var _channel_id = req.query.channelId;
+	if(!_channel_id || _channel_id.length !== 24){
+		res.json({retCode:100032, msg:'无该渠道信息', data:null});
+ 		res.end();
+ 		return;
+	}
+	//是否存在渠道
+	var _isExistChannel = function(){
+		var defer = Q.defer();
+		UserModel.findOne({_id:_channel_id}, function(ferr, fdoc){
+			if(ferr){
+				res.sendStatus(500);
+				res.end();
+				return;
+			}
+			if(!fdoc){
+				res.json({retCode:100031, msg:'该渠道不存在', data:null});
+				res.end();
+				return;
+			}
+			defer.resolve(fdoc);
+		});
+		return defer.promise;
+	}
+	//删除改渠道下的所有游戏
+	var _delAllGame = function(_channelObj){
+
+		var _model = _channelObj.mode == 1 ? CostActiveModel : CostSalesModel;
+		var defer = Q.defer();
+		_model.remove({channel: _channelObj._id}, function(rerr, robj){
+			if(rerr || !robj.result.ok){
+				res.sendStatus(500);
+				res.end();
+				return;
+			}
+			defer.resolve();
+		});
+		return defer.promise;
+	}
+	//删除该渠道
+	var _delTheChannel = function(_glist){
+		UserModel.findByIdAndRemove(_channel_id, function(frerr, frdoc){
+			if(frerr){
+				res.sendStatus(500);
+				res.end();
+				return;
+			}
+			res.json({retCode:0, msg:'删除成功', data:frdoc});
+			res.end();
+		});
+	}
+	_isExistChannel().then(_delAllGame).then(_delTheChannel);
+}
+
 exports.addChannel = _addChannel;
 exports.getChannelList = _getChannelList;
 exports.editChannel = _editChannel;
 exports.getChannelDetail = _getChannelDetail;
 exports.editChannelPassword = _editChannelPassword;
+exports.delChannel = _delChannel

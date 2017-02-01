@@ -48,6 +48,10 @@ var  CostActiveSchema = new Schema({
 	createIp:{
 		type:String,
 		require:true
+	},
+	lastEditTime:{
+		type:Number,
+		require:false
 	}
 });
 var CostSalesSchema = new Schema({
@@ -74,11 +78,11 @@ var CostSalesSchema = new Schema({
 		require:true
 	},
 	additionUser:{
-		type:String,
+		type:Number,
 		require:true
 	},
 	splitRatio:{
-		type:String,
+		type:Number,
 		require:true
 	},
 	totalStream:{
@@ -102,6 +106,10 @@ var CostSalesSchema = new Schema({
 	createIp:{
 		type:String,
 		require:true
+	},
+	lastEditTime:{
+		type:Number,
+		require:false
 	}
 });
 exports.CostActiveSchema = CostActiveSchema;

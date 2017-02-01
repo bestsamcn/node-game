@@ -322,6 +322,217 @@ var _getGameList = function(req, res, next) {
 	_getList().then(_getTotal);
 }
 
+/**
+ * @name  /api/game/getGameDetail 获取游戏详情
+ * @param {mode:String} 游戏的模式，必需，1-cpa;2-cps
+ * @param {gameId:ObjectId} 游戏的id，必需
+ * @param {channelId:ObjectId} 渠道的id，普通会员必需，用着检测权限，中间件使用
+ */
+var _getGameDetail = function(req, res){
+ 	var _mode = req.query.mode,
+ 		_game_id = req.query.gameId;
+ 	if(!_mode || (_mode !== '1' && _mode !== '2')){
+ 		res.json({retCode:100047, msg:'该游戏不存在', data:null});
+ 		res.end();
+ 		return;
+ 	}
+ 	if(!_game_id || _game_id.length !== 24){
+ 		res.json({retCode:100047, msg:'该游戏不存在', data:null});
+ 		res.end();
+ 		return;
+ 	}
+ 	var _model = _mode === '1' ? CostActiveModel : CostSalesModel;
+ 	_model.findById(_game_id, function(ferr, fdoc){
+ 		if(ferr){
+ 			res.sendStatus(500);
+ 			res.end();
+ 			return;
+ 		}
+ 		if(!fdoc){
+ 			req.json({retCode:100047, msg:'该游戏不存在', data:null});
+ 			res.end();
+ 			return;
+ 		}
+ 		res.json({retCode:0, msg:'查询成功', data:fdoc});
+ 		res.end();
+ 	});
+}
+
+/**
+ * @name  /api/game/editCpaGame 修改游戏
+ * @param {gameName:String}  游戏名称
+ * @param {installAmount:Number} 安装数
+ * @param {singlePrize:Number} 单价
+ */
+var _editCpaGame = function(req, res){
+	var _game_id = req.body.gameId,
+		_gameName = req.body.gameName,
+		_installAmount = req.body.installAmount,
+		_inputDate = req.body.inputDate,
+		_singlePrize = req.body.singlePrize;
+ 	if(!_game_id || _game_id.length !== 24){
+ 		res.json({retCode:100047, msg:'该游戏不存在', data:null});
+ 		res.end();
+ 		return;
+ 	}
+ 	if(!_gameName || _gameName.length < 2){
+		res.json({retCode:100035, msg:'游戏名称长度不能少于2位', data:null});
+		res.end();
+		return;
+	}
+	if(isNaN(_installAmount) || _installAmount< 0){
+		res.json({retCode:100046, msg:'游戏安装数只能是数字并不能小于0', data:null});
+		res.end();
+		return;
+	}
+	if(isNaN(_singlePrize) || _singlePrize < 0 ){
+		res.json({retCode:100036, msg:'游戏单价只能是数字并不能小于0', data:null});
+		res.end();
+		return;	
+	}
+	if(!_inputDate || _inputDate.length !== 10 || !/^(\d{4})-(\d{2})-(\d{2})$/g.test(_inputDate)){
+		res.json({retCode:100045, msg:'日期长度只能为10位,且为yyyy-MM-dd格式', data:null});
+		res.end();
+		return;
+	}
+ 	//结算金额 = 单价×安装数
+	_settlementAmount = (_singlePrize*_installAmount).toFixed(2);
+	//日期转换
+	_inputDate = new Date(_inputDate).getTime();
+ 	var obj = {
+		gameName:_gameName,
+		inputDate:_inputDate,
+		installAmount:_installAmount,
+		singlePrize:_singlePrize,
+		settlementAmount:_settlementAmount,
+		lastEditTime:Date.now()
+	}
+	CostActiveModel.findByIdAndUpdate(_game_id, obj, function(fuerr, fudoc){
+		if(fuerr){
+			res.sendStatus(500);
+			res.end();
+			return;
+		}
+		if(!fudoc){
+			res.json({retCode:100048, msg:'游戏修改失败', data:null});
+			res.end();
+			return;
+		}
+		res.json({retCode:0, msg:'修改成功', data:fudoc});
+	});
+}
+
+/**
+ * 修改cps游戏
+ */
+var _editCpsGame = function(req, res){
+	var _game_id = req.body.gameId,
+		_gameName = req.body.gameName,
+		_inputDate = req.body.inputDate,
+		_additionUser = req.body.additionUser,
+		_splitRatio = req.body.splitRatio;
+		_totalStream = req.body.totalStream;
+	if(!_game_id || _game_id.length !==24){
+		res.json({retCode:100039, msg:'无该游戏记录', data:null});
+		res.end();
+		return;
+	}
+	if(!_gameName || _gameName.length < 2){
+		res.json({retCode:100040, msg:'游戏名称长度不能少于2位', data:null});
+		res.end();
+		return;
+	}
+	if(!_inputDate || _inputDate.length < 10 || !/^(\d{4})-(\d{2})-(\d{2})$/g.test(_inputDate)){
+		res.json({retCode:100045, msg:'日期长度只能为10位,且为yyyy-MM-dd格式', data:null});
+		res.end();
+		return;
+	}
+	if(!_additionUser || isNaN(_additionUser) || _additionUser< 0){
+		res.json({retCode:100041, msg:'新增用户不能小于0', data:null});
+		res.end();
+		return;
+	}
+	if(!_splitRatio || _splitRatio < 0 || _splitRatio >100){
+		res.json({retCode:100042, msg:'分成比例长度不能小于0或者大于100', data:null});
+		res.end();
+		return;
+	}
+	if(!_totalStream || isNaN(_totalStream) || _totalStream < 0 ){
+		res.json({retCode:100043, msg:'总流水不能小于0', data:null});
+		res.end();
+		return;	
+	}
+
+	//arpu = 总流水/ 新增人数；
+	var _ARPU = parseFloat((_totalStream / _additionUser).toFixed(2));
+	
+	//结算金额 = 总流水×分成比例
+	var _settlementAmount = parseFloat((_totalStream * (_splitRatio/100)).toFixed(2));
+
+	//日期转换
+	_inputDate = new Date(_inputDate).getTime();
+
+	//修改游戏
+	var obj = {
+		gameName:_gameName,
+		inputDate:_inputDate,
+		additionUser:_additionUser,
+		settlementAmount:_settlementAmount,
+		totalStream:_totalStream,
+		splitRatio:_splitRatio,
+		arpu:_ARPU,
+		lastEditTime:Date.now()
+	}
+	CostSalesModel.findByIdAndUpdate(_game_id, obj, function(cerr, cdoc){
+		if(cerr){
+			res.sendStatus(500);
+			res.end();
+			return;
+		}
+		if(!cdoc){
+			res.json({retCode:100048, msg:'游戏修改失败', data:null});
+			res.end();
+			return;
+		}
+		res.json({retCode:0, msg:'修改成功', data:null});
+	});
+}
+
+/**
+ * @name  /api/game/delGame 删除游戏
+ * @param {mode:Number} 游戏隶属模式
+ * @param {id:ObjectId} 游戏id
+ */
+var _delGame = function(req, res){
+	var _game_id = req.query.gameId,
+		_mode = req.query.mode;
+	if(!_game_id || _game_id.length !==24){
+		res.json({retCode:100039, msg:'无该游戏记录', data:null});
+		res.end();
+		return;
+	}
+	if(!_mode || (_mode != 1 && _mode != 2)){
+		res.json({retCode:100039, msg:'无该游戏记录', data:null});
+		res.end();
+		return;
+	}
+	var _model = _mode === '1' ? CostActiveModel : CostSalesModel;
+	_model.findByIdAndRemove(_game_id, function(rerr, rdoc){
+		if(rerr){
+			res.sendStatus(500);
+			res.end();
+			return;
+		}
+		res.json({retCode:0, msg:'删除成功', data:rdoc});
+		res.end();
+	});
+}
+
+
 exports.addCpaGame = _addCpaGame;
 exports.addCpsGame = _addCpsGame;
 exports.getGameList = _getGameList;
+exports.getGameDetail = _getGameDetail;
+exports.editCpaGame = _editCpaGame;
+exports.editCpsGame = _editCpsGame;
+exports.delGame = _delGame;

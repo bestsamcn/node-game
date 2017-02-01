@@ -1,0 +1,40 @@
+<form class="form-horizontal" id="edit-cps-game-form">
+    <input type="hidden" name="channel-id" id="gameId" value="{{ gameDetail._id }}">
+    <input type="hidden" name="mode" id="mode" value="{{ gameDetail.mode }}">
+    <div class="form-group">
+        <label class="col-sm-3 control-label">游戏名称：</label>
+        <div class="col-sm-8">
+            <input type="text" name="gameName" id="gameName" value="{{ gameDetail.gameName }}" placeholder="游戏名称" class="form-control"> 
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">新增用户：</label>
+        <div class="col-sm-8">
+            <input type="text" onkeyup="this.value = this.value.replace(/[^0-9]/g,'')" name="additionUser" placeholder="新增用户" id="additionUser" value="{{ gameDetail.additionUser }}" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">分成比例：</label>
+        <div class="col-sm-8">
+            <input type="text" name="splitRatio" id="splitRatio" value="{{ gameDetail.splitRatio }}" onblur='toDecimal2(this)'  placeholder="分成比例，单位百分比，填数字即可" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">总流水：</label>
+        <div class="col-sm-8">
+            <input type="text" name="totalStream" id="totalStream" value="{{ gameDetail.totalStream }}" placeholder="总流水" onblur='toDecimal2(this)' value="0.00" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">日期：</label>
+        <div class="col-sm-8">
+            <input type="text" name="inputDate" value="{{ gameDetail.inputDate | dateFormat:'yyyy-MM-dd' }}"  id="inputDate" placeholder="日期：2010-10-10" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-8">
+            <button class="btn btn-sm btn-primary" id="edit-cps-game-btn">确定</button>
+            <button type="reset" class="btn btn-sm btn-info">重置</button>
+        </div>
+    </div>
+</form>

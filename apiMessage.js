@@ -195,6 +195,14 @@ var arr = [{
 	data: null
 }, {
 	retCode: 100046,
-	msg: '游戏安装数不能小于0',
+	msg: '游戏安装数不能f小于0',
+	data: null
+}, {
+	retCode: 100047,
+	msg: '该游戏不存在',
+	data: null
+}, {
+	retCode: 100048,
+	msg: '游戏修改失败',
 	data: null
 }]

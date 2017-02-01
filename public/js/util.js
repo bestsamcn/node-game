@@ -157,9 +157,9 @@ window.Modal = function () {
  */
 window.toDecimal2 = function (_this) {
     var x = _this.value;
-    var f = parseFloat(x);    
-    if (isNaN(f)) {
-        _this.value = '0.00';    
+    var f = parseFloat(x);  
+    if (isNaN(f) || f == 0 || (f == x.replace(/[^\d.]/ig,'') && f != x)) {
+        _this.value = '0.00'; 
         return false;    
     }    
     var f = Math.round(x*100)/100;    

@@ -353,4 +353,245 @@
 	}
 	getGameList();
 
+	/**
+	 * 修改cpa游戏
+	 */
+	var editCpaGame = function(){
+		var editCpaGameForm = $('#edit-cpa-game-form');
+		var editCpaGameBtn = $('#edit-cpa-game-btn');
+		var game4 = {
+			validateForm:function(){
+				var that = this;
+				var b = true;
+				if(!editCpaGameForm[0].gameName.value || editCpaGameForm[0].gameName.value < 2){
+					b = false;
+					alertInfo('游戏名称长度不能少于2位');
+					editCpaGameForm[0].gameName.blur();
+					editCpaGameForm[0].gameName.focus();
+					return b;
+				}
+				if(isNaN(editCpaGameForm[0].installAmount.value) || editCpaGameForm[0].installAmount.value < 0){
+					b = false;
+					alertInfo('安装数不能小于0或者不存在');
+					editCpaGameForm[0].installAmount.blur();
+					editCpaGameForm[0].installAmount.focus();
+					return b;
+				}
+				if(isNaN(editCpaGameForm[0].singlePrize.value) || editCpaGameForm[0].singlePrize.value <= 0){
+					b = false;
+					alertInfo('单价不能小于0或者不存在');
+					editCpaGameForm[0].singlePrize.blur();
+					editCpaGameForm[0].singlePrize.focus();
+					return b;
+				}
+				if(!editCpaGameForm[0].inputDate.value || editCpaGameForm[0].inputDate.value < 10 || !/^(\d{4})-(\d{2})-(\d{2})$/g.test(editCpaGameForm[0].inputDate.value)){
+					b = false;
+					alertInfo('日期长度只能为10位，且为yyyy-MM-dd的格式');
+					editCpaGameForm[0].inputDate.blur();
+					editCpaGameForm[0].inputDate.focus();
+					return b;
+				}
+				return b;
+			},
+			editCpaGame:function(){
+				var that = this;
+				var postInfo = function(e){
+					e && e.preventDefault();
+					e && e.stopPropagation();
+					window.event && (window.event.returnValue = false);
+					window.event && (window.event.cancelBubble = true);
+					if(!that.validateForm()) return;
+					var obj = {};
+					obj.gameId = editCpaGameForm[0].gameId.value;
+					obj.gameName = editCpaGameForm[0].gameName.value;
+					obj.installAmount = editCpaGameForm[0].installAmount.value;
+					obj.singlePrize = editCpaGameForm[0].singlePrize.value;
+					obj.inputDate = editCpaGameForm[0].inputDate.value;
+					$.ajax({
+						type:'post',
+						dataType:'json',
+						data:obj,
+						url:'/api/game/editCpaGame',
+						success:function(res){
+							if(res.retCode !==0){
+								alertInfo(res.msg || '修改游戏失败');
+								return;
+							}
+							alertInfo(res.msg || '修改游戏成功');
+						},
+						error:function(){
+							alertInfo('异常');
+						}
+					});
+				}
+				editCpaGameBtn.on('click',postInfo);
+			},
+			init:function(){
+				if(!/^\/game\/editGame\/1\/\w{24}/ig.test(window.location.pathname)) return;
+				this.editCpaGame();
+			}
+		}
+		game4.init();
+	} 
+	editCpaGame();
+
+	/**
+	 * 修改cps游戏
+	 */
+	var editCpsGame = function(){
+		var editCpsGameForm = $('#edit-cps-game-form');
+		var editCpsGameBtn = $('#edit-cps-game-btn');
+		var game5 = {
+			validateForm:function(){
+				var b = true;
+				if(!editCpsGameForm[0].gameName.value || editCpsGameForm[0].gameName.value.length < 2){
+					alertInfo('游戏名称长度不能少于2位');
+					editCpsGameForm[0].gameName.focus();
+					b = false
+					return b;
+				}
+				if(!editCpsGameForm[0].additionUser.value || isNaN(editCpsGameForm[0].additionUser.value) || parseInt(editCpsGameForm[0].additionUser.value)<0){
+					alertInfo('新增用户只能为数字，并不能少于0个');
+					editCpsGameForm[0].additionUser.focus();
+					b = false
+					return b;
+				}
+				if(!editCpsGameForm[0].splitRatio.value || isNaN(editCpsGameForm[0].splitRatio.value) || parseInt(editCpsGameForm[0].splitRatio.value)<0 || parseInt(editCpsGameForm[0].splitRatio.value)>100){
+					alertInfo('分成比例只能为数字，并不能少于0个大于100，单位是%');
+					editCpsGameForm[0].splitRatio.focus();
+					b = false
+					return b;
+				}
+				if(!editCpsGameForm[0].totalStream.value || isNaN(editCpsGameForm[0].totalStream.value) || parseInt(editCpsGameForm[0].totalStream.value)<0){
+					alertInfo('总流水只能为数字，并不能少于0');
+					editCpsGameForm[0].totalStream.focus();
+					b = false
+					return b;
+				}
+				if(!editCpsGameForm[0].inputDate.value || editCpsGameForm[0].inputDate.value.length !== 10 || !/^(\d{4})-(\d{2})-(\d{2})$/g.test(editCpsGameForm[0].inputDate.value)){
+					alertInfo('日期长度只能为10位，且为yyyy-MM-dd的格式');
+					inputDate[0].focus();
+					b = false
+					return b;
+				}
+				return b;
+			},
+			editCpsGame:function(){
+				var that = this;
+				var postInfo = function(e){
+					e && e.preventDefault();
+					e && e.stopPropagation();
+					window.event && (window.event.returnValue = false);
+					window.event && (window.event.cancelBubble = true);
+					if(!that.validateForm()) return;
+					var obj = {};
+					obj.gameId = editCpsGameForm[0].gameId.value;
+					obj.gameName = editCpsGameForm[0].gameName.value;
+					obj.additionUser = editCpsGameForm[0].additionUser.value;
+					obj.splitRatio = editCpsGameForm[0].splitRatio.value;
+					obj.totalStream = editCpsGameForm[0].totalStream.value;
+					obj.inputDate = editCpsGameForm[0].inputDate.value;
+					$.ajax({
+						type:'post',
+						dataType:'json',
+						data:obj,
+						url:'/api/game/editCpsGame',
+						success:function(res){
+							if(res.retCode !==0){
+								alertInfo(res.msg || '修改游戏失败');
+								return;
+							}
+							alertInfo(res.msg || '修改游戏成功');
+						},
+						error:function(){
+							alertInfo('异常');
+						}
+					});
+				}
+				editCpsGameBtn.on('click',postInfo);
+			},
+			init:function(){
+				if(!/^\/game\/editGame\/2\/\w{24}/ig.test(window.location.pathname)) return;
+				this.editCpsGame();
+			}
+		}
+		game5.init();
+	} 
+	editCpsGame();
+
+
+	/**
+	 * 删除游戏
+	 */
+	var delGame = function(){
+		var gameListVm = $('#game-list-vm');
+		var game6 = {
+			confirmFunc:function(cb){
+				 swal({
+		            title: "确定删除该游戏？",
+		            text: "删除后将无法恢复，请谨慎操作！",
+		            type: "warning",
+		            showCancelButton: true,
+		            confirmButtonColor: "#DD6B55",
+		            confirmButtonText: "删除",
+		            closeOnConfirm: false
+		        }, function() {
+		        	cb && cb();
+		        });
+			},
+			delInfo:function(){
+				var that = this;
+				var delFunc = function(){
+					var $this = $(this);
+					console.log($this)
+					var _mode = $this.attr('data-mode');
+					var _game_id = $this.attr('data-id');
+					if(!_mode || (_mode != 1 && _mode != 2)){
+						alertInfo('异常');
+						return;
+					}
+					if(!_game_id || _game_id.length !== 24){
+						alertInfo('异常');
+						return;
+					}
+					that.confirmFunc(function(){
+						$.ajax({
+							type:'get',
+							dataType:'json',
+							data:{
+								gameId:_game_id,
+								mode:_mode
+							},
+							url:'/api/game/delGame',
+							success:function(res){
+								if(res.retCode !== 0){
+									alertInfo(res.msg || '删除失败');
+									return;
+								}
+								alertInfo(res.msg || '删除成功');
+								$this.parent().parent().remove();
+								swal({
+									type:'success',
+									title:'删除成功',
+									timer:1000
+								});
+							},
+							error:function(){
+								alertInfo('异常');
+							}
+						});
+					})
+					
+				}
+				gameListVm.on('click', '.delete-game-btn', delFunc);
+			},
+			init:function(){
+				if(!/^\/game\/\w{24}/ig.test(window.location.pathname)) return;
+				console.log(window.location.pathname)
+				this.delInfo();
+			}
+		}
+		game6.init();
+	}
+	delGame();
 })();
