@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>- 基础表格</title>
+    <title>{{ title }}</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link rel="shortcut icon" href="favicon.ico">
@@ -11,6 +11,7 @@
     <link href="/public/libs/font-awesome.css" rel="stylesheet">
     <link href="/public/libs/iCheck/custom.css" rel="stylesheet">
     <link href="/public/libs/animate.css" rel="stylesheet">
+    <link href="/public/libs/sweetalert/sweetalert.css" rel="stylesheet">
     <link href="/public/css/base.css" rel="stylesheet">
     <link href="/public/css/style.css" rel="stylesheet"></head>
 
@@ -114,7 +115,7 @@
                                             <a href="/admin/editChannel/<% $value._id %>" title="修改" class="margin-0-5">
                                                 <i class="fa fa-pencil text-navy"></i>
                                             </a>
-                                            <a href="javascript:;" class="delete-btn" title="删除" data-id="<% $value._id %>">
+                                            <a href="javascript:;" class="delete-channel-btn" title="删除" data-id="<% $value._id %>">
                                                 <i class="fa fa-remove text-navy"></i>
                                             </a>
                                         </td>
@@ -134,6 +135,7 @@
     <script src="/public/libs/jquery/dist/jquery.min.js"></script>
     <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/public/libs/art-template/dist/template.js"></script>
+    <script src="/public/libs/sweetalert/sweetalert.min.js"></script>
     <!-- 自定义js -->
     <script src="/public/js/util.js"></script>
     <script src="/public/js/artHelper.js"></script>

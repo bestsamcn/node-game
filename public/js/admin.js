@@ -372,4 +372,72 @@
 		channel.init();
 	}
 	editChannelPassword();
+
+	/**
+	 * 删除渠道
+	 */
+	var delChannel = function(){
+		var channelListVm = $('#channel-list-vm');
+		var channel = {
+			confirmFunc:function(cb){
+				 swal({
+		            title: "确定删除该游戏？",
+		            text: "删除后将无法恢复，请谨慎操作！",
+		            type: "warning",
+		            showCancelButton: true,
+		            confirmButtonColor: "#DD6B55",
+		            confirmButtonText: "删除",
+		            closeOnConfirm: false
+		        }, function() {
+		        	cb && cb();
+		        });
+			},
+			delInfo:function(){
+				var that = this;
+				var delFunc = function(){
+					var $this = $(this);
+					console.log($this)
+					var _channel_id = $this.attr('data-id');
+					if(!_channel_id || _channel_id.length !== 24){
+						alertInfo('异常');
+						return;
+					}
+					that.confirmFunc(function(){
+						$.ajax({
+							type:'get',
+							dataType:'json',
+							data:{
+								channelId:_channel_id
+							},
+							url:'/api/admin/delChannel',
+							success:function(res){
+								if(res.retCode !== 0){
+									alertInfo(res.msg || '删除失败');
+									return;
+								}
+								alertInfo(res.msg || '删除成功');
+								$this.parent().parent().remove();
+								swal({
+									type:'success',
+									title:'删除成功',
+									timer:1000
+								});
+							},
+							error:function(){
+								alertInfo('异常');
+							}
+						});
+					})
+					
+				}
+				channelListVm.on('click', '.delete-channel-btn', delFunc);
+			},
+			init:function(){
+				if(!/^\/admin/ig.test(window.location.pathname)) return;
+				this.delInfo();
+			}
+		}
+		channel.init();
+	}
+	delChannel();
 })();
