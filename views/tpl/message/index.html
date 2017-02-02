@@ -77,12 +77,12 @@
                             <% if messageList.length > 0 %>
                             <% each messageList %>
                             <tr class="<% $value.isRead ? 'read': 'unread' %>">
-                                <td class="mail-ontact text-left"><a href="/message/messageDetail/<% $value._id %>"><% $value.name %></a> 
+                                <td class="mail-ontact text-left"><a href="javascript:;"><% $value.name %></a> 
                                 <% if !!$value.member %>
                                 <span class="label label-warn pull-right">会员</span>
                                 <% /if %>
                                 </td>
-                                <td class="mail-subject text-center"><a href="/message/messageDetail/<% $value._id %>"><% $value.content | textEllipsis:50 %></a>
+                                <td class="mail-subject text-center"><a class="read-msg" href="/message/messageDetail/<% $value._id %>" data-read="<% $value.isRead %>"><% $value.content | textEllipsis:50 %></a>
                                 </td>
                                 <td class=""><% $value.email %></td>
                                 <td class="text-center mail-date"><% $value.postTime | dateFormat:'yyyy.MM.dd hh:mm:ss' %></td>

@@ -266,8 +266,24 @@ var _getMessageDetail = function(req, res){
 	});
 }
 
+/**
+ * 获取未读信息
+ */
+var _getUnreadMessageList = function(req, res){
+	MessageModel.find({isRead:false}, function(ferr, flist){
+		if(ferr){
+			res.sendStatus(500);
+			res.end();
+			return;
+		}
+		res.json({retCode:0, msg:'查询成功', data:flist});
+		res.end();
+	});
+}
+
 exports.addMessage = _addMessage;
 exports.getMessageList = _getMessageList;
 exports.delMessage = _delMessage;
 exports.getAdjoinMessage = _getAdjoinMessage;
 exports.getMessageDetail = _getMessageDetail;
+exports.getUnreadMessageList = _getUnreadMessageList;

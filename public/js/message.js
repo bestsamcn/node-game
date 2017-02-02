@@ -9,7 +9,6 @@ var pageListVm = $('#message-list-vm');
 var delMessageBtn = $('#del-message-btn');
 var parentWindow = window.parent;
 var PWtotalMessageNumber1=parentWindow.document.getElementById('total-message-number1');
-var PWtotalMessageNumber2=parentWindow.document.getElementById('total-message-number2');
 var readFilter = document.getElementsByName('filter');
 var searchInput = document.getElementById('message-search-value');
 var searchBtn = document.getElementById('message-search-btn');
@@ -110,9 +109,7 @@ var delMessage = function() {
                     
                     //控制父级window的信息
                     PWtotalMessageNumber1.innerHTML = parseInt(PWtotalMessageNumber1.innerHTML)-1;
-                    PWtotalMessageNumber2.innerHTML = parseInt(PWtotalMessageNumber2.innerHTML)-1;
                     totalMessage && (totalMessage.innerHTML = parseInt(totalMessage.innerHTML)-1);
-
         			if($this.parent().parent()) $this.parent().parent().remove();
                     
         			swal("删除成功！", "您已经永久删除了这条信息。", "info");
@@ -173,6 +170,8 @@ var searchMessage = function(){
 
 
 
+
+
 $(function() {
     getMessageList(pageIndex, pageSize);
     messageListPage();
@@ -180,4 +179,5 @@ $(function() {
     refreshDocument();
     filterMessageList();
     searchMessage();
+    readMessage();
 });

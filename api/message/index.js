@@ -9,6 +9,8 @@ router.get('/getMessageList', onlyAllowAdmin, messageService.getMessageList);
 router.get('/delMessage', onlyAllowAdmin, messageService.delMessage);
 router.get('/getAdjoinMessage', onlyAllowAdmin, messageService.getAdjoinMessage);
 router.get('/getMessageDetail', onlyAllowAdmin, messageService.getMessageDetail);
+router.get('/getMessageDetail', onlyAllowAdmin, messageService.getMessageDetail);
+router.get('/getUnreadMessageList', onlyAllowAdmin, messageService.getUnreadMessageList);
 
 
 module.exports = router;

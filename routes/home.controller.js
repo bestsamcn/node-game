@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
 	var rcookie = req.cookies.NODESESSIONID;
 	var _getMessageCount = function(){
 		var defer = Q.defer();
-		R.request('http://'+globalConfig.host+':'+globalConfig.port+'/api/message/getMessageList',{
+		R.request('http://'+globalConfig.host+':'+globalConfig.port+'/api/message/getUnreadMessageList',{
 			method:'get',
 			dataType:'json',
 			cookies:{
@@ -35,7 +35,7 @@ router.get('/', function(req, res, next) {
 		}).then(function(data){
 			//只是body不是json对象
 			var rdata = JSON.parse(data.body);
-			defer.resolve(rdata);
+			defer.resolve(rdata.data);
 		},function(){
 			res.sendStatus(500);
 			res.end();
