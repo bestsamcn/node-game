@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/public/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/libs/font-awesome.css" rel="stylesheet">
+    <link href="/public/libs/iCheck/custom.css" rel="stylesheet">
+    <link href="/public/libs/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="/public/libs/animate.css" rel="stylesheet">
+    <link href="/public/css/base.css" rel="stylesheet">
+    <link href="/public/css/style.css" rel="stylesheet"></head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="mail-box-header">
+                    <form method="get" action="index.html" class="pull-right mail-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="search" id="game-search-input" placeholder="搜索游戏名">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-sm btn-primary" id="game-search-btn">搜索</button>
+                            </div>
+                        </div>
+                    </form>
+                    <h2>
+                        游戏列表 (
+                        <span id="total-game">0</span>
+                        )
+                    </h2>
+                    <div class="row mail-tools tooltip-demo m-t-md">
+                        <div class="col-md-8 col-xs-8">
+                            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="刷新" id="refresh-btn">
+                                <i class="fa fa-refresh"></i>
+                                刷新
+                            </button>
+                            <span class="btn btn-sm btn-danger" title="渠道名" id="reset-all-game-btn">{{ channelDetail.channelName }}</span>
+                            <input type="hidden" value="{{ channelDetail._id }}" id="channel-id" name="channel-id">
+                            <select class="btn btn-sm btn-info" name="mode" id="mode" title="模式">
+                                {{ if channelDetail.mode === 1 }}
+                                <option value="" disabled>请选择</option>
+                                <option value="1" selected>CPA</option>
+                                <option value="2">CPS</option>
+                                {{ else if channelDetail.mode === 2 }}
+                                <option value="" disabled>请选择</option>
+                                <option value="1">CPA</option>
+                                <option value="2" selected>CPS</option>
+                                {{ /if }}
+                            </select>
+                            <input id="input-date" class="laydate-icon form-control layer-date">
+                        </div>
+                        <div class="col-md-4 col-xs-4 btn-group text-right">
+                            <button class="btn btn-white btn-sm no-float" disabled id="prev-page-btn"> <i class="fa fa-arrow-left"></i>
+                            </button>
+                            <button class="btn btn-white btn-sm no-float" disabled id="next-page-btn"> <i class="fa fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead id="game-header-vm">
+                                </thead>
+                                <script type="text/html" id="game-header-tpl">
+                                <% if mode === '1' %> 
+                                    <tr>
+                                        <th>渠道名</th>
+                                        <th class="text-center">日期</th>
+                                        <th class="text-center">游戏名</th>
+                                        <th class="text-center">安装数</th>
+                                        <th class="text-center">单价</th>
+                                        <th class="text-center">结算金额</th>
+                                    </tr>
+                                <% else %> 
+                                    <tr>
+                                        <th>渠道名</th>
+                                        <th class="text-center">日期</th>
+                                        <th class="text-center">游戏名</th>
+                                        <th class="text-center">新增用户</th>
+                                        <th class="text-center">总流水</th>
+                                        <th class="text-center">ARPU</th>
+                                        <th class="text-center">分成比例</th>
+                                        <th class="text-center">结算金额</th>
+                                    </tr>
+                                <% /if %>
+                                </script> 
+                                <tbody id="game-list-vm">
+                                </tbody>
+                                <script type="text/html" id="game-cpa-list-tpl">
+                                    <% if !!gameList.length %>
+                                    <% each gameList %>
+                                    <tr>
+                                        <td><% $value.channelName %></td>
+                                        <td class="text-center"><% $value.inputDate | dateFormat:'yyyy-MM-dd' %></td>
+                                        <td class="text-center"><% $value.gameName %></td>
+
+                                        <td class="text-center"><% $value.installAmount %></td>
+                                        <td class="text-center"><% $value.singlePrize %></td>
+                                        
+                                        <td class="text-center"><% $value.settlementAmount %></td>
+                                    </tr>
+                                    <% /each %>
+                                    <% /if %>
+                                </script>
+                                <script type="text/html" id="game-cps-list-tpl">
+                                    <% if !!gameList.length %>
+                                    <% each gameList %>
+                                    <tr>
+                                        <td><% $value.channelName %></td>
+                                        <td class="text-center"><% $value.inputDate | dateFormat:'yyyy-MM-dd' %></td>
+                                        <td class="text-center"><% $value.gameName %></td>
+                                        <td class="text-center"><% $value.additionUser %></td>
+                                        <td class="text-center"><% $value.totalStream %></td>
+                                        <td class="text-center"><% $value.arpu %></td>
+                                        <td class="text-center"><% $value.splitRatio %></td>
+                                        <td class="text-center"><% $value.settlementAmount %></td>
+                                    </tr>
+                                    <% /each %>
+                                    <% /if %>
+                                </script>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="/public/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/public/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/public/libs/art-template/dist/template.js"></script>
+    <script src="/public/libs/sweetalert/sweetalert.min.js"></script>
+     <!-- layerDate plugin javascript -->
+    <script src="/public/libs/laydate/laydate.js"></script>
+    <!-- 自定义js -->
+    <script src="/public/js/util.js"></script>
+    <script src="/public/js/artHelper.js"></script>
+    <script src="/public/js/content.js"></script>
+    <script src="/public/js/user.js"></script>
+
+</body>
+
+</html>

@@ -9,8 +9,8 @@ var globalConfig = require('../config');
 /**
  * 添加游戏
  */
-router.get('/addGame/:id', routerOnlyForAdmin, function(req, res){
-	var _channel_id = req.params.id;
+router.get('/addGame/:channelId', routerOnlyForAdmin, function(req, res){
+	var _channel_id = req.params.channelId;
 	if(!_channel_id || _channel_id.length !== 24){
 		res.redirect('back');
 		res.end();
@@ -22,7 +22,7 @@ router.get('/addGame/:id', routerOnlyForAdmin, function(req, res){
 		R.request('http://'+globalConfig.host+':'+globalConfig.port+'/api/admin/getChannelDetail',{
 			method:'get',
 			params:{
-				id:_channel_id
+				channelId:_channel_id
 			},
 			cookies:{
 				NODESESSIONID:rcookies
@@ -55,8 +55,8 @@ router.get('/addGame/:id', routerOnlyForAdmin, function(req, res){
 /**
  * 游戏列表
  */
- router.get('/:id', routerOnlyForAdmin, function(req, res){
- 	var _channel_id = req.params.id;
+ router.get('/:channelId', routerOnlyForAdmin, function(req, res){
+ 	var _channel_id = req.params.channelId;
 	if(!_channel_id || _channel_id.length !== 24){
 		res.redirect('back');
 		res.end();
@@ -68,7 +68,7 @@ router.get('/addGame/:id', routerOnlyForAdmin, function(req, res){
 		R.request('http://'+globalConfig.host+':'+globalConfig.port+'/api/admin/getChannelDetail',{
 			method:'get',
 			params:{
-				id:_channel_id
+				channelId:_channel_id
 			},
 			cookies:{
 				NODESESSIONID:rcookies
@@ -76,6 +76,7 @@ router.get('/addGame/:id', routerOnlyForAdmin, function(req, res){
 			dataType:'json'
 		}).then(function(rdata){
 			var data = JSON.parse(rdata.body);
+			console.log(data,'fffffffffffff')
 			if(data.retCode !== 0){
 				res.redirect('back');
 				res.end();

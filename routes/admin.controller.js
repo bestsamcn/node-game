@@ -40,8 +40,8 @@ router.get('/addChannel', function(req, res, next){
 /**
  * 编辑修改渠道
  */
-router.get('/editChannel/:id', function(req, res, next){
- 	if(!req.params.id || req.params.id.length !== 24){
+router.get('/editChannel/:channelId', function(req, res, next){
+ 	if(!req.params.channelId || req.params.channelId.length !== 24){
  		res.redirect('back');
  		return;
  	}
@@ -51,7 +51,7 @@ router.get('/editChannel/:id', function(req, res, next){
  		R.request('http://'+globalConfig.host+':'+globalConfig.port+'/api/admin/getChannelDetail',{
 	 		method:'get',
 	 		params:{
-	 			id:req.params.id
+	 			channelId:req.params.channelId
 	 		},
 	 		cookies:{
 	 			NODESESSIONID:rcookie
@@ -59,7 +59,6 @@ router.get('/editChannel/:id', function(req, res, next){
 	 		dataType:'json'
 	 	}).then(function(res){
 	 		var data = JSON.parse(res.body);
-	 		console.log(data)
 	 		defer.resolve(data);
 	 	},function(){
 	 		res.sendStatus(500);

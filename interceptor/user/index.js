@@ -74,6 +74,18 @@ var _routerOnlyForAdmin = function(req, res, next){
 }
 
 /**
+ * router只允许用户登录后进入
+ */
+var _routerOnlyForLogin = function(req, res, next){
+    if(!req.session.isLogin || !req.session.user._id){
+        res.redirect('back');
+        res.end();
+        return;
+    }
+    next();
+}
+
+/**
  * 只允许用户自己和管理员访问api
  */
 
@@ -92,3 +104,4 @@ exports.setAccessLog =_setAccessLog;
 exports.onlyAllowAdmin = _onlyAllowAdmin;
 exports.routerOnlyForAdmin = _routerOnlyForAdmin;
 exports.apiJustForAdminAndYourself = _apiJustForAdminAndYourself;
+exports.routerOnlyForLogin = _routerOnlyForLogin;

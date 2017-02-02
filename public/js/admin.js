@@ -381,12 +381,13 @@
 		var channel = {
 			confirmFunc:function(cb){
 				 swal({
-		            title: "确定删除该游戏？",
-		            text: "删除后将无法恢复，请谨慎操作！",
+		            title: "确定删除该渠道？",
+		            text: "删除该渠道以及旗下所有游戏，将无法恢复，请谨慎操作！",
 		            type: "warning",
 		            showCancelButton: true,
-		            confirmButtonColor: "#DD6B55",
+		            confirmButtonColor: "#f05050",
 		            confirmButtonText: "删除",
+		            cancelButtonText:"取消",
 		            closeOnConfirm: false
 		        }, function() {
 		        	cb && cb();

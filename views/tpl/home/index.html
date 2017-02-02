@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title> MEME- 主页</title>
+    <title>{{ title }}</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <!--[if lt IE 9]>
@@ -38,9 +38,6 @@
                         <div class="logo-element">MEME
                         </div>
                     </li>
-                    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                        <span class="ng-scope">我自己</span>
-                    </li>
                     <li>
                         <a class="J_menuItem" href="/home">
                             <i class="fa fa-home"></i>
@@ -53,11 +50,19 @@
                             <span class="nav-label">首页</span>
                         </a>
                     </li>
+                    {{ if session.user.userType === 1 }}
+                    <li>
+                        <a class="J_menuItem" href="/user">
+                            <i class="fa fa-sitemap"></i>
+                            <span class="nav-label">渠道</span>
+                        </a>
+                    </li>
+                    {{ /if }}
+                    {{ if session.user.userType > 1}}
                     <li class="line dk"></li>
                     <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
                         <span class="ng-scope">管理员</span>
                     </li>
-                    {{ if session.user.userType > 1}}
                     <li>
                         <a href="/message" class="J_menuItem"><i class="fa fa-envelope"></i> <span class="nav-label">信箱 </span><span class="label label-warning pull-right" id="total-message-number1">{{ messageList.total }}</span></a>
                     </li>
@@ -150,7 +155,11 @@
                 </nav>
             </div>
             <div class="row J_mainContent" id="content-main">
+                {{ if session.user.userType > 1 }}
                 <iframe id="J_iframe" width="100%" height="100%" src="/admin" frameborder="0" data-id="" seamless></iframe>
+                {{ else }}
+                <iframe id="J_iframe" width="100%" height="100%" src="/user" frameborder="0" data-id="" seamless></iframe>
+                {{ /if }}
             </div>
         </div>
         <!--右侧部分结束-->

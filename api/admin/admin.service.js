@@ -337,16 +337,16 @@ var _editChannel = function(req, res){
 /**
  * @name  /api/admin/getChannelDetail 获取指定id的渠道信息
  * @type {get}
- * @param {id:String} 渠道id
+ * @param {channelId:String} 渠道id
  * @return {retCode:Number, msg:String, data:entity }  
  */
 var _getChannelDetail = function(req, res){
- 	if(!req.query.id || req.query.id.length !== 24){
+ 	if(!req.query.channelId || req.query.channelId.length !== 24){
  		res.json({retCode:100032, msg:'无该渠道信息', data:null});
  		res.end();
  		return;
  	}
- 	UserModel.findById(req.query.id, function(ferr, fdoc){
+ 	UserModel.findById(req.query.channelId, function(ferr, fdoc){
  		if(ferr){
  			res.sendStatus(500);
  			res.end();
@@ -365,11 +365,11 @@ var _getChannelDetail = function(req, res){
 /**
  * @name  /api/admin/editChannelPassword 修改渠道密码
  * @type {post}
- * @param {id:String}  渠道id
+ * @param {channelId:String}  渠道id
  * @param {password:String}  新密码
  */
 var _editChannelPassword = function(req, res){
- 	var _channel_id = req.body.id,
+ 	var _channel_id = req.body.channelId,
  		_password = req.body.password;
  	if(!_channel_id || _channel_id.length !== 24){
  		res.json({retCode:100032, msg:'无该渠道信息', data:null});

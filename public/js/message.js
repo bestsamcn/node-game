@@ -92,8 +92,9 @@ var delMessage = function() {
             text: "删除后将无法恢复，请谨慎操作！",
             type: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
+            confirmButtonColor: "#f05050",
             confirmButtonText: "删除",
+            cancelButtonText:"取消",
             closeOnConfirm: false
         }, function() {
         	$.ajax({
