@@ -8,6 +8,7 @@ var NODE_ENV = process.env.NODE_ENV || 'development',
 	MONGO_DATABASE = process.env.MONGO_DATABASE || 'game',
 	MONGO_USER = process.env.MONGO_USER || 'game',
 	MONGO_PASSWORD = process.env.MONGO_PASSWORD || '123123';
+	MONGO_PORT = process.env.MONGO_PORT || 27017;
 var _config = {
 	host:NODE_HOST,
 	port:NODE_PORT,
@@ -29,7 +30,7 @@ var _config = {
 	mongoConfig:{
 		// mongoose.connect('mongodb://username:password@host:port/database?options...');
 		// mongodb: 'mongodb://admin:123123@10.28.5.197/swyc',
-		mongodb: 'mongodb://'+MONGO_USER+':'+MONGO_PASSWORD+'@'+NODE_HOST+'/'+MONGO_DATABASE,
+		mongodb: 'mongodb://'+MONGO_USER+':'+MONGO_PASSWORD+'@'+NODE_HOST+':'+MONGO_PORT+'/'+MONGO_DATABASE,
 	    database: MONGO_DATABASE,
 	    server: NODE_HOST
 	},

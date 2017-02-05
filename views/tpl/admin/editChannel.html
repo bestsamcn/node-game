@@ -46,20 +46,9 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ">合作模式：</label>
                                 <div class="col-sm-8 m-b-xs">
-                                    <select name="mode" class="input-sm form-control input-s-sm inline">
-                                    	{{ if channelDetail.mode === 1 }}
-                                        <option value="" disabled>请选择</option>
-                                        <option value="1" selected>CPA</option>
-                                        <option value="2">CPS</option>
-                                        {{ else }}
-                                        <option value="" disabled>请选择</option>
-                                        <option value="1">CPA</option>
-                                        <option value="2" selected>CPS</option>
-                                        {{ /if }}
-                                    </select>
+                                    <input type="text" name="mode" disabled value="{{ channelDetail.mode | transformMode }}" placeholder="合作模式" class="form-control">
                                 </div>
                             </div>
-                            
 							<div class="form-group">
                                 <input type="text" style="position:absolute;top:-100000px;">
                                 <label class="col-sm-3 control-label">公司名称：</label>

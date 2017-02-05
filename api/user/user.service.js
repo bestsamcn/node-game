@@ -237,7 +237,7 @@ var _userSignout =  function(req, res) {
 	res.locals.session = req.session;
 	res.clearCookie('NODESESSIONID');
 	// res.json({retCode:0,msg:'退出成功',data:null});
-	res.redirect('/');
+	res.redirect('/sign/signin');
 };
 
 exports.userSignup = _userSignup;

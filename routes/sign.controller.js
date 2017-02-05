@@ -10,7 +10,7 @@ var router = express.Router();
  */
 router.get('*',function(req, res, next){
 	if(req.session.isLogin){
-		res.redirect('/');
+		res.redirect('/home');
 		return;
 	}
 	next();
