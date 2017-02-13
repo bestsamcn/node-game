@@ -7,6 +7,7 @@ var $$ = require('../../tools');
 var Q = require('q');
 var UserModel = require('../../model/').UserModel;
 var crypto = require('crypto');
+var _ = require('loadash');
 
 /**
  * _userSignup 用户注册
@@ -32,7 +33,8 @@ var _userSignup = function(req, res){
 	// 	res.end();
 	// 	return;
 	// }
-
+	_account = _.trim(_account);
+	_password = _.trim(_password);
 	//数据格式验证
 	if (_account.length < 2 || _account.length > 24) {
 		res.json({
@@ -130,6 +132,8 @@ var _userSignup = function(req, res){
 var _userSignin = function(req, res){
 	var _account = req.body.account,
 		_password = req.body.password;
+	_account = _.trim(_account);
+	_password = _.trim(_password);
 	if(!_account || _account.length < 2){
 		res.json({retCode: 100005, msg:'用户名不能为空或者少于2位', data:null});
 		res.end();
