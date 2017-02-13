@@ -19,11 +19,11 @@ grunt
 ```
 
 ##部署
-项目使用了nginx服务器做反向代理
-在config目录中的index.js需要在生产环境中配置好相关的环境变量
-mongodb需要开启权限，并添加授权用户，还需要做好日常定时备份
-linux对外限制访问端口
-启动项目
+- 项目使用了nginx服务器做反向代理
+- 在config目录中的index.js需要在生产环境中配置好相关的环境变量
+- mongodb需要开启权限，并添加授权用户，还需要做好日常定时备份
+- linux对外限制访问端口
+- 启动项目
 ```
 redis-server.exe
 nginx start
