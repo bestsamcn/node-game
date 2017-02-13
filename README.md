@@ -3,7 +3,9 @@
 
 
 ## 简介
-node-game 是一个以express框架（后端）和hAdmin（前端）为基础的javascript项目，涵盖了用户注册，登录，信息修改，用户筛选，搜索等功能
+node-game 是一个以express框架（后端）和hAdmin（前端）为基础的javascript项目，涵盖了用户注册，登录，信息修改，用户筛选，搜索等功能。
+- develop分支适应需求已经修改了网站首页路由为用户中心
+- master主分支路由正常不变
 
 ## 准备
 ```
