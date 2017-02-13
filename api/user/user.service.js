@@ -7,7 +7,7 @@ var $$ = require('../../tools');
 var Q = require('q');
 var UserModel = require('../../model/').UserModel;
 var crypto = require('crypto');
-var _ = require('loadash');
+var _ = require('lodash');
 
 /**
  * _userSignup 用户注册
@@ -173,7 +173,10 @@ var _userSignin = function(req, res){
 	var _isEqualToPassword = function(fdoc){
 		var defer = Q.defer();
 		var md5 = crypto.createHash('md5');
-		_password = md5.update(_password).digest('hex');
+		//渠道密码不加密验证
+		if(fdoc.userType > 1){
+			_password = md5.update(_password).digest('hex');
+		}
 		if(_password !== fdoc.password ){
 			res.json({ retCode:100008, msg:'密码错误', data:null });
 			res.end();

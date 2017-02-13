@@ -90,7 +90,8 @@ var _addChannel = function(req, res){
 	//创建渠道
 	var _createChannel = function(){
 		var md5 = crypto.createHash('md5');
-		_password = md5.update(_password).digest('hex');
+		// stupid code for user
+		// _password = md5.update(_password).digest('hex');
 		var _createIp = $$.getClientIp(req).match(/\d+\.\d+\.\d+\.\d+/)[0] || '';
 		var entity = {
 			account:_account,
@@ -479,4 +480,4 @@ exports.getChannelList = _getChannelList;
 exports.editChannel = _editChannel;
 exports.getChannelDetail = _getChannelDetail;
 exports.editChannelPassword = _editChannelPassword;
-exports.delChannel = _delChannel
+exports.delChannel = _delChannel;
