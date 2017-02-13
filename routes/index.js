@@ -13,7 +13,7 @@ var gameController = require('./game.controller');
 var router =  function(app){
 	app.use('/',indexController);
 	app.use('/home',homeController);
-	app.use('/message',messageController);
+	// app.use('/message',messageController);
 	app.use('/sign',signController);
 	app.use('/user',userController);
 	app.use('/admin',adminController);

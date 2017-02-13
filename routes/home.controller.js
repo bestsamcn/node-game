@@ -12,7 +12,7 @@ var globalConfig = require('../config');
  */
 router.get('*', function(req, res, next){
 	if(!req.session.isLogin){
-		res.redirect('/sign/signin')
+		res.redirect('/sign/signin');
 		res.end();
 		return;
 	}
