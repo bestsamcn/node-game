@@ -20,6 +20,15 @@ npm install
 grunt
 ```
 
+##测试
+####使用了[mocha](https://github.com/mochajs/mocha "mocha")  [supertest](https://github.com/visionmedia/supertest "supertest") [chai](https://github.com/chaijs/chai "chai")
+####[请看阮一峰老师的入门教程](http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html "入门教程")
+####请先关闭了node服务器再测试
+```
+cd test
+mocha user.test.js
+```
+
 ##部署
 - 项目使用了nginx服务器做反向代理
 - 在config目录中的index.js需要在生产环境中配置好相关的环境变量
