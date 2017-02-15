@@ -5,8 +5,5 @@ node_js:
  - stable
 
 services:
- mongodb
- redis
-
-
-  
+ - mongodb
+ - redis

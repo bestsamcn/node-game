@@ -4,7 +4,8 @@
   "description": "node back-end management",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test":"mocha ./test"
   },
   "dependencies": {
     "art-template": "^3.1.3",

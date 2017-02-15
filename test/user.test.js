@@ -241,5 +241,4 @@ describe('user.test.js', function(){
 
 		});
 	});
-
 });
