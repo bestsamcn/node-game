@@ -1,7 +1,9 @@
 # node-game 以express框架为基础的node项目
+[![build status][travis-image]][travis-url]
 [![dependencies Status](https://david-dm.org/bestsamcn/node-game/status.svg)](https://david-dm.org/bestsamcn/node-game)
 
-
+[travis-image]: https://travis-ci.org/bestsamcn/node-game.svg?branch=develop
+[travis-url]: https://travis-ci.org/bestsamcn/node-game
 ## 简介
 node-game 是一个以express框架（后端）和hAdmin（前端）为基础的javascript项目，涵盖了用户注册，登录，信息修改，用户筛选，搜索等功能。
 - develop分支适应需求已经修改了网站首页路由为用户中心
@@ -9,7 +11,7 @@ node-game 是一个以express框架（后端）和hAdmin（前端）为基础的
 
 ## 准备
 ```
-mongodb 3.2+
+mongodb 3.2
 redis 3.2
 ```
 ## 开发
@@ -18,6 +20,15 @@ https://github.com/bestsamcn/node-game.git
 cd node-game
 npm install
 grunt
+```
+
+##测试
+####使用了[mocha](https://github.com/mochajs/mocha "mocha")  [supertest](https://github.com/visionmedia/supertest "supertest") [chai](https://github.com/chaijs/chai "chai")
+####[请看阮一峰老师的入门教程](http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html "入门教程")
+####请先关闭了node服务器再测试
+```
+cd test
+mocha user.test.js
 ```
 
 ##部署

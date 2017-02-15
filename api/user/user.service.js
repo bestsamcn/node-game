@@ -7,7 +7,7 @@ var $$ = require('../../tools');
 var Q = require('q');
 var UserModel = require('../../model/').UserModel;
 var crypto = require('crypto');
-var _ = require('loadash');
+var _ = require('lodash');
 
 /**
  * _userSignup 用户注册
@@ -77,9 +77,7 @@ var _userSignup = function(req, res){
 	 * @return {promise} 返回一个可以执行的promise
 	 */
 	var _notExistAccount = function(){
-		
 		var defer = Q.defer();
-
 		UserModel.findOne({ account:_account }, function(ferr, fdoc){
 			if(ferr){
 				res.senStatus(500);
@@ -105,6 +103,7 @@ var _userSignup = function(req, res){
 			account: _account,
 			password: _password,
 			mobile: _mobile,
+			channelName:_account,
 			createLog: {
 				createTime: Date.now(),
 				createIp: uip
@@ -173,7 +172,10 @@ var _userSignin = function(req, res){
 	var _isEqualToPassword = function(fdoc){
 		var defer = Q.defer();
 		var md5 = crypto.createHash('md5');
-		_password = md5.update(_password).digest('hex');
+		
+		if(fdoc.userType >1 ){
+			_password = md5.update(_password).digest('hex');
+		}
 		if(_password !== fdoc.password ){
 			res.json({ retCode:100008, msg:'密码错误', data:null });
 			res.end();
@@ -244,7 +246,54 @@ var _userSignout =  function(req, res) {
 	res.redirect('/sign/signin');
 };
 
+/**
+ * 删除用户
+ */
+var _delUser = function(req, res){
+	var _account = req.query.account;
+	if(!_account){
+		console.log('dddddddddddddddddddddd')
+		res.json({ retCode:100007, msg:'用户名不存在', data:null });
+		res.end();
+		return;
+	}
+	/**
+	* 检测用户名是否存在
+	* @return {object} promise
+	*/
+	var _isExistAccount = function(){
+		var defer = Q.defer();
+		UserModel.findOne({ account:_account }, function(ferr, fdoc){
+			if(ferr){
+				res.sendStatus(500);
+				res.end();
+				return;
+			}
+			if(!fdoc){
+				res.json({ retCode:100007, msg:'用户名不存在', data:null });
+				res.end();
+				return;
+			}
+			defer.resolve(fdoc);
+		});
+		return defer.promise;
+	}
+	var _delFunc = function(user){
+		UserModel.findByIdAndRemove(user._id, function(frerr, frdoc){
+			if(frerr || !frdoc){
+				res.sendStatus(500);
+				res.end();
+				return;
+			}
+			res.json({ retCode:0, msg:'删除成功', data:user });
+			res.end();
+		});
+	}
+	_isExistAccount().then(_delFunc);
+}
+
 exports.userSignup = _userSignup;
 exports.userSignin = _userSignin;
 exports.userSignout = _userSignout;
 exports.getCurrentUser = _getCurrentUser;
+exports.delUser = _delUser;

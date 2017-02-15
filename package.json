@@ -24,6 +24,7 @@
     "grunt-nodemon": "^0.4.2",
     "grunt-open": "^0.2.3",
     "loadash": "0.0.1",
+    "lodash": "^4.17.4",
     "mongoose": "^4.6.8",
     "morgan": "~1.7.0",
     "pm2": "^2.2.3",
@@ -46,5 +47,10 @@
   "bugs": {
     "url": "https://github.com/bestsamcn/node-game/issues"
   },
-  "homepage": "https://github.com/bestsamcn/node-game#readme"
+  "homepage": "https://github.com/bestsamcn/node-game#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "supertest": "^3.0.0"
+  }
 }
