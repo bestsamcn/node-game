@@ -255,7 +255,6 @@ var _userSignout =  function(req, res) {
 var _delUser = function(req, res){
 	var _account = req.query.account;
 	if(!_account){
-		console.log('dddddddddddddddddddddd')
 		res.json({ retCode:100007, msg:'用户名不存在', data:null });
 		res.end();
 		return;
