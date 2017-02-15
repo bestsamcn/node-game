@@ -92,7 +92,7 @@ router.get('/editChannelPassword/:id', function(req, res){
 		R.request('http://'+globalConfig.host+':'+globalConfig.port+'/api/admin/getChannelDetail',{
 			method:'get',
 			params:{
-				id:_channel_id
+				channelId:_channel_id
 			},
 			cookies:{
 				NODESESSIONID:rcookies
