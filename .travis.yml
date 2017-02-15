@@ -8,12 +8,3 @@ services:
  mongodb
  redis
 
-# S: Build Lifecycle
-install:
-  - npm install
-
-#before_script:
-  - npm install -g grunt
-
-script:
-  - grunt
