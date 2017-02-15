@@ -1,4 +1,5 @@
 # node-game 以express框架为基础的node项目
+[![build status][travis-image]][travis-url]
 [![dependencies Status](https://david-dm.org/bestsamcn/node-game/status.svg)](https://david-dm.org/bestsamcn/node-game)
 
 
