@@ -95,16 +95,14 @@
                                 <tbody id="game-list-vm">
                                 </tbody>
                                 <script type="text/html" id="game-cpa-list-tpl">
-                                    <% if !!gameList.length %>
-                                    <% each gameList %>
+                                    <% if !!game.data.length %>
+                                    <% each game.data %>
                                     <tr>
                                         <td><% $value.channelName %></td>
                                         <td class="text-center"><% $value.inputDate | dateFormat:'yyyy-MM-dd' %></td>
                                         <td class="text-center"><% $value.gameName %></td>
-
                                         <td class="text-center"><% $value.installAmount %></td>
                                         <td class="text-center"><% $value.singlePrize %></td>
-                                        
                                         <td class="text-center"><% $value.settlementAmount %></td>
                                         <td class="pull-right text-center">
                                             <a href="/game/editGame/1/<% $value._id %>" title="修改" class="margin-0-5">
@@ -119,8 +117,8 @@
                                     <% /if %>
                                 </script>
                                 <script type="text/html" id="game-cps-list-tpl">
-                                    <% if !!gameList.length %>
-                                    <% each gameList %>
+                                    <% if !!game.data.length %>
+                                    <% each game.data %>
                                     <tr>
                                         <td><% $value.channelName %></td>
                                         <td class="text-center"><% $value.inputDate | dateFormat:'yyyy-MM-dd' %></td>
@@ -128,7 +126,7 @@
                                         <td class="text-center"><% $value.additionUser %></td>
                                         <td class="text-center"><% $value.totalStream %></td>
                                         <td class="text-center"><% $value.arpu %></td>
-                                        <td class="text-center"><% $value.splitRatio %></td>
+                                        <td class="text-center"><% $value.splitRatio %>%</td>
                                         <td class="text-center"><% $value.settlementAmount %></td>
                                         <td class="pull-right text-center">
                                             <a href="/game/editGame/2/<% $value._id %>" title="修改" class="margin-0-5">

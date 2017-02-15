@@ -257,7 +257,8 @@
 						var tpl = modeValue === '1' ? 'game-cpa-list-tpl' : 'game-cps-list-tpl';
 						var gameHeaderHtm = template('game-header-tpl',{mode:modeValue});
 						gameHeaderVm.html(gameHeaderHtm)
-						var html = template(tpl,{gameList:res.data});
+						console.log(res)
+						var html = template(tpl,{game:res});
 						gameListVM.html(html);
 						totalGame.html(res.total);
 						if(res.total <= _pageSize*_pageIndex){
