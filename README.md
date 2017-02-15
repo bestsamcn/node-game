@@ -11,7 +11,7 @@ node-game 是一个以express框架（后端）和hAdmin（前端）为基础的
 
 ## 准备
 ```
-mongodb 3.2+
+mongodb 3.2
 redis 3.2
 ```
 ## 开发
