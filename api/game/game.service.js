@@ -320,29 +320,37 @@ var _getGameList = function(req, res, next) {
 	var _channel_id = req.query.channelId;
 	var _mode = req.query.mode || 1; //1-cpa,2-cps
 	var _search = req.query.search; //渠道名称|游戏名称
-	var _inputDate = req.query.inputDate;
+	var _startDate = req.query.startDate;
+	var _endDate = req.query.endDate;
 	var _company = req.query.company;
 	var filterObj = {};
+	var matchObj = {};
 
 	//如果是指定了渠道id，那么渠道的名的模糊搜索将取消，主要针对用户查询自己的游戏列表
 	if (!!_channel_id && _channel_id.length === 24) {
 		//怪异啊，不能直接赋值，需要重新开内存，才能赋值属性，这个是涉及到关联表的属性查询
 		filterObj.channel = {};
 		filterObj.channel._id = _channel_id
+		matchObj.channel = new ObjectId(_channel_id);
 		if (!!_search) {
 			var reg = new RegExp(_search, 'gim');
 			filterObj.gameName = reg;
+			matchObj.gameName = reg;
 		}
 	} else {
 		//搜索-渠道名-游戏名
 		if (!!_search) {
 			var reg = new RegExp(_search, 'gim');
-			// filterObj.$or = [];
-			// filterObj.$or[0] = {};
-			// filterObj.$or[0].channel = {};
-			// filterObj.$or[0].channel.channelName ={$regex:reg};
-			// filterObj.$or[1].gameName = {$regex:reg};
 			filterObj.$or = [{
+				'channelName': {
+					$regex: reg
+				}
+			}, {
+				'gameName': {
+					$regex: reg
+				}
+			}]
+			matchObj.$or = [{
 				'channelName': {
 					$regex: reg
 				}
@@ -354,19 +362,27 @@ var _getGameList = function(req, res, next) {
 		}
 	}
 
-	//搜索-日期
-	if (!!_inputDate) {
-		_inputDate = new Date(_inputDate).getTime();
-		filterObj.inputDate = _inputDate;
+	// //搜索-日期
+	if(!!_startDate && !!_endDate){
+		if(_startDate === _endDate){
+			_inputDate = new Date(_startDate).getTime();
+			filterObj.inputDate = _inputDate;
+			matchObj.inputDate = _inputDate;
+		}else{
+			_startDate = new Date(_startDate).getTime();
+			_endDate = new Date(_endDate).getTime();
+			filterObj.inputDate = {$gte:_startDate, $lte:_endDate}
+			matchObj.inputDate = {$gte:_startDate, $lte:_endDate}
+		}
 	}
 
 	//搜索-公司
 	if (!!_company) {
 		filterObj.company = _company;
+		matchObj.company = _company;
 	}
 	//搜索-模式cpa cps
 	var _model = _mode === '1' ? CostActiveModel : CostSalesModel;
-
 	//获取分页数据
 	var _getList = function() {
 		var defer = Q.defer();
@@ -374,6 +390,7 @@ var _getGameList = function(req, res, next) {
 			'_id': -1
 		}).skip(_pageIndex * _pageSize).limit(_pageSize).exec(function(ferr, flist) {
 			if (ferr) {
+				console.log(ferr, 'mongodb error');
 				res.sendStatus(500);
 				res.end();
 				return;
@@ -393,6 +410,7 @@ var _getGameList = function(req, res, next) {
 		var defer = Q.defer();
 		_model.count(filterObj, function(cerr, ctotal) {
 			if (cerr) {
+				console.log(aerr, 'mongodb error');
 				res.sendStatus(500);
 				res.end();
 				return;
@@ -406,10 +424,11 @@ var _getGameList = function(req, res, next) {
 	var _getTotalInstall = function() {
 		var defer = Q.defer();
 		_model.aggregate([
-			{$match:{channel:new ObjectId(_channel_id)}},
+			{$match:matchObj},
 			{$group:{_id:null, totalInstall:{$sum:'$installAmount'}}}
 		], function(aerr, aobj){
 			if(aerr){
+				console.log(aerr, 'mongodb error');
 				res.sendStatus(500);
 				res.end();
 				return;
@@ -423,10 +442,11 @@ var _getGameList = function(req, res, next) {
 	var _getTotalSettlement = function() {
 		var defer = Q.defer();
 		_model.aggregate([
-			{$match:{channel:new ObjectId(_channel_id)}},
+			{$match:matchObj},
 			{$group:{_id:null, totalSettlement:{$sum:'$settlementAmount'}}}
 		], function(aerr, aobj){
 			if(aerr){
+				console.log(aerr, 'mongodb error');
 				res.sendStatus(500);
 				res.end();
 				return;
@@ -439,10 +459,11 @@ var _getGameList = function(req, res, next) {
 	var _getTotalAddition = function(){
 		var defer = Q.defer();
 		_model.aggregate([
-			{$match:{channel:new ObjectId(_channel_id)}},
+			{$match:matchObj},
 			{$group:{_id:null, totalAddition:{$sum:'$additionUser'}}}
 		], function(aerr, aobj){
 			if(aerr){
+				console.log(aerr, 'mongodb error');
 				res.sendStatus(500);
 				res.end();
 				return;
@@ -455,7 +476,7 @@ var _getGameList = function(req, res, next) {
 	var _getAllTotalStream = function(){
 		var defer = Q.defer();
 		_model.aggregate([
-			{$match:{channel:new ObjectId(_channel_id)}},
+			{$match:matchObj},
 			{$group:{_id:null, allTotalStream:{$sum:'$totalStream'}}}
 		], function(aerr, aobj){
 			if(aerr){
@@ -469,15 +490,13 @@ var _getGameList = function(req, res, next) {
 	}
 	//返回
 	if(_mode === '1'){
-		console.log('cpacpacpapcpacpacpapcapcpacpacpapcapcapcpacpacpac')
 		Q.all([_getList(), _getTotal(), _getTotalInstall(), _getTotalSettlement()]).then(function(flist){
-			console.log(flist)
 			var _pageIndex = flist[0].pageIndex + 1;
 			var _pageSize = flist[0].pageSize;
 			var _gameList = flist[0].flist;
 			var _total = flist[1] || 0;
-			var _totalInstall = flist[2][0].totalInstall || 0;
-			var _totalSettlement = flist[3][0].totalSettlement || 0;
+			var _totalInstall = !!flist[2].length && flist[2][0].totalInstall || 0;
+			var _totalSettlement = !!flist[3].length && flist[3][0].totalSettlement || 0;
 			res.json({
 				retCode: 0,
 				msg: '查询成功',
@@ -492,31 +511,28 @@ var _getGameList = function(req, res, next) {
 		});
 		return
 	}
-	console.log('cpcpscpscpscpscpspcspcscpscpspc')
 	Q.all([_getList(), _getTotal(), _getTotalAddition(), _getAllTotalStream(),  _getTotalSettlement()]).then(function(flist){
-
-			console.log(flist,'fffffffffffffffffffffffffffffff')
-			var _pageIndex = flist[0].pageIndex + 1;
-			var _pageSize = flist[0].pageSize;
-			var _gameList = flist[0].flist;
-			var _total = flist[1] || 0;
-			var _totalAddition = flist[2][0].totalAddition || 0;
-			var _allTotalStream = flist[3][0].allTotalStream || 0;
-			var _totalSettlement = flist[4][0].totalSettlement || 0;
-			res.json({
-				retCode: 0,
-				msg: '查询成功',
-				data: _gameList,
-				pageIndex: _pageIndex,
-				pageSize: _pageSize,
-				total: _total,
-				allTotalStream:_allTotalStream,
-				totalSettlement:_totalSettlement,
-				totalAddition:_totalAddition
-			});
-			res.end();
+		var _pageIndex = flist[0].pageIndex + 1;
+		var _pageSize = flist[0].pageSize;
+		var _gameList = flist[0].flist;
+		var _total = flist[1] || 0;
+		var _totalAddition = !!flist[2].length && flist[2][0].totalAddition || 0;
+		var _allTotalStream = !!flist[3].length && flist[3][0].allTotalStream || 0;
+		var _totalSettlement = !!flist[4].length && flist[4][0].totalSettlement || 0;
+		console.log(_pageIndex, _pageSize, _gameList, _total, _totalAddition, _allTotalStream, _totalSettlement)
+		res.json({
+			retCode: 0,
+			msg: '查询成功',
+			data: _gameList,
+			pageIndex: _pageIndex,
+			pageSize: _pageSize,
+			total: _total,
+			allTotalStream:_allTotalStream,
+			totalSettlement:_totalSettlement,
+			totalAddition:_totalAddition
 		});
-	
+		res.end();
+	});
 }
 
 /**

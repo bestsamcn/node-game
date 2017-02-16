@@ -95,3 +95,9 @@ a{
 .table .read{
 	background:#f7f7f7;
 }
+.margin-top-10{
+	margin-top:10px;
+}
+.margin-lf-5{
+	margin:0 5px;
+}
