@@ -185,10 +185,11 @@
 				var that = this;
 				//focus
 				var getSearchTit = function(){
-					var keywords = this.value;
+					var keywords = '';
 					var _this = this;
 					_this.timer && clearTimeout(_this.timer);
 					_this.timer = setTimeout(function(){
+						keywords = _this.value;
 						var obj = {};
 						obj.mode = modeValue;
 						obj.search = keywords;
