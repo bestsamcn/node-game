@@ -108,6 +108,7 @@
 		var refreshBtn = $('#refresh-btn');
 		var modeRadio = document.getElementsByName('mode');
 		var totalChannel = $('#total-channel');
+		var searchTitVm = $('#search-tit-vm');
 		var searchValue = null;
 		var modeValue = null;
 		var channel = {
@@ -180,6 +181,61 @@
 				}
 				searchBtn.on('click', searchFunc);
 			},
+			searchSmart:function(){
+				var that = this;
+				//focus
+				var getSearchTit = function(){
+					var keywords = this.value;
+					var _this = this;
+					_this.timer && clearTimeout(_this.timer);
+					_this.timer = setTimeout(function(){
+						var obj = {};
+						obj.mode = modeValue;
+						obj.search = keywords;
+						obj.pageIndex = 1;
+						obj.pageSize = 5;
+						$.ajax({
+							type:'get',
+							dataType:'json',
+							data:obj,
+							url:'/api/admin/getChannelList',
+							success:function(res){
+								if(res.retCode !== 0){
+									alertInfo(res.msg || '获取搜索提示失败');
+									return;
+								}
+								var _html = template('search-tit-tpl', {channel:res});
+								searchTitVm.show().html(_html);
+							},
+							fail:function(){
+								alertInf('异常');
+							}
+						});
+					},500);
+				}
+				//blur
+				var relSearchTit = function(){
+					var _this = this;
+					_this.value = '';
+					setTimeout(function(){
+						searchTitVm.html('').hide();
+					},200);
+					
+				}
+				//正式请求
+				var clickSearchTit = function(){
+					var _this = $(this);
+					var textValue = _this.html();
+					searchInput.val(textValue);
+					PAGE_INDEX = 1;
+					searchValue = textValue;
+					that.getChannelList();
+					searchTitVm.html('').hide();
+				}
+				searchInput[0].oninput = getSearchTit;
+				searchTitVm.on('click', '.channel-tit', clickSearchTit);
+				searchInput[0].onblur = relSearchTit;
+			},
 			refreshDocument:function(){
 				refreshBtn.on('click',function(){
 					window.location.reload();
@@ -192,6 +248,7 @@
 				this.filterMode();
 				this.refreshDocument();
 				this.searchChannel();
+				this.searchSmart();
 			}
 		}
 		channel.init();
@@ -225,6 +282,7 @@
 					that.oForm[0].channelName.focus();
 					return b;
 				}
+
 				if(!that.oForm[0].mode.value || that.oForm[0].mode.value.length !== 1){
 					alertInfo('请选择合作模式');
 					b = false;
@@ -274,14 +332,12 @@
 						return;
 					}
 					var obj = that.oForm.serialize();
-
 					$.ajax({
 						type:'post',
 						dataType:'json',
 						url:'/api/admin/editChannel',
 						data:obj,
 						success:function(res){
-							console.log(res);
 							if(res.retCode !== 0){
 								alertInfo(res.msg || '修改失败');
 								return;
@@ -397,7 +453,6 @@
 				var that = this;
 				var delFunc = function(){
 					var $this = $(this);
-					console.log($this)
 					var _channel_id = $this.attr('data-id');
 					if(!_channel_id || _channel_id.length !== 24){
 						alertInfo('异常');

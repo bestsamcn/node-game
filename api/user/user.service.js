@@ -36,10 +36,10 @@ var _userSignup = function(req, res){
 	_account = _.trim(_account);
 	_password = _.trim(_password);
 	//数据格式验证
-	if (_account.length < 2 || _account.length > 24) {
+	if (_account.length < 2 || _account.length > 24 || !/^\w{2,}$/g.test(_account)) {
 		res.json({
 			retCode: 100002,
-			msg: '用户名格式错误',
+			msg: '用户名只能为大于2位长度，且英文数字下划线类型',
 			data: null
 		});
 		res.end(); return;

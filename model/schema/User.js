@@ -82,6 +82,12 @@ var UserSchema = new mongoose.Schema({
 		require:true,
 		unique:true
 	},
+	pinYin:[
+		{
+			type:String,
+			require:false
+		}
+	],
 	mode:{
 		type:Number,
 		require:true

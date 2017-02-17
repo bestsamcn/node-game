@@ -1,8 +1,10 @@
 var Q = require('q');
 var xss = require('xss');
 var Mongoose = require('mongoose');
+var getPinyin = require('../../tools').getPinyin;
 var ObjectId = Mongoose.Types.ObjectId;
 var R = require('requestify');
+var getPinyin = require('../../tools').getPinyin;
 var UserModel = require('../../model').UserModel;
 var CostActiveModel = require('../../model').CostActiveModel;
 var CostSalesModel = require('../../model').CostSalesModel;
@@ -107,6 +109,11 @@ var _addCpaGame = function(req, res) {
 	_settlementAmount = (_singlePrize * _installAmount).toFixed(2);
 	//日期转换
 	_inputDate = new Date(_inputDate).getTime();
+	//拼音
+	var _pinYin = [];
+	var _allPinyin = getPinyin(_gameName, true);
+	var _sglPinyin = getPinyin(_gameName, false);
+	_pinYin = _pinYin.concat(_allPinyin, _sglPinyin);
 	//添加游戏
 	var _addModel = function() {
 		var obj = {
@@ -119,7 +126,8 @@ var _addCpaGame = function(req, res) {
 			singlePrize: _singlePrize,
 			settlementAmount: _settlementAmount,
 			createTime: Date.now(),
-			createIp: _createIp
+			createIp: _createIp,
+			pinYin:_pinYin
 		}
 		CostActiveModel.create(obj, function(cerr, cdoc) {
 			if (cerr) {
@@ -263,6 +271,12 @@ var _addCpsGame = function(req, res) {
 	//日期转换
 	_inputDate = new Date(_inputDate).getTime();
 
+	//拼音
+	var _pinYin = [];
+	var _allPinyin = getPinyin(_gameName, true);
+	var _sglPinyin = getPinyin(_gameName, false);
+	_pinYin = _pinYin.concat(_allPinyin, _sglPinyin);
+
 	//添加游戏
 	var _addModel = function() {
 		var obj = {
@@ -277,7 +291,8 @@ var _addCpsGame = function(req, res) {
 			splitRatio: _splitRatio,
 			arpu: _ARPU,
 			createTime: Date.now(),
-			createIp: _createIp
+			createIp: _createIp,
+			pinYin:_pinYin
 		}
 		CostSalesModel.create(obj, function(cerr, cdoc) {
 			if (cerr) {
@@ -334,7 +349,15 @@ var _getGameList = function(req, res, next) {
 		matchObj.channel = new ObjectId(_channel_id);
 		if (!!_search) {
 			var reg = new RegExp(_search, 'gim');
-			filterObj.gameName = reg;
+			filterObj.$or = [{
+				'gameName': {
+					$regex: reg
+				}
+			}, {
+				'pinYin': {
+					$regex: reg
+				}
+			}];
 			matchObj.gameName = reg;
 		}
 	} else {
@@ -349,7 +372,11 @@ var _getGameList = function(req, res, next) {
 				'gameName': {
 					$regex: reg
 				}
-			}]
+			}, {
+				'pinYin': {
+					$regex: reg
+				}
+			}];
 			matchObj.$or = [{
 				'channelName': {
 					$regex: reg
@@ -358,7 +385,11 @@ var _getGameList = function(req, res, next) {
 				'gameName': {
 					$regex: reg
 				}
-			}]
+			}, {
+				'pinYin': {
+					$regex: reg
+				}
+			}];
 		}
 	}
 

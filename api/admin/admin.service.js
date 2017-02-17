@@ -3,6 +3,7 @@
  */
 var Q = require('q');
 var xss = require('xss');
+var getPinyin = require('../../tools').getPinyin;
 var UserModel = require('../../model').UserModel;
 var CostActiveModel = require('../../model').CostActiveModel;
 var CostSalesModel = require('../../model').CostSalesModel;
@@ -41,8 +42,8 @@ var _addChannel = function(req, res){
 		res.end();
 		return;
 	}
-	if(!_account || _account.length < 2){
-		res.json({retCode:100021, msg:'用户名长度不能少于2位', data:null});
+	if(!_account || _account.length < 2 || !/^\w{2,}$/g.test(_account)){
+		res.json({retCode:100021, msg:'用户名只能为大于2位长度，且英文数字下划线类型', data:null});
 		res.end();
 		return;
 	}
@@ -93,6 +94,11 @@ var _addChannel = function(req, res){
 		// stupid code for user
 		// _password = md5.update(_password).digest('hex');
 		var _createIp = $$.getClientIp(req).match(/\d+\.\d+\.\d+\.\d+/)[0] || '';
+		var _pinYin = [];
+		var _allPinyin = getPinyin(_channelName, true);
+		var _sglPinyin = getPinyin(_channelName, false);
+		_pinYin = _pinYin.concat(_allPinyin, _sglPinyin);
+		console.log(_pinYin,'PINYPINYPINYPINYPINY')
 		var entity = {
 			account:_account,
 			password:_password,
@@ -102,9 +108,11 @@ var _addChannel = function(req, res){
 			},
 			company:_company,
 			channelName:_channelName,
-			mode:_mode
+			mode:_mode,
+			pinYin:_pinYin
 		}
 		UserModel.create(entity, function(cerr, cdoc){
+			console.log(cerr,'sffffffffffffff')
 			if(cerr || !cdoc){
 				res.sendStatus(500);
 				res.end();
@@ -145,14 +153,24 @@ var _getChannelList = function(req, res, next) {
 
     //搜索
     if(!!_search){
-    	filterObj.channelName = new RegExp(_search,'gim');
+    	// filterObj.channelName = new RegExp(_search,'gim');
+    	var reg = new RegExp(_search, 'gim');
+    	filterObj.$or = [{
+    		'channelName':{
+    			$regex:reg
+    		}
+    	},{
+    		'pinYin':{
+    			$regex:reg
+    		}
+    	}]
     }
 
 	//获取分页数据
 	var _getList = function() {
 			var defer = Q.defer();
 			UserModel.find(filterObj).sort({
-				'createLog.createTime': -1
+				'_id': -1
 			}).skip(_pageIndex * _pageSize).limit(_pageSize).exec(function(ferr, flist) {
 				if (ferr) {
 					res.sendStatus(500);

@@ -3,7 +3,7 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var  CostActiveSchema = new Schema({
+var CostActiveSchema = new Schema({
 	createBy:{
 		type:Schema.ObjectId,
 		ref:'User',
@@ -22,6 +22,12 @@ var  CostActiveSchema = new Schema({
 		type:String,
 		require:true
 	},
+	pinYin:[
+		{
+			type:String,
+			require:false
+		}
+	],
 	inputDate:{
 		type:Number,
 		require:true
@@ -73,6 +79,12 @@ var CostSalesSchema = new Schema({
 		type:String,
 		require:true
 	},
+	pinYin:[
+		{
+			type:String,
+			require:false
+		}
+	],
 	inputDate:{
 		type:Number,
 		require:true

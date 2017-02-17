@@ -21,11 +21,22 @@
             <div class="col-sm-12">
                 <div class="mail-box-header">
                     <form method="get" action="index.html" class="pull-right mail-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-sm" name="search" id="channel-search-input" placeholder="搜索渠道">
+                        <div class="input-group search-bar">
+                            <input type="text" class="form-control input-sm" name="search" autocomplete="off" id="channel-search-input" placeholder="搜索渠道">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-sm btn-primary" id="channel-search-btn">搜索</button>
                             </div>
+                            <ul class="search-tit" id="search-tit-vm">
+                            </ul>
+                            <script type="text/html" id="search-tit-tpl">
+                                <% if !!channel.data.length %>
+                                <% each channel.data %>
+                                <li class="<% $index%2===0 ? 'bounceInLeft animated' : 'bounceInRight animated' %>">
+                                    <a href="javascript:;" class="channel-tit"><% $value.channelName %></a>
+                                </li>
+                                <% /each %>
+                                <% /if %>
+                            </script>
                         </div>
                     </form>
                     <h2>

@@ -231,6 +231,7 @@
 		var totalUser = $('#total-user');
 		var startDateField = $('#start-date');
 		var endDateField = $('#end-date');
+		var searchTitVm = $('#search-tit-vm');
 
 		//必传参数
 		var _channel_id = $('#channel-id').val();
@@ -322,6 +323,62 @@
 					that.getGameList(PAGE_INDEX);
 				}
 				searchBtn.on('click', searchFunc);
+			},
+			searchSmart:function(){
+				var that = this;
+				//focus
+				var getSearchTit = function(){
+					var keywords = this.value;
+					var _this = this;
+					_this.timer && clearTimeout(_this.timer);
+					_this.timer = setTimeout(function(){
+						var obj = {};
+						obj.channeId = _channel_id;
+						obj.mode = modeValue;
+						obj.search = keywords;
+						obj.pageIndex = 1;
+						obj.pageSize = 5;
+						$.ajax({
+							type:'get',
+							dataType:'json',
+							data:obj,
+							url:'/api/game/getGameList',
+							success:function(res){
+								if(res.retCode !== 0){
+									alertInfo(res.msg || '获取搜索提示失败');
+									return;
+								}
+								var _html = template('search-tit-tpl', {game:res});
+								searchTitVm.show().html(_html);
+							},
+							fail:function(){
+								alertInf('异常');
+							}
+						});
+					},500);
+				}
+				//blur
+				var relSearchTit = function(){
+					var _this = this;
+					_this.value = '';
+					setTimeout(function(){
+						searchTitVm.html('').hide();
+					},200);
+					
+				}
+				//正式请求
+				var clickSearchTit = function(){
+					var _this = $(this);
+					var textValue = _this.html();
+					searchInput.val(textValue);
+					PAGE_INDEX = 1;
+					searchValue = textValue;
+					that.getGameList();
+					searchTitVm.html('').hide();
+				}
+				searchInput[0].oninput = getSearchTit;
+				searchTitVm.on('click', '.game-tit', clickSearchTit);
+				searchInput[0].onblur = relSearchTit;
 			},
 			filterMode: function() {
 				var that = this;
@@ -417,6 +474,7 @@
 				this.filterMode();
 				this.refreshDocument();
 				this.searchGame();
+				this.searchSmart();
 			}
 		}
 		game3.init();
@@ -615,7 +673,6 @@
 				var that = this;
 				var delFunc = function() {
 					var $this = $(this);
-					console.log($this)
 					var _mode = $this.attr('data-mode');
 					var _game_id = $this.attr('data-id');
 					if (!_mode || (_mode != 1 && _mode != 2)) {
@@ -659,7 +716,6 @@
 			},
 			init: function() {
 				if (!/^\/game\/\w{24}/ig.test(window.location.pathname)) return;
-				console.log(window.location.pathname)
 				this.delInfo();
 			}
 		}

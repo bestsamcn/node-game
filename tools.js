@@ -1,3 +1,4 @@
+var PY = require('pinyin');
 /**
  * @function getClientIp获取客户端ip，
  * @param {req}
@@ -34,5 +35,23 @@ var _getClientIp = function (req) {
     return ipAddress;
 };
 
+/**
+ *@function getPinyin 汉字转拼音
+ *@param {Array} bufArr 拼音单体的二维拼音 
+ *@param {Boolean} isAll 转换的类型，true是全拼，false是首字母，默认true
+ *@return {String} 返回合体后的汉字拼音 
+ *@example
+ * getPinyin([['ha'],['ha']])=>haha
+ */
+ var _getPinyin = function(bufArr,isAll){
+    var str = '';
+    isAll = !!isAll;
+
+    if(!bufArr.length) return str;
+    str = isAll ? PY(bufArr, {style:PY.STYLE_NORMAL}).join('').toString() : PY(bufArr, {style:PY.STYLE_FIRST_LETTER}).join('').toString();
+    
+    return str;
+ }
 
 exports.getClientIp = _getClientIp;
+exports.getPinyin = _getPinyin;

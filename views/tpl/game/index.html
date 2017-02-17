@@ -21,27 +21,21 @@
                 <div class="mail-box-header">
                     <form method="get" action="index.html" class="pull-right mail-search">
                         <div class="input-group search-bar">
-                            <input type="text" class="form-control input-sm" name="search" id="game-search-input" placeholder="搜索游戏名">
+                            <input type="text" class="form-control input-sm" name="search" autocomplete="off" id="game-search-input" placeholder="搜索游戏名">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-sm btn-primary" id="game-search-btn">搜索</button>
                             </div>
-                            <ul class="search-tit" id="search-tit">
-                                <li>
-                                    <a href="javascript:;">飞车</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">飞车</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">飞车</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">飞车</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">飞车</a>
-                                </li>
+                            <ul class="search-tit" id="search-tit-vm">
                             </ul>
+                            <script type="text/html" id="search-tit-tpl">
+                                <% if !!game.data.length %>
+                                <% each game.data %>
+                                <li class="<% $index%2===0 ? 'bounceInLeft animated' : 'bounceInRight animated' %>">
+                                    <a href="javascript:;" class="game-tit"><% $value.gameName %></a>
+                                </li>
+                                <% /each %>
+                                <% /if %>
+                            </script>
                         </div>
                     </form>
                     <h2>
