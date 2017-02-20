@@ -131,7 +131,7 @@
 					var _this = this;
 					_this.timer && clearTimeout(_this.timer);
 					_this.timer = setTimeout(function(){
-						keywords = this.value;
+						keywords = _this.value;
 						var obj = {};
 						obj.channelId = _channel_id;
 						obj.mode = modeValue;

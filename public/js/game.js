@@ -232,6 +232,7 @@
 		var startDateField = $('#start-date');
 		var endDateField = $('#end-date');
 		var searchTitVm = $('#search-tit-vm');
+		var downloadExcelBtn = $('#download-excel');
 
 		//必传参数
 		var _channel_id = $('#channel-id').val();
@@ -429,6 +430,21 @@
 				endDateValue = d;
 				!!startDateValue && that.getGameList();
 			},
+			downloadExcel:function(){
+				var getFile = function(){
+				    var obj = {};
+					obj.channelId = _channel_id;
+					obj.search = searchValue;
+					obj.pageSize = -1;
+					obj.pageIndex = 1;
+					obj.mode = modeValue;
+					obj.startDate = startDateValue;
+					obj.endDate = endDateValue;
+					var queryString = 'channelId='+_channel_id+'&search='+searchValue+'&pageSize=-1&pageIndex=1&mode='+modeValue+'&startDate='+startDateValue+'&endDate='+endDateValue;
+					window.open('/game/download?'+queryString);
+				}
+				downloadExcelBtn.on('click', getFile);
+			},
 			init: function() {
 				if (!/^\/game\/\w{24}/ig.test(window.location.pathname)) return;
 				var that = this;
@@ -476,6 +492,7 @@
 				this.refreshDocument();
 				this.searchGame();
 				this.searchSmart();
+				this.downloadExcel();
 			}
 		}
 		game3.init();

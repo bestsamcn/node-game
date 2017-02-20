@@ -322,11 +322,13 @@ var _addCpsGame = function(req, res) {
 /**
  * @name  /api/game/getCpaGameList 获取游戏列表
  * @type {get}
- * @param {id:String} 特定渠道下的搜索
+ * @param {channelId:String} 特定渠道下的搜索
  * @param {seach:String} 关键词搜索
  * @param {pageIndex:Number} 分页索引,1默认
- * @param {pageSize:Number} 分页长度,10默认
- * @return { retCode:Number, msg:String, data:Object, pageIndex:Number, pageSize:Number, total:Number}; 
+ * @param {pageSize:Number} 分页长度,10默认,如果等于-1，则返回全部
+ * @param {startDate:Date} 开始日期 2017-02-14
+ * @param {endDate:Date} 结束日期日期 2017-02-14
+ * @return { retCode:Number, msg:String, data:Object, pageIndex:Number, pageSize:Number, total:Number, allTotalStream:Number, totalSettltment:Number, totalAddition:Number}; 
  */
 
 var _getGameList = function(req, res, next) {
@@ -412,6 +414,11 @@ var _getGameList = function(req, res, next) {
 		filterObj.company = _company;
 		matchObj.company = _company;
 	}
+
+	//分页数如果-1,则返回分页数为0
+	_pageSize == -1 &&  (_pageSize = 0);
+
+	
 	//搜索-模式cpa cps
 	var _model = _mode === '1' ? CostActiveModel : CostSalesModel;
 	//获取分页数据
@@ -859,6 +866,7 @@ var _delGame = function(req, res) {
 		res.end();
 	});
 }
+
 
 
 exports.addCpaGame = _addCpaGame;
