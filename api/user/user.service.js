@@ -112,7 +112,6 @@ var _userSignup = function(req, res){
 			}
 		});
 		UserEntity.save(function(cerr, cdoc){
-			console.log(cerr, 'mongoose error');
 			if(cerr){
 				res.sendStatus(500);
 				res.end();

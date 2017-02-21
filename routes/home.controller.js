@@ -37,8 +37,7 @@ router.get('/', function(req, res, next) {
 			var rdata = JSON.parse(data.body);
 			defer.resolve(rdata.data);
 		},function(){
-			res.sendStatus(500);
-			res.end();
+			res.render('500');
 		}); 
 		return defer.promise;
 	}

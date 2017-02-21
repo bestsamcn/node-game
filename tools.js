@@ -64,11 +64,15 @@ var _getClientIp = function (req) {
 var _generateArray = function(arrObj, breakArr){
     breakArr = !!breakArr.length ? breakArr : [];
     var res = [];
-    for(var i = 0; i<arr.length; i++){
+    for(var i = 0; i<arrObj.length; i++){
         res[i]= [];
-        for(var j in arr[i]){
-            if(j === '_id' || _.indexOf(breakArr,j)) continue;
-            res[i].push(arr[i][j]);
+        for(var j in arrObj[i]){
+            if(_.indexOf(breakArr, j) !== -1) continue;
+            if(j === 'channelName'){
+                res[i].unshift(arrObj[i][j]);
+                continue;
+            } 
+            res[i].push(arrObj[i][j]);
         }
     }
     return res;

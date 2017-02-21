@@ -232,7 +232,7 @@
 		var startDateField = $('#start-date');
 		var endDateField = $('#end-date');
 		var searchTitVm = $('#search-tit-vm');
-		var downloadExcelBtn = $('#download-excel');
+		var downloadExcelBtn = $('#download-excel-btn');
 
 		//必传参数
 		var _channel_id = $('#channel-id').val();
@@ -434,14 +434,18 @@
 				var getFile = function(){
 				    var obj = {};
 					obj.channelId = _channel_id;
-					obj.search = searchValue;
 					obj.pageSize = -1;
 					obj.pageIndex = 1;
 					obj.mode = modeValue;
 					obj.startDate = startDateValue;
 					obj.endDate = endDateValue;
-					var queryString = 'channelId='+_channel_id+'&search='+searchValue+'&pageSize=-1&pageIndex=1&mode='+modeValue+'&startDate='+startDateValue+'&endDate='+endDateValue;
-					window.open('/game/download?'+queryString);
+					if(!searchValue){
+						var _url = '/game/download/'+_channel_id+'?'+$.param(obj)+'&search=';
+					}else{
+						var _url = '/game/download/'+_channel_id+'?'+$.param(obj)+'&search='+searchValue;
+					}
+					console.log(_url,'asdfasdfasdf')
+					window.open(_url)
 				}
 				downloadExcelBtn.on('click', getFile);
 			},

@@ -18,18 +18,12 @@ var CostActiveSchema = new Schema({
 		type:String,
 		require:true
 	},
-	gameName:{
-		type:String,
-		require:true
-	},
-	pinYin:[
-		{
-			type:String,
-			require:false
-		}
-	],
 	inputDate:{
 		type:Number,
+		require:true
+	},
+	gameName:{
+		type:String,
 		require:true
 	},
 	installAmount:{
@@ -47,6 +41,12 @@ var CostActiveSchema = new Schema({
 		require:true,
 		default:0
 	},
+	pinYin:[
+		{
+			type:String,
+			require:false
+		}
+	],
 	createTime:{
 		type:Number,
 		require:true
@@ -75,25 +75,15 @@ var CostSalesSchema = new Schema({
 		type:String,
 		require:true
 	},
-	gameName:{
-		type:String,
-		require:true
-	},
-	pinYin:[
-		{
-			type:String,
-			require:false
-		}
-	],
 	inputDate:{
 		type:Number,
 		require:true
 	},
-	additionUser:{
-		type:Number,
+	gameName:{
+		type:String,
 		require:true
 	},
-	splitRatio:{
+	additionUser:{
 		type:Number,
 		require:true
 	},
@@ -106,11 +96,21 @@ var CostSalesSchema = new Schema({
 		type:Number,
 		require:true
 	},
+	splitRatio:{
+		type:Number,
+		require:true
+	},
 	settlementAmount:{
 		type:Number,
 		require:true,
 		default:0
 	},
+	pinYin:[
+		{
+			type:String,
+			require:false
+		}
+	],
 	createTime:{
 		type:Number,
 		require:true

@@ -61,8 +61,7 @@ router.get('/editChannel/:channelId', function(req, res, next){
 	 		var data = JSON.parse(res.body);
 	 		defer.resolve(data);
 	 	},function(){
-	 		res.sendStatus(500);
-	 		res.end();
+	 		res.render('500');
 	 	});
 	 	return defer.promise;
  	}

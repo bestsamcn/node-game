@@ -20,12 +20,12 @@ var _getMe = function(req, res, next) {
                 req.session.save();
                 res.locals.session = req.session;
             }
-            next()
+            next();
         });
     } else {
         //如果用户没登录，需要预留session作为判断，否则res.locals.session = undefined
         res.locals.session = req.session;
-        next()
+        next();
     }
 }
 /**

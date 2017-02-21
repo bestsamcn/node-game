@@ -397,7 +397,7 @@ var _getGameList = function(req, res, next) {
 
 	// //搜索-日期
 	if(!!_startDate && !!_endDate){
-		if(_startDate === _endDate){
+		if(_startDate === _endDate  ){
 			_inputDate = new Date(_startDate).getTime();
 			filterObj.inputDate = _inputDate;
 			matchObj.inputDate = _inputDate;
@@ -417,7 +417,6 @@ var _getGameList = function(req, res, next) {
 
 	//分页数如果-1,则返回分页数为0
 	_pageSize == -1 &&  (_pageSize = 0);
-
 	
 	//搜索-模式cpa cps
 	var _model = _mode === '1' ? CostActiveModel : CostSalesModel;
@@ -428,7 +427,6 @@ var _getGameList = function(req, res, next) {
 			'_id': -1
 		}).skip(_pageIndex * _pageSize).limit(_pageSize).exec(function(ferr, flist) {
 			if (ferr) {
-				console.log(ferr, 'mongodb error');
 				res.sendStatus(500);
 				res.end();
 				return;
@@ -448,7 +446,6 @@ var _getGameList = function(req, res, next) {
 		var defer = Q.defer();
 		_model.count(filterObj, function(cerr, ctotal) {
 			if (cerr) {
-				console.log(aerr, 'mongodb error');
 				res.sendStatus(500);
 				res.end();
 				return;
@@ -466,7 +463,6 @@ var _getGameList = function(req, res, next) {
 			{$group:{_id:null, totalInstall:{$sum:'$installAmount'}}}
 		], function(aerr, aobj){
 			if(aerr){
-				console.log(aerr, 'mongodb error');
 				res.sendStatus(500);
 				res.end();
 				return;
@@ -484,7 +480,6 @@ var _getGameList = function(req, res, next) {
 			{$group:{_id:null, totalSettlement:{$sum:'$settlementAmount'}}}
 		], function(aerr, aobj){
 			if(aerr){
-				console.log(aerr, 'mongodb error');
 				res.sendStatus(500);
 				res.end();
 				return;
@@ -501,7 +496,6 @@ var _getGameList = function(req, res, next) {
 			{$group:{_id:null, totalAddition:{$sum:'$additionUser'}}}
 		], function(aerr, aobj){
 			if(aerr){
-				console.log(aerr, 'mongodb error');
 				res.sendStatus(500);
 				res.end();
 				return;
@@ -555,9 +549,8 @@ var _getGameList = function(req, res, next) {
 		var _gameList = flist[0].flist;
 		var _total = flist[1] || 0;
 		var _totalAddition = !!flist[2].length && flist[2][0].totalAddition || 0;
-		var _allTotalStream = !!flist[3].length && flist[3][0].allTotalStream || 0;
-		var _totalSettlement = !!flist[4].length && flist[4][0].totalSettlement || 0;
-		console.log(_pageIndex, _pageSize, _gameList, _total, _totalAddition, _allTotalStream, _totalSettlement)
+		var _allTotalStream = !!flist[3].length && parseFloat(flist[3][0].allTotalStream).toFixed(2) || 0;
+		var _totalSettlement = !!flist[4].length && parseFloat(flist[4][0].totalSettlement).toFixed(2) || 0;
 		res.json({
 			retCode: 0,
 			msg: '查询成功',

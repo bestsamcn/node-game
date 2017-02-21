@@ -98,7 +98,6 @@ var _addChannel = function(req, res){
 		var _allPinyin = getPinyin(_channelName, true);
 		var _sglPinyin = getPinyin(_channelName, false);
 		_pinYin = _pinYin.concat(_allPinyin, _sglPinyin);
-		console.log(_pinYin,'PINYPINYPINYPINYPINY')
 		var entity = {
 			account:_account,
 			password:_password,
@@ -112,7 +111,6 @@ var _addChannel = function(req, res){
 			pinYin:_pinYin
 		}
 		UserModel.create(entity, function(cerr, cdoc){
-			console.log(cerr,'sffffffffffffff')
 			if(cerr || !cdoc){
 				res.sendStatus(500);
 				res.end();
@@ -302,7 +300,6 @@ var _editChannel = function(req, res){
 	}
 	//mode
 	if(!!_mode){
-		console.log(_mode)
 		if(_mode !== '1' && _mode !=='2'){
 			res.json({retCode:100030, msg:'合作模式不能为空', data:null});
 			res.end();

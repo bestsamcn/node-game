@@ -6,7 +6,8 @@ var routerOnlyForAdmin = require('../interceptor/user').routerOnlyForAdmin;
 var globalConfig = require('../config');
 var dateFormat = require('../tools').dateFormat;
 var generateArray = require('../tools').generateArray;
-var nodeExcel = require('excel-export')
+var nodeExcel = require('excel-export');
+var fs = require('fs');
 
 
 /**
@@ -168,25 +169,28 @@ router.get('/editGame/:mode/:id', routerOnlyForAdmin, function(req, res) {
  * @param {endDate:Date} 结束日期日期 2017-02-14
  * @return startDate_endDate.xlsx
  */
-router.get('/download', function(req, res) {
+router.get('/download/:channelId', function(req, res, next) {
+	var _channel_id = req.params.channelId;
 	var _channelId = req.query.channelId,
 		_mode = req.query.mode,
-		_seach = req.query.search,
+		_search = req.query.search,
 		_pageIndex = req.query.pageIndex,
 		_pageSize = req.query.pageSize,
 		_startDate = req.query.startDate,
 		_company = req.query.company,
 		_endDate = req.query.endDate;
-	if (!_channelId || _channelId.length !== 24 || _mode !== '1' || _mode !== '2') {
-		res.sendStatus(404);
-		res.end();
-		return;
+	if (_channel_id !== _channelId || !_channelId || _channelId.length !== 24 || (_mode !== '1' && _mode !== '2')) {
+		res.render('404');
 	}
-	var filedir = 'puclic/files/';
-	var fileName = ''
-	if (!_startDate || !_endStart) {
+	_search = !!_search ? decodeURI(_search) : null;
+	console.log(_search)
+	var filedir = 'public/files/';
+	var fileName = '';
+	if (!_startDate || !_endDate) {
+
 		fileName = dateFormat(new Date().getTime(), 'yyyy-MM-dd');
 	} else {
+
 		fileName = _startDate + '_' + _endDate;
 	}
 	var conf = {};
@@ -196,15 +200,18 @@ router.get('/download', function(req, res) {
 			type: 'string',
 			width: 40
 		}, {
-			caption: '日期',
+			caption: '游戏名',
 			type: 'string',
 			width: 50
 		}, {
-			caption: '游戏名',
+			caption: '日期',
 			type: 'string',
-			width: 40
+			width: 40,
+			beforeCellWrite:function(row, cellData){
+               return dateFormat(cellData,'yyyy-MM-dd');
+        	}
 		}, {
-			caption: '安装数',
+			caption: '结算金额',
 			type: 'number',
 			width: 40
 		}, {
@@ -212,7 +219,7 @@ router.get('/download', function(req, res) {
 			type: 'number',
 			width: 40
 		}, {
-			caption: '结算金额',
+			caption: '安装数',
 			type: 'number',
 			width: 40
 		}
@@ -221,21 +228,24 @@ router.get('/download', function(req, res) {
 		{
 			caption: '渠道名',
 			type: 'string',
-			width: 40
-		}, {
-			caption: '日期',
-			type: 'string',
-			width: 50
+			width: 60
 		}, {
 			caption: '游戏名',
 			type: 'string',
-			width: 40
+			width: 60
+		}, {
+			caption: '日期',
+			type: 'string',
+			width: 100,
+			beforeCellWrite:function(row, cellData){
+               return dateFormat(cellData,'yyyy-MM-dd');
+        	}
 		}, {
 			caption: '新增用户',
 			type: 'number',
-			width: 40
+			width: 60
 		}, {
-			caption: '总流水',
+			caption: '分成比例',
 			type: 'number',
 			width: 40
 		}, {
@@ -243,15 +253,17 @@ router.get('/download', function(req, res) {
 			type: 'number',
 			width: 40
 		}, {
-			caption: '分成比例',
-			type: 'number',
-			width: 40
-		}, {
 			caption: '结算金额',
 			type: 'number',
-			width: 40
+			width: 60
+		}, {
+			caption: '总流水',
+			type: 'number',
+			width: 80
 		}
 	]
+
+	conf.cols = _mode == 1 ? cpaCols : cpsCols;
 	var rcookies = req.cookies.NODESESSIONID;
 	//获取数据
 	var _getGameList = function() {
@@ -261,7 +273,7 @@ router.get('/download', function(req, res) {
 			params: {
 				mode: _mode,
 				channelId:_channelId,
-				seach:_seach,
+				search:_search,
 				pageIndex:_pageIndex,
 				pageSize:_pageSize,
 				startDate:_startDate,
@@ -273,34 +285,30 @@ router.get('/download', function(req, res) {
 			},
 			dataType: 'json'
 		}).then(function(rdata) {
-			console.log('asdfasdfasdfasdf')
 			var data = JSON.parse(rdata.body);
-			if (data.retCode !== 0) {
-				res.redirect(404);
-				res.end();
-				return;
+			if (data.retCode !== 0 || data.data.length === 0) {
+				res.render('404');
 			}
 			defer.resolve(data.data);
-			console.log(data.data,'downloadfile')
-			res.end();
 		}, function() {
-			res.redirect(404);
-			res.end();
+			res.render('404');
 		});
 		return defer.promise;
 	}
 	//生成xlsx文件
 	var _generateXlsx = function(game){
-		var hideElementArr = ['_id','_v','channel','createBy','createTime','createIp','pinYin']
-		conf.rows = generateArray(game.data,hideElementArr);
-		var result = excelPort.execute(conf);
-		var random = Math.floor(Math.random() * 10000 + 0);
-		var filePath = filedir + fileName + ".xlsx";
+		var hideElementArr = ['_id','__v','channel','createBy','createTime','createIp','pinYin'];
+		// conf.name = game[0].channelName+fileName;
+		conf.rows = generateArray(game, hideElementArr);
+
+		var result = nodeExcel.execute(conf);
+        fileName = game[0].channelName+fileName;
+		var filePath = filedir + fileName + '.xlsx';
 		fs.writeFile(filePath, result, 'binary', function(err) {
 			if (err) {
-				console.log(err);
+				res.render('500');
 			}
-			res.send(filePath)
+			res.download(filePath);
 		});
 	}
 	_getGameList().then(_generateXlsx);

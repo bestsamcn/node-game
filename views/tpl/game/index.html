@@ -64,6 +64,7 @@
                             </select>
                             <input id="start-date" class="laydate-icon form-control layer-date">
                             <input id="end-date" class="laydate-icon form-control layer-date">
+                            <button class="btn btn-white btn-sm" id="download-excel-btn"><i class="fa fa-save"></i>导出</button>
                         </div>
                         <div class="col-md-4 col-xs-4 btn-group text-right">
                             <button class="btn btn-white btn-sm no-float" disabled id="prev-page-btn"> <i class="fa fa-arrow-left"></i>
@@ -160,7 +161,7 @@
                         {{ else }}
                         <p class="text-center margin-top-10">用户总数：<span id="total-user"></span><span class="margin-lf-5">|</span>流水总额：<span id="total-stream"></span><span class="margin-lf-5">|</span>结算总额：<span id="total-settlement"></span></p>
                         {{ /if }}
-                        <a href="javascript:;" id="download-excel">导出</a>
+                        
                     </div>
                 </div>
             </div>
