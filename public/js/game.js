@@ -233,6 +233,7 @@
 		var endDateField = $('#end-date');
 		var searchTitVm = $('#search-tit-vm');
 		var downloadExcelBtn = $('#download-excel-btn');
+		var pageSizeOpt = document.getElementById('page-size');
 
 		//必传参数
 		var _channel_id = $('#channel-id').val();
@@ -244,6 +245,25 @@
 		var startDateValue = null;
 		var endDateValue = null;
 		var game3 = {
+			pagesizeInit:function(){
+				PAGE_SIZE = !!window.getCookie('pagesize') ? parseInt(window.getCookie('pagesize')) : 10;
+				for(var i=0; i<pageSizeOpt.length; i++){
+					if(pageSizeOpt[i].value == PAGE_SIZE){
+						pageSizeOpt.selectedIndex = i;
+					}
+				}
+			},
+			setPagesize:function(){
+				var that = this;
+				var changeFunc = function(){
+					var val = this.value;
+					window.setCookie('pagesize', val, 100);
+					PAGE_SIZE = val;
+					PAGE_INDEX = 1;
+					that.getGameList();
+				}
+				pageSizeOpt.onchange = changeFunc
+			},
 			getGameList: function(pageIndex, pageSize) {
 				var _pageSize = pageSize || PAGE_SIZE;
 				var _pageIndex = pageIndex || PAGE_INDEX;
@@ -444,7 +464,6 @@
 					}else{
 						var _url = '/game/download/'+_channel_id+'?'+$.param(obj)+'&search='+searchValue;
 					}
-					console.log(_url,'asdfasdfasdf')
 					window.open(_url)
 				}
 				downloadExcelBtn.on('click', getFile);
@@ -452,7 +471,8 @@
 			init: function() {
 				if (!/^\/game\/\w{24}/ig.test(window.location.pathname)) return;
 				var that = this;
-
+				this.pagesizeInit();
+				this.setPagesize();
 				that.start = {
 					elem: '#start-date',
 					format: 'YYYY-MM-DD',

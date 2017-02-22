@@ -183,7 +183,6 @@ router.get('/download/:channelId', function(req, res, next) {
 		res.render('404');
 	}
 	_search = !!_search ? decodeURI(_search) : null;
-	console.log(_search)
 	var filedir = 'public/files/';
 	var fileName = '';
 	if (!_startDate || !_endDate) {
@@ -300,7 +299,6 @@ router.get('/download/:channelId', function(req, res, next) {
 		var hideElementArr = ['_id','__v','channel','createBy','createTime','createIp','pinYin'];
 		// conf.name = game[0].channelName+fileName;
 		conf.rows = generateArray(game, hideElementArr);
-
 		var result = nodeExcel.execute(conf);
         fileName = game[0].channelName+fileName;
 		var filePath = filedir + fileName + '.xlsx';

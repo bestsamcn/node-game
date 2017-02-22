@@ -99,7 +99,8 @@
 	 * 渠道列表
 	 */
 	var channelList = function(){
-		var PAGE_SIZE = 2, PAGE_INDEX = 1;
+		var PAGE_SIZE = 10, PAGE_INDEX = 1;
+
 		var prevPageBtn = $('#prev-page-btn');
 		var nextPageBtn = $('#next-page-btn');
 		var channelListVM = $('#channel-list-vm');
@@ -109,9 +110,29 @@
 		var modeRadio = document.getElementsByName('mode');
 		var totalChannel = $('#total-channel');
 		var searchTitVm = $('#search-tit-vm');
+		var pageSizeOpt = document.getElementById('page-size');
 		var searchValue = null;
 		var modeValue = null;
 		var channel = {
+			pagesizeInit:function(){
+				PAGE_SIZE = !!window.getCookie('pagesize') ? parseInt(window.getCookie('pagesize')) : 10;
+				for(var i=0; i<pageSizeOpt.length; i++){
+					if(pageSizeOpt[i].value == PAGE_SIZE){
+						pageSizeOpt.selectedIndex = i;
+					}
+				}
+			},
+			setPagesize:function(){
+				var that = this;
+				var changeFunc = function(){
+					var val = this.value;
+					window.setCookie('pagesize', val, 100);
+					PAGE_SIZE = val;
+					PAGE_INDEX = 1;
+					that.getChannelList();
+				}
+				pageSizeOpt.onchange = changeFunc
+			},
 			getChannelList:function(pageIndex, pageSize){
 				var _pageSize = pageSize || PAGE_SIZE;
 				var _pageIndex = pageIndex || PAGE_INDEX;
@@ -244,6 +265,8 @@
 			},	
 			init:function(){
 				if(window.location.pathname !== '/admin') return;
+				this.pagesizeInit();
+				this.setPagesize();
 				this.getChannelList();
 				this.pageClick();
 				this.filterMode();

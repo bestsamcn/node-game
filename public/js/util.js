@@ -174,3 +174,38 @@ window.toDecimal2 = function (_this) {
     }    
     _this.value = s   
 }
+
+/**
+ * 设置cookie
+ * @param {string} k 键名 
+ * @param {string} v 值
+ * @param {number} d 天数
+ */
+window.setCookie = function(k, v, d){
+    var expire = '';
+    if(d){
+        var date = new Date();
+        date.setTime(date.getTime()+d * 24 * 60 * 60 * 1000);
+        expire = ';expires=' + date.toUTCString();
+    }
+    document.cookie = k +'='+ v + expire;
+}
+
+/**
+* 获取cookie
+* @param {string} k 键名
+* @return {v} 键值 
+*/
+window.getCookie = function(k){
+    //一旦检测到分号，即停止
+    var arr = document.cookie.match(new RegExp(k + '=([^;]*)'));
+    return arr ? arr[1] : '';
+}
+
+/**
+* 清除cookie
+* @param {string} k 键名
+*/
+window.clearCookie = function(k){
+    window.setCookie(k, '', -1);
+}
