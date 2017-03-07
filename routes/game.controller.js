@@ -197,68 +197,68 @@ router.get('/download/:channelId', function(req, res, next) {
 		{
 			caption: '渠道名',
 			type: 'string',
-			width: 40
+			width: 20
 		}, {
 			caption: '游戏名',
 			type: 'string',
-			width: 50
+			width: 20
 		}, {
 			caption: '日期',
 			type: 'string',
-			width: 40,
+			width: 20,
 			beforeCellWrite:function(row, cellData){
                return dateFormat(cellData,'yyyy-MM-dd');
         	}
 		}, {
 			caption: '结算金额',
 			type: 'number',
-			width: 40
+			width: 20
 		}, {
 			caption: '单价',
 			type: 'number',
-			width: 40
+			width: 20
 		}, {
 			caption: '安装数',
 			type: 'number',
-			width: 40
+			width: 20
 		}
 	];
 	var cpsCols = [
 		{
 			caption: '渠道名',
 			type: 'string',
-			width: 60
+			width: 20
 		}, {
 			caption: '游戏名',
 			type: 'string',
-			width: 60
+			width: 20
 		}, {
 			caption: '日期',
 			type: 'string',
-			width: 100,
+			width: 20,
 			beforeCellWrite:function(row, cellData){
                return dateFormat(cellData,'yyyy-MM-dd');
         	}
 		}, {
 			caption: '新增用户',
 			type: 'number',
-			width: 60
+			width: 20
 		}, {
 			caption: '分成比例',
 			type: 'number',
-			width: 40
+			width: 20
 		}, {
 			caption: 'ARPU',
 			type: 'number',
-			width: 40
+			width: 20
 		}, {
 			caption: '结算金额',
 			type: 'number',
-			width: 60
+			width: 20
 		}, {
 			caption: '总流水',
 			type: 'number',
-			width: 80
+			width: 20
 		}
 	]
 

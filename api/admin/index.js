@@ -10,6 +10,7 @@ router.post('/editChannel', onlyAllowAdmin, adminService.editChannel);
 router.get('/getChannelDetail', apiJustForAdminAndYourself, adminService.getChannelDetail);
 router.post('/editChannelPassword', onlyAllowAdmin, adminService.editChannelPassword);
 router.get('/delChannel', onlyAllowAdmin, adminService.delChannel);
+router.post('/editUserPassword', onlyAllowAdmin, adminService.editUserPassword);
 
 
 module.exports = router;

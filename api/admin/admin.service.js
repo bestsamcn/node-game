@@ -490,9 +490,79 @@ var _delChannel = function(req, res){
 	_isExistChannel().then(_delAllGame).then(_delTheChannel);
 }
 
+
+
+/**
+ * @name  /api/user/editUserPassword 修改渠道密码
+ * @type {post}
+ * @param {userId:String}  用户id
+ * @param {password:String}  新密码
+ */
+var _editUserPassword = function(req, res){
+ 	var _user_id = req.body.userId,
+ 		_password = req.body.password;
+ 		_old_password = req.body.oldpassword;
+ 	if(!_user_id || _user_id.length !== 24){
+ 		res.json({retCode:100032, msg:'无该渠道信息', data:null});
+ 		res.end();
+ 		return;
+ 	}
+ 	if(!_old_password || _old_password.length < 6){
+ 		res.json({retCode:100033, msg:'原密码不能为空或者少于6位', data:null});
+ 		res.end();
+ 		return;
+ 	}
+ 	if(!_password || _password.length < 6){
+ 		res.json({retCode:100033, msg:'新密码不能为空或者少于6位', data:null});
+ 		res.end();
+ 		return;
+ 	}
+ 	
+
+ 	//判断id是否存在
+	var _isExistChannel = function(){
+		var defer = Q.defer();
+		//一旦md5.digest();这个方法被调用了，hash 对象就被清空了是不能被重用的。
+		var md5 = crypto.createHash('md5');
+		_old_password = md5.update(_old_password).digest('hex');
+		UserModel.findOne({_id:_user_id, password:_old_password}, function(ferr, fdoc){
+			if(!!ferr){
+				res.sendStatus(500);
+				res.end();
+				return;
+			}
+
+			if(!fdoc){
+				res.json({retCode:100031, msg:'该用户不存在或者原密码错误', data:null});
+				res.end();
+				return;
+			}
+			defer.resolve();
+		});
+		return defer.promise;
+	}
+	//修改密码
+	var _editAndResponse = function(){
+		var md5 = crypto.createHash('md5');
+		_password = md5.update(_password).digest('hex');
+		UserModel.findByIdAndUpdate(_user_id, {$set:{password:_password}}, function(uerr, udoc){
+			if(uerr){
+				res.sendStatus(500);
+				res.end();
+				return;
+			}
+			res.json({retCode:0, msg:'修改成功', data:null});
+			res.end();
+		});
+	}
+	_isExistChannel().then(_editAndResponse);
+}
+
+
 exports.addChannel = _addChannel;
 exports.getChannelList = _getChannelList;
 exports.editChannel = _editChannel;
 exports.getChannelDetail = _getChannelDetail;
 exports.editChannelPassword = _editChannelPassword;
 exports.delChannel = _delChannel;
+exports.editUserPassword = _editUserPassword;

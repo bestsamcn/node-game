@@ -45,4 +45,5 @@ router.get('/', function(req, res, next){
  	_getDetail().then(_sendHtml);
  });
 
+
 module.exports = router;

@@ -293,6 +293,7 @@ var _delUser = function(req, res){
 	_isExistAccount().then(_delFunc);
 }
 
+
 exports.userSignup = _userSignup;
 exports.userSignin = _userSignin;
 exports.userSignout = _userSignout;

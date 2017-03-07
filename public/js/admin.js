@@ -420,9 +420,11 @@
 					alertInfo('无该渠道信息存在');
 					return;
 				}
+				var that = this;
 				var postInfo = function(e){
 					e && e.preventDefault();
 					window.event && (window.event.returnValue = false);
+					if(!that.validateForm()) return;
 					var obj = editChannelPasswordForm.serialize();
 					delete obj.repassword;
 					$.ajax({
@@ -520,4 +522,83 @@
 		channel.init();
 	}
 	delChannel();
+
+
+
+	/**
+	 * 修改用户密码
+	 */
+	var editUserPassword = function(){
+		var editUserPasswordBtn = $('#edit-user-password-btn');
+		var editUserPasswordForm = $('#edit-user-password-form');
+		var userId = $('#user-id').val();
+		var user = {
+			editUserPasswordBtn:editUserPasswordBtn,
+			editUserPasswordForm:editUserPasswordForm,
+			userId:userId,
+			validateForm:function(){
+				var that = this;
+				var b = true
+				if(!that.editUserPasswordForm[0].oldpassword.value || that.editUserPasswordForm[0].oldpassword.value.length < 6){
+					alertInfo('密码长度不能少于6位');
+					b = false;
+					that.editUserPasswordForm[0].oldpassword.blur();
+					that.editUserPasswordForm[0].oldpassword.focus();
+					return b;
+				}
+				if(!that.editUserPasswordForm[0].password.value || that.editUserPasswordForm[0].password.value.length < 6){
+					alertInfo('密码长度不能少于6位');
+					b = false;
+					that.editUserPasswordForm[0].password.blur();
+					that.editUserPasswordForm[0].password.focus();
+					return b;
+				}
+				if(that.editUserPasswordForm[0].password.value !== that.editUserPasswordForm[0].repassword.value){
+					alertInfo('两次密码输入不一致');
+					b = false;
+					that.editUserPasswordForm[0].repassword.blur();
+					that.editUserPasswordForm[0].repassword.focus();
+					return b;
+				}
+				return b;
+			},
+			postForm:function(){
+				if(!this.userId || this.userId.length !== 24){
+					alertInfo('无该渠道信息存在');
+					return;
+				}
+				var that = this;
+				var postInfo = function(e){
+					e && e.preventDefault();
+					window.event && (window.event.returnValue = false);
+					if(!that.validateForm()) return;
+					var obj = editUserPasswordForm.serialize();
+					delete obj.repassword;
+					$.ajax({
+						type:'post',
+						dataType:'json',
+						url:'/api/admin/editUserPassword',
+						data:obj,
+						success:function(res){
+							if(res.retCode !== 0){
+								alertInfo(res.msg || '修改失败');
+								return;
+							}
+							alertInfo(res.msg || '修改成功');
+						},
+						error:function(){
+							alertInfo('修改失败');
+						}
+					});
+				}
+				this.editUserPasswordBtn.on('click', postInfo);
+			},
+			init:function(){
+				if(window.location.pathname.indexOf('/admin/editUserPassword') === -1 ) return;
+				this.postForm();
+			}
+		}
+		user.init();
+	}
+	editUserPassword();
 })();

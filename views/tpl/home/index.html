@@ -92,18 +92,20 @@
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="javascript:;">
                                 <i class="fa fa-user"></i> 
                             </a>
                             <ul class="dropdown-menu dropdown-alerts">
+                                {{ if session.user.userType >= 2}}
                                 <li>
-                                    <a href="#">
+                                    <a href="/admin/editUserPassword" data-toggle="dropdown" id="edit-password-btn">
                                         <div>
-                                            <i class="fa fa-address-card" ></i>个人信息
+                                            <i class="fa fa-address-card" ></i>修改密码
                                         </div>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
+                                {{ /if }}
                                 <li>
                                     <a href="/api/user/signout">
                                         <div>

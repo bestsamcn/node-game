@@ -120,5 +120,17 @@ router.get('/editChannelPassword/:id', function(req, res){
 	}
 	_getDetail().then(_sendHtml);
 });
+
+/**
+ * 修改用户密码
+ */
+router.get('/editUserPassword', function(req, res, next){
+	res.render('tpl/admin/editUserPassword', {
+		routerName:'/admin/editUserPassword',
+		title:'修改密码'
+	});	
+});
+
+
 	
 module.exports = router;
