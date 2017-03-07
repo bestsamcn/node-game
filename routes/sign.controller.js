@@ -29,11 +29,11 @@ router.get('/signin',function(req, res){
 /**
  * @router signin 注册
  */
-router.get('/signup',function(req, res){
-	res.render('tpl/sign/signup',{
-		routerName:'sign/signup',
-		title:'注册'
-	});
-});
+// router.get('/signup',function(req, res){
+// 	res.render('tpl/sign/signup',{
+// 		routerName:'sign/signup',
+// 		title:'注册'
+// 	});
+// });
 
 module.exports = router;

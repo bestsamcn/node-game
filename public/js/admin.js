@@ -584,7 +584,8 @@
 								alertInfo(res.msg || '修改失败');
 								return;
 							}
-							alertInfo(res.msg || '修改成功');
+							editUserPasswordForm[0].reset();
+							alertInfo(res.msg+'，下次登录请用新密码' || '修改成功');
 						},
 						error:function(){
 							alertInfo('修改失败');
