@@ -13,7 +13,7 @@ var routerOnlyForLogin = require('../interceptor/user').routerOnlyForLogin;
 /**
  * 用户界面
  */
-router.get('/', function(req, res, next){
+router.get('/', routerOnlyForLogin, function(req, res, next){
  	var _channel_id = req.session.user._id;
  	var rcookie = req.cookies.NODESESSIONID;
  	var _getDetail = function(){

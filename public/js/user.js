@@ -31,7 +31,7 @@
 		var startDateField = $('#start-date');
 		var endDateField = $('#end-date');
 		var searchTitVm = $('#search-tit-vm');
-
+		var pageSizeOpt = document.getElementById('page-size');
 		//必传参数
 		var _channel_id = $('#channel-id').val();
 
@@ -41,7 +41,27 @@
 		var resetMode = modeValue;
 		var startDateValue = null;
 		var endDateValue = null;
+		var isSearchKeyword = null;
 		var game3 = {
+			pagesizeInit:function(){
+				PAGE_SIZE = !!window.getCookie('pagesize') ? parseInt(window.getCookie('pagesize')) : 10;
+				for(var i=0; i<pageSizeOpt.length; i++){
+					if(pageSizeOpt[i].value == PAGE_SIZE){
+						pageSizeOpt.selectedIndex = i;
+					}
+				}
+			},
+			setPagesize:function(){
+				var that = this;
+				var changeFunc = function(){
+					var val = this.value;
+					window.setCookie('pagesize', val, 100);
+					PAGE_SIZE = val;
+					PAGE_INDEX = 1;
+					that.getGameList();
+				}
+				pageSizeOpt.onchange = changeFunc
+			},
 			getGameList: function(pageIndex, pageSize) {
 				var _pageSize = pageSize || PAGE_SIZE;
 				var _pageIndex = pageIndex || PAGE_INDEX;
@@ -132,10 +152,12 @@
 					_this.timer && clearTimeout(_this.timer);
 					_this.timer = setTimeout(function(){
 						keywords = _this.value;
+						isSearchKeyword = 1;
 						var obj = {};
 						obj.channelId = _channel_id;
 						obj.mode = modeValue;
 						obj.search = keywords;
+						obj.isSearchKeyword = isSearchKeyword;
 						obj.pageIndex = 1;
 						obj.pageSize = 5;
 						$.ajax({
@@ -231,7 +253,8 @@
 			init: function() {
 				if (!/^\/user/ig.test(window.location.pathname)) return;
 				var that = this;
-
+				this.pagesizeInit();
+				this.setPagesize();
 				that.start = {
 					elem: '#start-date',
 					format: 'YYYY-MM-DD',

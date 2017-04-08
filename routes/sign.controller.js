@@ -8,13 +8,13 @@ var router = express.Router();
 /**
  * 登录之后，禁止进入登录注册页面
  */
-// router.get('*',function(req, res, next){
-// 	if(req.session.isLogin){
-// 		res.redirect('/');
-// 		return;
-// 	}
-// 	next();
-// });
+router.get('*',function(req, res, next){
+	if(req.session.isLogin){
+		res.redirect('/');
+		return;
+	}
+	next();
+});
 
 /**
  * @router signin 登录

@@ -1,3 +1,4 @@
+
 var Q = require('q');
 var xss = require('xss');
 var Mongoose = require('mongoose');
@@ -340,6 +341,7 @@ var _getGameList = function(req, res, next) {
 	var _startDate = req.query.startDate;
 	var _endDate = req.query.endDate;
 	var _company = req.query.company;
+	var _isSearchKeyword = req.query.isSearchKeyword;
 	var filterObj = {};
 	var matchObj = {};
 
@@ -417,6 +419,9 @@ var _getGameList = function(req, res, next) {
 
 	//分页数如果-1,则返回分页数为0
 	_pageSize == -1 &&  (_pageSize = 0);
+	if(parseInt(_isSearchKeyword) === 1){
+		_pageSize = 1000;
+	}
 	
 	//搜索-模式cpa cps
 	var _model = _mode === '1' ? CostActiveModel : CostSalesModel;
@@ -424,12 +429,28 @@ var _getGameList = function(req, res, next) {
 	var _getList = function() {
 		var defer = Q.defer();
 		_model.find(filterObj).populate('channel').sort({
-			'_id': -1
+			'inputDate': -1
 		}).skip(_pageIndex * _pageSize).limit(_pageSize).exec(function(ferr, flist) {
 			if (ferr) {
 				res.sendStatus(500);
 				res.end();
 				return;
+			}
+
+			//搜索提示去重
+			if(parseInt(_isSearchKeyword) === 1){
+				var tempArr = [];
+				for(var i = 0; i< flist.length; i++){
+					var b = false;
+					for(var j = 0; j<tempArr.length; j++){
+						if(tempArr[j] && (tempArr[j].gameName === flist[i].gameName) ){
+							b = true;
+							break;
+						}
+					}
+					!b && tempArr.push(flist[i]);
+				}
+				flist = tempArr;
 			}
 			var obj = {
 				pageIndex: _pageIndex,

@@ -244,6 +244,7 @@
 		var resetMode = modeValue;
 		var startDateValue = null;
 		var endDateValue = null;
+		var isSearchKeyword = null;
 		var game3 = {
 			pagesizeInit:function(){
 				PAGE_SIZE = !!window.getCookie('pagesize') ? parseInt(window.getCookie('pagesize')) : 10;
@@ -353,13 +354,15 @@
 					var _this = this;
 					_this.timer && clearTimeout(_this.timer);
 					_this.timer = setTimeout(function(){
+						isSearchKeyword = 1;
 						keywords = _this.value;
 						var obj = {};
-						obj.channeId = _channel_id;
+						obj.channelId = _channel_id;
 						obj.mode = modeValue;
 						obj.search = keywords;
 						obj.pageIndex = 1;
 						obj.pageSize = 5;
+						obj.isSearchKeyword = isSearchKeyword;
 						$.ajax({
 							type:'get',
 							dataType:'json',
@@ -394,6 +397,7 @@
 					var textValue = _this.html();
 					searchInput.val(textValue);
 					PAGE_INDEX = 1;
+					
 					searchValue = textValue;
 					that.getGameList();
 					searchTitVm.html('').hide();
@@ -426,6 +430,7 @@
 					modeValue = resetMode;
 					startDateValue = null;
 					endDateValue = null;
+					isSearchKeyword = null;
 					PAGE_INDEX = 1;
 					searchInput.val('');
 					mode.val(modeValue);

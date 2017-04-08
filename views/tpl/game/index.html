@@ -30,9 +30,11 @@
                             <script type="text/html" id="search-tit-tpl">
                                 <% if !!game.data.length %>
                                 <% each game.data %>
+                                <% if $index <= 5 %>
                                 <li class="<% $index%2===0 ? 'bounceInLeft animated' : 'bounceInRight animated' %>">
                                     <a href="javascript:;" class="game-tit"><% $value.gameName %></a>
                                 </li>
+                                <% /if %>
                                 <% /each %>
                                 <% /if %>
                             </script>
