@@ -429,7 +429,8 @@ var _getGameList = function(req, res, next) {
 	var _getList = function() {
 		var defer = Q.defer();
 		_model.find(filterObj).populate('channel').sort({
-			'inputDate': -1
+			'inputDate': -1,
+			'gameName':1
 		}).skip(_pageIndex * _pageSize).limit(_pageSize).exec(function(ferr, flist) {
 			if (ferr) {
 				res.sendStatus(500);
