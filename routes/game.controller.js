@@ -296,7 +296,7 @@ router.get('/download/:channelId', function(req, res, next) {
 	}
 	//生成xlsx文件
 	var _generateXlsx = function(game){
-		var hideElementArr = ['_id','__v','channel','createBy','createTime','createIp','pinYin'];
+		var hideElementArr = ['_id','__v','channel','createBy','createTime','createIp','pinYin', 'lastEditTime'];
 		// conf.name = game[0].channelName+fileName;
 		conf.rows = generateArray(game, hideElementArr);
 		var result = nodeExcel.execute(conf);
