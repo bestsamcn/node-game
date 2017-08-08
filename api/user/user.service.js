@@ -16,8 +16,10 @@ var _ = require('lodash');
  * @return {object}     {retCode:Number, data:Object, msg:String}
  */
 var _userSignup = function(req, res){
+
 	var _account = req.body.account;
 	var _password = req.body.password;
+	var uip = '';
 	// var _code = req.body.code;
 	var _mobile = req.body.mobile || '';
 	//localhost访问会无法获取ip

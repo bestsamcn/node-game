@@ -58,7 +58,8 @@ var signup = function(){
 				alertInfo('注册成功');
 				window.location.href='/sign/signin';
 			},
-			error:function(){
+			error:function(e){
+				console.log(e)
 				alertInfo('注册失败');
 			}
 		});

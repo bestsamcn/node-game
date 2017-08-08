@@ -341,6 +341,7 @@ var _getGameList = function(req, res, next) {
 	var _startDate = req.query.startDate;
 	var _endDate = req.query.endDate;
 	var _company = req.query.company;
+	var _isSearchTips = req.query.isSearchTips;
 	var _isSearchKeyword = req.query.isSearchKeyword;
 	var filterObj = {};
 	var matchObj = {};
@@ -352,17 +353,25 @@ var _getGameList = function(req, res, next) {
 		filterObj.channel._id = _channel_id
 		matchObj.channel = new ObjectId(_channel_id);
 		if (!!_search) {
-			var reg = new RegExp(_search, 'gim');
-			filterObj.$or = [{
-				'gameName': {
-					$regex: reg
-				}
-			}, {
-				'pinYin': {
-					$regex: reg
-				}
-			}];
-			matchObj.gameName = reg;
+			if(_isSearchTips == 1){
+				var reg = new RegExp(_search, 'gim');
+				filterObj.$or = [{
+					'gameName': {
+						$regex: reg
+					}
+				}, {
+					'pinYin': {
+						$regex: reg
+					}
+				}];
+				matchObj.gameName = reg;
+			}else{
+				filterObj.$or = [{
+					'gameName': _search
+				}];
+				matchObj.gameName = _search;
+			}
+			
 		}
 	} else {
 		//搜索-渠道名-游戏名

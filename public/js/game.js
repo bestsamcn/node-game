@@ -237,7 +237,8 @@
 
 		//必传参数
 		var _channel_id = $('#channel-id').val();
-
+		//是否是请求提示列表，0不是，1是。
+		var isSearchTips = 0;
 		var searchValue = null;
 		var modeValue = null;
 		modeValue = $('#mode').val();
@@ -280,6 +281,7 @@
 				obj.mode = modeValue;
 				obj.startDate = startDateValue;
 				obj.endDate = endDateValue;
+				obj.isSearchTips = isSearchTips;
 				$.ajax({
 					type: 'get',
 					dataType: 'json',
@@ -341,6 +343,7 @@
 					e && e.preventDefault();
 					window.event && (window.event.returnValue = false);
 					PAGE_INDEX = 1;
+					isSearchTips = 0;
 					searchValue = searchInput.val();
 					that.getGameList(PAGE_INDEX);
 				}
@@ -363,6 +366,7 @@
 						obj.pageIndex = 1;
 						obj.pageSize = 5;
 						obj.isSearchKeyword = isSearchKeyword;
+						obj.isSearchTips = 1;
 						$.ajax({
 							type:'get',
 							dataType:'json',
@@ -397,7 +401,7 @@
 					var textValue = _this.html();
 					searchInput.val(textValue);
 					PAGE_INDEX = 1;
-					
+					isSearchTips = 0;
 					searchValue = textValue;
 					that.getGameList();
 					searchTitVm.html('').hide();
@@ -432,6 +436,7 @@
 					endDateValue = null;
 					isSearchKeyword = null;
 					PAGE_INDEX = 1;
+					isSearchTips = 0;
 					searchInput.val('');
 					mode.val(modeValue);
 					startDateField.val('');
