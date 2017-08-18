@@ -318,7 +318,7 @@
 							totalSettlement.html(res.totalSettlement);
 						} else {
 							totalUser.html(res.totalAddition);
-							totalStream.html(res.totalAddition);
+							totalStream.html(res.allTotalStream);
 							totalSettlement.html(res.totalSettlement);
 						}
 					}
